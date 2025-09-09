@@ -1,6 +1,7 @@
 # syntax=docker/dockerfile:1
 # check=skip=SecretsUsedInArgOrEnv
 
+# ARG BASE_IMAGE=ubuntu:22.04
 ARG BASE_IMAGE=ubuntu:24.04
 # ARG BASE_IMAGE=nvidia/cuda:11.0.3-cudnn8-runtime-ubuntu20.04
 # ARG BASE_IMAGE=nvidia/cuda:11.3.1-cudnn8-runtime-ubuntu20.04
@@ -16,6 +17,7 @@ ARG FT_API_SLUG="rest.fastapi-template"
 ## Here is the builder image:
 FROM ${BASE_IMAGE} AS builder
 
+ARG BASE_IMAGE
 ARG DEBIAN_FRONTEND
 ARG FT_API_SLUG
 
@@ -62,14 +64,16 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=private \
 COPY ./requirements* ./
 RUN	--mount=type=cache,target=/root/.cache,sharing=locked \
 	# _BUILD_TARGET_ARCH=$(uname -m) && \
-	# if [ "${_BUILD_TARGET_ARCH}" == "x86_64" ] && [[ ${BASE_IMAGE} == nvidia/cuda* ]]; then \
-	# 	export _REQUIRE_FILE_PATH=./requirements/requirements.gpu.txt; \
-	# elif [ "${_BUILD_TARGET_ARCH}" == "x86_64" ] && [[ ${BASE_IMAGE} == ubuntu* ]]; then \
-	# 	export _REQUIRE_FILE_PATH=./requirements/requirements.amd64.txt; \
+	# if [ "${_BUILD_TARGET_ARCH}" == "x86_64" ] && [[ "${BASE_IMAGE}" == nvidia/cuda* ]]; then \
+	# 	export _REQUIRE_FILE_PATH=./requirements.gpu.txt; \
+	# elif [ "${_BUILD_TARGET_ARCH}" == "x86_64" ]; then \
+	# 	export _REQUIRE_FILE_PATH=./requirements.amd64.txt; \
 	# elif [ "${_BUILD_TARGET_ARCH}" == "aarch64" ]; then \
-	# 	export _REQUIRE_FILE_PATH=./requirements/requirements.arm64.txt; \
+	# 	export _REQUIRE_FILE_PATH=./requirements.arm64.txt; \
 	# fi && \
-	# /opt/conda/bin/pip install --timeout 60 -r "${_REQUIRE_FILE_PATH}" && \
+	# if [ -n "${_REQUIRE_FILE_PATH}" ] && [ -f "${_REQUIRE_FILE_PATH}" ]; then \
+	# 	/opt/conda/bin/pip install --timeout 60 -r "${_REQUIRE_FILE_PATH}"; \
+	# fi && \
 	/opt/conda/bin/pip install --timeout 60 -r ./requirements.txt
 
 
@@ -96,7 +100,8 @@ ARG USER=ft-user
 ARG GROUP=ft-group
 
 # ENV FT_API_MODELS_DIR="${FT_API_MODELS_DIR}"
-ENV FT_HOME_DIR="${FT_HOME_DIR}" \
+ENV FT_API_SLUG="${FT_API_SLUG}" \
+	FT_HOME_DIR="${FT_HOME_DIR}" \
 	FT_API_DIR="${FT_API_DIR}" \
 	FT_API_CONFIGS_DIR="${FT_API_CONFIGS_DIR}" \
 	FT_API_DATA_DIR="${FT_API_DATA_DIR}" \
@@ -133,9 +138,10 @@ RUN rm -vrf /var/lib/apt/lists/* /var/cache/apt/archives/* /tmp/* /root/.cache/*
 	update-locale LANG=en_US.UTF-8 && \
 	echo "LANGUAGE=en_US.UTF-8" >> /etc/default/locale && \
 	echo "LC_ALL=en_AU.UTF-8" >> /etc/default/locale && \
-	addgroup --gid ${GID} ${GROUP} && \
-	useradd -lmN -d "/home/${USER}" -s /bin/bash -g ${GROUP} -G sudo -u ${UID} ${USER} && \
-	# usermod -l ${USER} -m -d /home/${USER} -s /bin/bash -g ${GROUP} -aG sudo ubuntu && \
+	# addgroup --gid ${GID} ${GROUP} && \
+	# useradd -lmN -d "/home/${USER}" -s /bin/bash -g ${GROUP} -G sudo -u ${UID} ${USER} && \
+	groupadd --gid ${GID} ${GROUP} && \
+	usermod -l ${USER} -m -d /home/${USER} -s /bin/bash -g ${GROUP} -aG sudo ubuntu && \
 	echo "${USER} ALL=(ALL) NOPASSWD: ALL" > "/etc/sudoers.d/${USER}" && \
 	chmod 0440 "/etc/sudoers.d/${USER}" && \
 	echo -e "${USER}:${HASH_PASSWORD}" | chpasswd -e && \
