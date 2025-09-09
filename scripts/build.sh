@@ -8,16 +8,27 @@ _SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 _PROJECT_DIR="$(cd "${_SCRIPT_DIR}/.." >/dev/null 2>&1 && pwd)"
 cd "${_PROJECT_DIR}" || exit 2
 
-# Loading base script:
-# shellcheck disable=SC1091
-source ./scripts/base.sh
-
-exitIfNoDocker
 
 # Loading .env file (if exists):
 if [ -f ".env" ]; then
 	# shellcheck disable=SC1091
 	source .env
+fi
+
+
+if [ -z "$(which docker)" ]; then
+	echo "[ERROR]: 'docker' not found or not installed!"
+	exit 1
+fi
+
+if ! docker info > /dev/null 2>&1; then
+	echo "[ERROR]: Unable to communicate with the docker daemon. Check docker is running or check your account added to docker group!"
+	exit 1
+fi
+
+if ! docker compose > /dev/null 2>&1; then
+	echo "[ERROR]: 'docker compose' not found or not installed!"
+	exit 1
 fi
 ## --- Base --- ##
 
@@ -55,7 +66,7 @@ _IMG_LATEST_FULLNAME=${_IMG_NAME}:latest${IMG_SUBTAG}
 ## --- Functions --- ##
 _buildImages()
 {
-	echoInfo "Building image (${IMG_PLATFORM}): ${_IMG_FULLNAME}"
+	echo "[INFO]: Building image (${IMG_PLATFORM}): ${_IMG_FULLNAME}"
 	# shellcheck disable=SC2086
 	DOCKER_BUILDKIT=1 docker build \
 		${IMG_ARGS} \
@@ -67,18 +78,18 @@ _buildImages()
 		-t "${_IMG_LATEST_FULLNAME}-${IMG_PLATFORM#linux/*}" \
 		-f "${DOCKERFILE_PATH}" \
 		"${CONTEXT_PATH}" || exit 2
-	echoOk "Done."
+	echo "[OK]: Done."
 }
 
 _crossBuildPush()
 {
 	if ! docker buildx ls | grep new_builder > /dev/null 2>&1; then
-		echoInfo "Creating new builder..."
+		echo "[INFO]: Creating new builder..."
 		docker buildx create --driver docker-container --bootstrap --use --name new_builder || exit 2
-		echoOk "Done."
+		echo "[OK]: Done."
 	fi
 
-	echoInfo "Cross building images (linux/amd64, linux/arm64): ${_IMG_FULLNAME}"
+	echo "[INFO]: Cross building images (linux/amd64, linux/arm64): ${_IMG_FULLNAME}"
 	# shellcheck disable=SC2086
 	docker buildx build \
 		${IMG_ARGS} \
@@ -91,39 +102,39 @@ _crossBuildPush()
 		-f "${DOCKERFILE_PATH}" \
 		--push \
 		"${CONTEXT_PATH}" || exit 2
-	echoOk "Done."
+	echo "[OK]: Done."
 
-	echoInfo "Removing new builder..."
+	echo "[INFO]: Removing new builder..."
 	docker buildx rm new_builder || exit 2
-	echoOk "Done."
+	echo "[OK]: Done."
 }
 
 _removeCaches()
 {
-	echoInfo "Removing leftover cache images..."
+	echo "[INFO]: Removing leftover cache images..."
 	# shellcheck disable=SC2046
 	docker rmi -f $(docker images --filter "dangling=true" -q --no-trunc) 2> /dev/null || true
-	echoOk "Done."
+	echo "[OK]: Done."
 }
 
 _pushImages()
 {
-	echoInfo "Pushing images..."
+	echo "[INFO]: Pushing images..."
 	docker push "${_IMG_FULLNAME}" || exit 2
 	docker push "${_IMG_LATEST_FULLNAME}" || exit 2
 	docker push "${_IMG_FULLNAME}-${IMG_PLATFORM#linux/*}" || exit 2
 	docker push "${_IMG_LATEST_FULLNAME}-${IMG_PLATFORM#linux/*}" || exit 2
-	echoOk "Done."
+	echo "[OK]: Done."
 }
 
 _cleanImages()
 {
-	echoInfo "Cleaning images..."
+	echo "[INFO]: Cleaning images..."
 	docker rmi -f "${_IMG_FULLNAME}" || exit 2
 	# docker rmi -f "${_IMG_LATEST_FULLNAME}" || exit 2
 	docker rmi -f "${_IMG_FULLNAME}-${IMG_PLATFORM#linux/*}" || exit 2
 	docker rmi -f "${_IMG_LATEST_FULLNAME}-${IMG_PLATFORM#linux/*}" || exit 2
-	echoOk "Done."
+	echo "[OK]: Done."
 }
 ## --- Functions --- ##
 
@@ -169,8 +180,8 @@ main()
 					CONTEXT_PATH="${_input#*=}"
 					shift;;
 				*)
-					echoError "Failed to parsing input -> ${_input}"
-					echoInfo "USAGE: ${0}  -p=*, --platform=* [amd64 | arm64] | -u, --push-images | -c, --clean-images | -x, --cross-compile | -b=*, --base-image=* | -g=*, --registry=* | -r=*, --repo=* | -v=*, --version=* | -s=*, --subtag=* | -d=*, --dockerfile=* | -t=*, --context-path=*"
+					echo "[ERROR]: Failed to parsing input -> ${_input}!"
+					echo "[INFO]: USAGE: ${0}  -p=*, --platform=* [amd64 | arm64] | -u, --push-images | -c, --clean-images | -x, --cross-compile | -b=*, --base-image=* | -g=*, --registry=* | -r=*, --repo=* | -v=*, --version=* | -s=*, --subtag=* | -d=*, --dockerfile=* | -t=*, --context-path=*"
 					exit 1;;
 			esac
 		done
@@ -179,7 +190,7 @@ main()
 
 
 	# if [ -z "${IMG_REGISTRY:-}" ]; then
-	# 	echoError "Required 'IMG_REGISTRY' environment variable or '--registry=' argument for image registry!"
+	# 	echo "[ERROR]: Required 'IMG_REGISTRY' environment variable or '--registry=' argument for image registry!"
 	# 	exit 1
 	# fi
 
@@ -201,7 +212,7 @@ main()
 	elif [ "${IMG_PLATFORM}" = "aarch64" ] || [ "${IMG_PLATFORM}" = "arm64" ] || [ "${IMG_PLATFORM}" = "linux/arm64" ]; then
 		IMG_PLATFORM="linux/arm64"
 	else
-		echoError "Unsupported platform: ${IMG_PLATFORM}"
+		echo "[ERROR]: Unsupported platform: ${IMG_PLATFORM}!"
 		exit 2
 	fi
 	## --- Init arguments --- ##

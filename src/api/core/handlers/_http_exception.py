@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from typing import Union
 
 from fastapi import HTTPException, Request
@@ -22,7 +20,7 @@ async def http_exception_handler(request: Request, exc: HTTPException) -> BaseRe
     """
 
     _message: str
-    _error: Union[dict, str, None] = None
+    _error: dict | str | None = None
 
     _http_status, _ = utils.get_http_status(status_code=exc.status_code)
     if isinstance(exc.detail, dict):

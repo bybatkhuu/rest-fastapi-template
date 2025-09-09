@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-
 from uuid import uuid4
-from typing import Callable
+from collections.abc import Callable
 
 from starlette.middleware.base import BaseHTTPMiddleware
 from fastapi import Request, Response

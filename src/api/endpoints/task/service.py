@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from typing import List, Tuple, Union
 
 from pydantic import validate_call
@@ -13,7 +11,7 @@ from .schemas import TaskPM, TaskBasePM
 
 
 ## NOTE: This is a mock database for demonstration purposes.
-_TASKS_DB: List[TaskPM] = []
+_TASKS_DB: list[TaskPM] = []
 for _i in range(1, 101):
     _task = TaskPM(name=f"Task {_i}", point=_i)
     _TASKS_DB.append(_task)
@@ -26,7 +24,7 @@ def get_list(
     limit: int = 100,
     is_desc: bool = True,
     warn_mode: WarnEnum = WarnEnum.IGNORE,
-) -> Tuple[List[TaskPM], int]:
+) -> tuple[list[TaskPM], int]:
     """Get list of tasks and total count.
 
     Args:
@@ -42,7 +40,7 @@ def get_list(
 
     log_mode(message=f"[{request_id}] - Getting task list...", warn_mode=warn_mode)
 
-    _task_list: List[TaskPM] = _TASKS_DB
+    _task_list: list[TaskPM] = _TASKS_DB
     _all_count = len(_task_list)
     if is_desc:
         _task_list = _task_list[::-1]
@@ -89,7 +87,7 @@ def create(
 @validate_call
 def get(
     request_id: str, id: str, warn_mode: WarnEnum = WarnEnum.IGNORE
-) -> Union[TaskPM, None]:
+) -> TaskPM | None:
     """Get task by ID.
 
     Args:
@@ -106,7 +104,7 @@ def get(
         warn_mode=warn_mode,
     )
 
-    _task: Union[TaskPM, None] = None
+    _task: TaskPM | None = None
     for _task_db in _TASKS_DB:
         if _task_db.id == id:
             _task = _task_db
@@ -155,7 +153,7 @@ def update(
         warn_mode=warn_mode,
     )
 
-    _task: Union[TaskPM, None] = get(request_id=request_id, id=id)
+    _task: TaskPM | None = get(request_id=request_id, id=id)
 
     if not _task:
         raise BaseHTTPException(

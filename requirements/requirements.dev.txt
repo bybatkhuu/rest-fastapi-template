@@ -2,4 +2,5 @@
 -r ./requirements.docs.txt
 -r ../examples/simple/requirements.txt
 -r ../examples/async/requirements.txt
+pyright>=1.1.392,<2.0.0
 pre-commit>=4.0.1,<5.0.0

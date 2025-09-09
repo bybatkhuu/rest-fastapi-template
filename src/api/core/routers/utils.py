@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from fastapi import APIRouter, Request
 
 from api.core.schemas import BaseResPM

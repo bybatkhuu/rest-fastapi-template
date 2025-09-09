@@ -126,7 +126,8 @@ ipython_config.py
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
@@ -504,7 +505,6 @@ results/
 output/
 outputs/
 .benchmarks/
-rest.fastapi-template/
 
 # Files:
 log
@@ -520,13 +520,11 @@ results
 output
 outputs
 .benchmarks
-rest.fastapi-template
 env
 *.bak
 pm2-process.json
 compose.override.yml
 compose.override.yaml
-sample.py
 example.py
 test.py
 

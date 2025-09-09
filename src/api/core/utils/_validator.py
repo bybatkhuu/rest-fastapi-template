@@ -1,7 +1,6 @@
-# -*- coding: utf-8 -*-
-
 import re
-from typing import List, Union, Pattern
+from typing import List, Union
+from re import Pattern
 
 from pydantic import validate_call
 
@@ -16,7 +15,7 @@ from api.core.constants import (
 
 
 @validate_call
-def is_truthy(val: Union[str, bool, int, float, None]) -> bool:
+def is_truthy(val: str | bool | int | float | None) -> bool:
     """Check if the value is truthy.
 
     Args:
@@ -43,7 +42,7 @@ def is_truthy(val: Union[str, bool, int, float, None]) -> bool:
 
 
 @validate_call
-def is_falsy(val: Union[str, bool, int, float, None]) -> bool:
+def is_falsy(val: str | bool | int | float | None) -> bool:
     """Check if the value is falsy.
 
     Args:
@@ -72,7 +71,7 @@ def is_request_id(val: str) -> bool:
 
 
 @validate_call
-def is_blacklisted(val: str, blacklist: List[str]) -> bool:
+def is_blacklisted(val: str, blacklist: list[str]) -> bool:
     """Check if the string is blacklisted.
 
     Args:
@@ -91,7 +90,7 @@ def is_blacklisted(val: str, blacklist: List[str]) -> bool:
 
 
 @validate_call
-def is_valid(val: str, pattern: Union[Pattern, str]) -> bool:
+def is_valid(val: str, pattern: Pattern | str) -> bool:
     """Check if the string is valid with given pattern.
 
     Args:

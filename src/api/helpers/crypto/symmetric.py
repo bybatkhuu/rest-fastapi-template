@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import base64
 from typing import Union
 
@@ -13,13 +11,13 @@ from api.core.constants import WarnEnum
 
 @validate_call(config={"arbitrary_types_allowed": True})
 def decrypt_aes_cbc(
-    ciphertext: Union[str, bytes],
+    ciphertext: str | bytes,
     key: bytes,
     iv: bytes,
     base64_decode: bool = False,
     as_str: bool = False,
     warn_mode: WarnEnum = WarnEnum.DEBUG,
-) -> Union[str, bytes]:
+) -> str | bytes:
     """Decrypts a ciphertext using AES-CBC key and iv.
 
     Args:
@@ -43,7 +41,7 @@ def decrypt_aes_cbc(
     if base64_decode:
         ciphertext = base64.b64decode(ciphertext)
 
-    _plaintext: Union[str, bytes]
+    _plaintext: str | bytes
     try:
         _message = "Decrypting ciphertext using AES-CBC key and iv..."
         if warn_mode == WarnEnum.ALWAYS:

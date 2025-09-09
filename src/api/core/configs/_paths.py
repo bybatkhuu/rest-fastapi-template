@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 from typing import Any, Dict
 
@@ -54,7 +52,7 @@ class PathsConfig(BaseConfig):
 class FrozenPathsConfig(PathsConfig):
     @model_validator(mode="before")
     @classmethod
-    def _check_all(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+    def _check_all(cls, values: dict[str, Any]) -> dict[str, Any]:
         for _key, _val in values.items():
             if isinstance(_val, str) and ("{data_dir}" in _val):
                 values[_key] = _val.format(data_dir=values["data_dir"])

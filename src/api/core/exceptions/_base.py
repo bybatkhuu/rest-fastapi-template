@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from typing import Any, Optional, Dict
 
 from pydantic import conint, constr, validate_call
@@ -19,13 +17,13 @@ class BaseHTTPException(HTTPException):
     def __init__(
         self,
         error_enum: ErrorCodeEnum,
-        status_code: Optional[conint(ge=100, le=599)] = None,  # type: ignore
-        message: Optional[
+        status_code: conint(ge=100, le=599) | None = None,  # type: ignore
+        message: None | (
             constr(strip_whitespace=True, min_length=1, max_length=256)  # type: ignore
-        ] = None,
-        description: Optional[constr(strip_whitespace=True, max_length=1024)] = None,  # type: ignore
+        ) = None,
+        description: constr(strip_whitespace=True, max_length=1024) | None = None,  # type: ignore
         detail: Any = None,
-        headers: Optional[Dict[str, str]] = None,
+        headers: dict[str, str] | None = None,
     ):
         """Constructor method for BaseHTTPException class.
 

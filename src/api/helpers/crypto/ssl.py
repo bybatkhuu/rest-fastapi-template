@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import errno
 from datetime import timedelta
@@ -80,7 +78,7 @@ async def async_create_ssl_certs(
     elif warn_mode == WarnEnum.DEBUG:
         logger.debug(_meesage)
 
-    _private_key: Union[RSAPrivateKey, PrivateKeyTypes]
+    _private_key: RSAPrivateKey | PrivateKeyTypes
     if await aiofiles.os.path.isfile(_key_path):
         if warn_mode == WarnEnum.ERROR:
             raise FileExistsError(f"'{_key_path}' SSL key file already exists!")
@@ -210,7 +208,7 @@ def create_ssl_certs(
     elif warn_mode == WarnEnum.DEBUG:
         logger.debug(_message)
 
-    _private_key: Union[RSAPrivateKey, PrivateKeyTypes]
+    _private_key: RSAPrivateKey | PrivateKeyTypes
     if os.path.isfile(_key_path):
         if warn_mode == WarnEnum.ERROR:
             raise FileExistsError(f"'{_key_path}' SSL key file already exists!")

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 # Valid characters:
 ALPHANUM_REGEX = r"^[0-9a-zA-Z]+$"
 ALPHANUM_SPACE_REGEX = r"^[0-9a-zA-Z ]+$"

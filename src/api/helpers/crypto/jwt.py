@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from typing import Dict, Any, Union
 
 import jwt
@@ -14,7 +12,7 @@ from api.core import utils
 
 @validate_call(config={"arbitrary_types_allowed": True})
 def encode(
-    payload: Dict[str, Any], key: Union[SecretStr, PrivateKeyTypes], algorithm: str
+    payload: dict[str, Any], key: SecretStr | PrivateKeyTypes, algorithm: str
 ) -> str:
     """Encodes payload into JWT token.
 
@@ -54,10 +52,10 @@ def encode(
 @validate_call(config={"arbitrary_types_allowed": True})
 def decode(
     token: str,
-    key: Union[SecretStr, PublicKeyTypes],
+    key: SecretStr | PublicKeyTypes,
     algorithm: str,
-    options: Dict[str, Any] = {},
-) -> Dict[str, Any]:
+    options: dict[str, Any] = {},
+) -> dict[str, Any]:
     """Decodes JWT token and returns payload.
 
     Args:

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from argon2 import PasswordHasher
 from argon2.exceptions import VerifyMismatchError
 from pydantic import validate_call, SecretStr

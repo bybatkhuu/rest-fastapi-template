@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 ## Third-party libraries
 from fastapi import FastAPI
 

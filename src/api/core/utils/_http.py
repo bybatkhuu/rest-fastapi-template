@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from typing import Tuple, Union
 from urllib import request
 from http import HTTPStatus
@@ -12,7 +10,7 @@ from fastapi import Request
 
 
 @validate_call
-def get_http_status(status_code: int) -> Tuple[HTTPStatus, bool]:
+def get_http_status(status_code: int) -> tuple[HTTPStatus, bool]:
     """Get HTTP status code enum from integer value.
 
     Args:
@@ -50,7 +48,7 @@ def get_http_status(status_code: int) -> Tuple[HTTPStatus, bool]:
 
 
 @validate_call(config={"arbitrary_types_allowed": True})
-def get_relative_url(val: Union[Request, URL]) -> str:
+def get_relative_url(val: Request | URL) -> str:
     """Get relative url only path with query params from request object or URL object.
 
     Args:

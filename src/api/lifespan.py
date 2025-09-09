@@ -1,7 +1,5 @@
-# -*- coding: utf-8 -*-
-
 import os
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI

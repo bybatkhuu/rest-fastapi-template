@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from typing import List, Optional, Dict, Any
 
 from pydantic import Field, constr, SecretStr, model_validator
@@ -18,20 +16,20 @@ _ENV_PREFIX_SECURITY = f"{ENV_PREFIX_API}SECURITY_"
 
 
 class CorsConfig(FrozenBaseConfig):
-    allow_origins: List[
+    allow_origins: list[
         constr(strip_whitespace=True, min_length=1, max_length=256)  # type: ignore
     ] = Field(...)
-    allow_origin_regex: Optional[
+    allow_origin_regex: None | (
         constr(strip_whitespace=True, min_length=1, max_length=256)  # type: ignore
-    ] = Field(default=None)
-    allow_headers: List[
+    ) = Field(default=None)
+    allow_headers: list[
         constr(strip_whitespace=True, min_length=1, max_length=128)  # type: ignore
     ] = Field(...)
-    allow_methods: List[constr(strip_whitespace=True, pattern=HTTP_METHOD_REGEX)] = (  # type: ignore
+    allow_methods: list[constr(strip_whitespace=True, pattern=HTTP_METHOD_REGEX)] = (  # type: ignore
         Field(...)
     )
     allow_credentials: bool = Field(...)
-    expose_headers: List[
+    expose_headers: list[
         constr(strip_whitespace=True, min_length=1, max_length=128)  # type: ignore
     ] = Field(...)
     max_age: int = Field(..., ge=0, le=86_400)
@@ -92,7 +90,7 @@ class PasswordConfig(FrozenBaseConfig):
 
     @model_validator(mode="before")
     @classmethod
-    def _check_all(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+    def _check_all(cls, values: dict[str, Any]) -> dict[str, Any]:
         if values["max_length"] < values["min_length"]:
             raise ValueError(
                 "`min_length` is greater than `max_length`, should be vice versa!"
@@ -104,10 +102,10 @@ class PasswordConfig(FrozenBaseConfig):
 
 
 class SecurityConfig(FrozenBaseConfig):
-    allowed_hosts: List[constr(strip_whitespace=True, min_length=1, max_length=256)] = (  # type: ignore
+    allowed_hosts: list[constr(strip_whitespace=True, min_length=1, max_length=256)] = (  # type: ignore
         Field(...)
     )
-    forwarded_allow_ips: List[
+    forwarded_allow_ips: list[
         constr(strip_whitespace=True, min_length=1, max_length=256)  # type: ignore
     ] = Field(...)
     cors: CorsConfig = Field(...)

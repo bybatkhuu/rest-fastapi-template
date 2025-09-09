@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import re
 import html
 from urllib.parse import quote

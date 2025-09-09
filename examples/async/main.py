@@ -1,14 +1,13 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-## Standard libraries
+# Standard libraries
 import sys
 import logging
 import pprint
 import asyncio
 from typing import Dict, Any
 
-## Third-party libraries
+# Third-party libraries
 import aiohttp
 
 
@@ -33,7 +32,7 @@ async def main() -> None:
     _headers = {"Accept": "application/json"}
 
     logger.info("Sending request...")
-    _result_dict: Dict[str, Any] = {}
+    _result_dict: dict[str, Any] = {}
     async with aiohttp.ClientSession() as _http_session:
         async with _http_session.request(
             method=_method, url=_url, headers=_headers, json=_payload

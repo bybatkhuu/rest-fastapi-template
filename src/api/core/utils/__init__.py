@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from ._base import *
 from ._secure import *
 from ._http import *

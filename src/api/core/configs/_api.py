@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import sys
 from typing import Any, Dict
 
@@ -98,7 +96,7 @@ class ApiConfig(BaseConfig):
 
     @model_validator(mode="before")
     @classmethod
-    def _check_args(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+    def _check_args(cls, values: dict[str, Any]) -> dict[str, Any]:
         if (
             sys.argv[0].endswith("uvicorn")
             or sys.argv[0].endswith("fastapi")

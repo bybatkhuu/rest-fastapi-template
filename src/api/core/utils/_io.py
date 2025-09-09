@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import errno
 import shutil
@@ -108,7 +106,7 @@ async def async_remove_dir(
 
 @validate_call
 async def async_remove_dirs(
-    remove_dirs: List[constr(strip_whitespace=True, min_length=1, max_length=_path_max_length)],  # type: ignore
+    remove_dirs: list[constr(strip_whitespace=True, min_length=1, max_length=_path_max_length)],  # type: ignore
     warn_mode: WarnEnum = WarnEnum.DEBUG,
 ) -> None:
     """Asynchronous remove directories if `remove_dirs` exists.
@@ -170,7 +168,7 @@ async def async_remove_file(
 
 @validate_call
 async def async_remove_files(
-    file_paths: List[constr(strip_whitespace=True, min_length=1, max_length=_path_max_length)],  # type: ignore
+    file_paths: list[constr(strip_whitespace=True, min_length=1, max_length=_path_max_length)],  # type: ignore
     warn_mode: WarnEnum = WarnEnum.DEBUG,
 ) -> None:
     """Asynchronous remove files if `file_paths` exists.
@@ -322,7 +320,7 @@ def remove_dir(
 
 @validate_call
 def remove_dirs(
-    remove_dirs: List[constr(strip_whitespace=True, min_length=1, max_length=_path_max_length)],  # type: ignore
+    remove_dirs: list[constr(strip_whitespace=True, min_length=1, max_length=_path_max_length)],  # type: ignore
     warn_mode: WarnEnum = WarnEnum.DEBUG,
 ) -> None:
     """Remove directories if `remove_dirs` exist.
@@ -384,7 +382,7 @@ def remove_file(
 
 @validate_call
 def remove_files(
-    file_paths: List[constr(strip_whitespace=True, min_length=1, max_length=_path_max_length)],  # type: ignore
+    file_paths: list[constr(strip_whitespace=True, min_length=1, max_length=_path_max_length)],  # type: ignore
     warn_mode: WarnEnum = WarnEnum.DEBUG,
 ) -> None:
     """Remove files if `file_paths` exist.

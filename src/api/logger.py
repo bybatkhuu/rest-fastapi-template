@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from pydantic import validate_call
 from fastapi.concurrency import run_in_threadpool
 

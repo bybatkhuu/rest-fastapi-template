@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from typing import Any, Dict, Optional, List
 
 from jwt import ExpiredSignatureError, InvalidTokenError
@@ -18,8 +16,8 @@ _http_bearer = HTTPBearer(auto_error=False)
 
 def auth_jwt(
     request: Request,
-    authorization: Optional[HTTPAuthorizationCredentials] = Security(_http_bearer),
-) -> Dict[str, Any]:
+    authorization: HTTPAuthorizationCredentials | None = Security(_http_bearer),
+) -> dict[str, Any]:
     """Dependency function to authenticate the access token (JWT) and get the payload.
 
     Args:
@@ -50,9 +48,9 @@ def auth_jwt(
             headers={"WWW-Authenticate": 'Bearer error="invalid_token"'},
         )
 
-    _payload: Dict[str, Any] = None
+    _payload: dict[str, Any] = None
     try:
-        _payload: Dict[str, Any] = jwt_helper.decode(
+        _payload: dict[str, Any] = jwt_helper.decode(
             token=_access_token,
             key=config.api.security.jwt.secret,
             algorithm=config.api.security.jwt.algorithm,
@@ -74,7 +72,7 @@ def auth_jwt(
     return _payload
 
 
-def get_user_id(payload: Dict[str, Any] = Depends(auth_jwt)) -> str:
+def get_user_id(payload: dict[str, Any] = Depends(auth_jwt)) -> str:
     """Dependency function to get the user ID from the token payload.
 
     Args:
@@ -110,8 +108,8 @@ class AuthScopeDep:
         self.allow_owner = allow_owner
 
     def __call__(
-        self, request: Request, payload: Dict[str, Any] = Depends(auth_jwt)
-    ) -> Dict[str, Any]:
+        self, request: Request, payload: dict[str, Any] = Depends(auth_jwt)
+    ) -> dict[str, Any]:
         """Dependency function to check the scope permissions of the user.
 
         Args:
@@ -127,12 +125,12 @@ class AuthScopeDep:
 
         if self.allow_owner:
             _auth_user_id: str = payload.get("sub")
-            _path_params: List[str] = list(request.path_params.values())
+            _path_params: list[str] = list(request.path_params.values())
             if _path_params and (_path_params[0] == _auth_user_id):
                 return payload
 
         _token_all_scope: str = payload.get("scope")
-        _token_scope_list: List[str] = _token_all_scope.split(" ")
+        _token_scope_list: list[str] = _token_all_scope.split(" ")
         if self.allow_scope not in _token_scope_list:
             raise BaseHTTPException(
                 error_enum=ErrorCodeEnum.FORBIDDEN,

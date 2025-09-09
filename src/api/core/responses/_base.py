@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from http import HTTPStatus
 from typing import Any, Optional, Dict, Type
 
@@ -26,18 +24,18 @@ class BaseResponse(JSONResponse):
     def __init__(
         self,
         content: Any = None,
-        status_code: Optional[conint(ge=100, le=599)] = 200,  # type: ignore
-        headers: Optional[Dict[str, str]] = None,
-        media_type: Optional[constr(strip_whitespace=True)] = None,  # type: ignore
-        background: Optional[BackgroundTask] = None,
-        request: Optional[Request] = None,
-        message: Optional[
+        status_code: conint(ge=100, le=599) | None = 200,  # type: ignore
+        headers: dict[str, str] | None = None,
+        media_type: constr(strip_whitespace=True) | None = None,  # type: ignore
+        background: BackgroundTask | None = None,
+        request: Request | None = None,
+        message: None | (
             constr(strip_whitespace=True, min_length=1, max_length=256)  # type: ignore
-        ] = None,
-        links: Optional[Dict[str, Any]] = None,
-        meta: Optional[Dict[str, Any]] = None,
+        ) = None,
+        links: dict[str, Any] | None = None,
+        meta: dict[str, Any] | None = None,
         error: Any = None,
-        response_schema: Optional[Type[BaseResPM]] = BaseResPM,
+        response_schema: type[BaseResPM] | None = BaseResPM,
     ) -> None:
         """Constructor method for BaseResponse class.
         This will prepare the most response data and pass it to `JSONResponse` parent class constructor.

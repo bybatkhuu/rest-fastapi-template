@@ -2,7 +2,7 @@
 set -euo pipefail
 
 
-echo "INFO: Running 'rest.fastapi-template' docker-entrypoint.sh..."
+echo "[INFO]: Running 'rest.fastapi-template' docker-entrypoint.sh..."
 
 _doStart()
 {
@@ -34,16 +34,16 @@ main()
 		-b | --bash | bash | /bin/bash)
 			shift
 			if [ -z "${*:-}" ]; then
-				echo "INFO: Starting bash..."
+				echo "[INFO]: Starting bash..."
 				/bin/bash
 			else
-				echo "INFO: Executing command -> ${*}"
+				echo "[INFO]: Executing command -> ${*}"
 				exec /bin/bash -c "${@}" || exit 2
 			fi
 			exit 0;;
 		*)
-			echo "ERROR: Failed to parsing input -> ${*}"
-			echo "USAGE: ${0}  -s, --start, start | -b, --bash, bash, /bin/bash"
+			echo "[ERROR]: Failed to parsing input -> ${*}!"
+			echo "[INFO]: USAGE: ${0}  -s, --start, start | -b, --bash, bash, /bin/bash"
 			exit 1;;
 	esac
 }

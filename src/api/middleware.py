@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from pydantic import validate_call
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware

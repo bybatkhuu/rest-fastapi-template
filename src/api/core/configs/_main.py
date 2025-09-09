@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 from typing_extensions import Self
 

@@ -68,7 +68,6 @@
 		"**/*pytest.ini",
 		"**/*README.md",
 		"**/*Thumbs.db",
-		"**/*sample.py",
 		"**/*example.py",
 		"**/*test.py"
 	],

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from typing import Union, List, Optional
 from typing_extensions import Self
 
@@ -35,7 +33,7 @@ class TaskBasePM(BasePM):
 
 
 class TaskUpPM(TaskBasePM):
-    name: Optional[str] = Field(
+    name: str | None = Field(
         default=None,
         min_length=2,
         max_length=64,
@@ -69,7 +67,7 @@ class TasksPM(TaskPM):
 
 
 class ResTaskPM(BaseResPM):
-    data: Union[TaskPM, None] = Field(
+    data: TaskPM | None = Field(
         default=None,
         title="Task data",
         description="Task as a main data.",
@@ -86,7 +84,7 @@ class ResTaskPM(BaseResPM):
 
 
 class ResTasksPM(BaseResPM):
-    data: List[TasksPM] = Field(
+    data: list[TasksPM] = Field(
         default=[],
         title="List of tasks",
         description="List of tasks as main data.",

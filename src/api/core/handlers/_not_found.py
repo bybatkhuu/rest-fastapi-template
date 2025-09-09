@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from fastapi import HTTPException, Request
 
 from api.core.constants import ErrorCodeEnum

@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import time
 from enum import Enum
 from typing import Union, Optional
@@ -20,7 +18,7 @@ class TSUnitEnum(str, Enum):
 
 
 @validate_call(config={"arbitrary_types_allowed": True})
-def add_tzinfo(dt: datetime, tz: Union[ZoneInfo, tzinfo, str]) -> datetime:
+def add_tzinfo(dt: datetime, tz: ZoneInfo | tzinfo | str) -> datetime:
     """Add or replace timezone info to datetime object.
 
     Args:
@@ -78,7 +76,7 @@ def datetime_to_iso(
 @validate_call(config={"arbitrary_types_allowed": True})
 def convert_tz(
     dt: datetime,
-    tz: Union[ZoneInfo, tzinfo, str],
+    tz: ZoneInfo | tzinfo | str,
     warn_mode: WarnEnum = WarnEnum.ALWAYS,
 ) -> datetime:
     """Convert datetime object to another timezone.
@@ -138,7 +136,7 @@ def now_local_dt() -> datetime:
 
 
 @validate_call(config={"arbitrary_types_allowed": True})
-def now_dt(tz: Union[ZoneInfo, tzinfo, str]) -> datetime:
+def now_dt(tz: ZoneInfo | tzinfo | str) -> datetime:
     """Get current datetime in specified timezone with tzinfo.
 
     Args:
@@ -204,9 +202,9 @@ def convert_ts(dt: datetime, unit: TSUnitEnum = TSUnitEnum.SECONDS) -> int:
 
 @validate_call(config={"arbitrary_types_allowed": True})
 def calc_future_dt(
-    delta: Union[timedelta, conint(ge=1)],  # type: ignore
-    dt: Optional[datetime] = None,
-    tz: Union[ZoneInfo, tzinfo, str, None] = None,
+    delta: timedelta | conint(ge=1),  # type: ignore
+    dt: datetime | None = None,
+    tz: ZoneInfo | tzinfo | str | None = None,
 ) -> datetime:
     """Calculate future datetime by adding delta time to current or specified datetime.
 

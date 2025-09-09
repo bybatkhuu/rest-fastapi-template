@@ -7,16 +7,28 @@ set -euo pipefail
 _PROJECT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 cd "${_PROJECT_DIR}" || exit 2
 
-# Loading base script:
-# shellcheck disable=SC1091
-source ./scripts/base.sh
-
-exitIfNoDocker
 
 # Loading .env file (if exists):
 if [ -f ".env" ]; then
 	# shellcheck disable=SC1091
 	source .env
+fi
+
+
+# Checking docker and docker-compose installed:
+if [ -z "$(which docker)" ]; then
+	echo "[ERROR]: 'docker' not found or not installed!"
+	exit 1
+fi
+
+if ! docker info > /dev/null 2>&1; then
+	echo "[ERROR]: Unable to communicate with the docker daemon. Check docker is running or check your account added to docker group!"
+	exit 1
+fi
+
+if ! docker compose > /dev/null 2>&1; then
+	echo "[ERROR]: 'docker compose' not found or not installed!"
+	exit 1
 fi
 ## --- Base --- ##
 
@@ -30,7 +42,7 @@ _DEFAULT_SERVICE="api"
 _doBuild()
 {
 	./scripts/build.sh || exit 2
-	# docker compose build || exit 2
+	# docker compose --progress=plain build || exit 2
 }
 
 _doValidate()
@@ -105,7 +117,7 @@ _doStats()
 _doExec()
 {
 	if [ -z "${1:-}" ]; then
-		echoError "Not found any input."
+		echo "[ERROR]: Not found any input!"
 		exit 1
 	fi
 
@@ -120,7 +132,7 @@ _doEnter()
 		_service=${1}
 	fi
 
-	echoInfo "Entering '${_service}' container..."
+	echo "[INFO]: Entering '${_service}' container..."
 	docker compose exec "${_service}" /bin/bash || exit 2
 }
 
@@ -155,14 +167,14 @@ _doUpdate()
 ## --- Menu arguments --- ##
 _exitOnWrongParams()
 {
-	echoInfo "USAGE: ${0}  build | validate | start | stop | restart | logs | list | ps | stats | exec | enter | images | clean | update"
+	echo "[INFO]: USAGE: ${0}  build | validate | start | stop | restart | logs | list | ps | stats | exec | enter | images | clean | update"
 	exit 1
 }
 
 main()
 {
 	if [ -z "${1:-}" ]; then
-		echoError "Not found any input."
+		echo "[ERROR]: Not found any input!"
 		_exitOnWrongParams
 	fi
 
@@ -209,7 +221,7 @@ main()
 			shift
 			_doUpdate "${@:-}";;
 		*)
-			echoError "Failed to parsing input: ${*}"
+			echo "[ERROR]: Failed to parsing input: ${*}!"
 			_exitOnWrongParams;;
 	esac
 

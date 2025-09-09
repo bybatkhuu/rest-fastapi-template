@@ -61,7 +61,7 @@ This is a template repository for FastAPI web service projects.
 
 For **standalone** runtime:
 
-- Install **Python (>= v3.9)** and **pip (>= 23)**:
+- Install **Python (>= v3.10)** and **pip (>= 23)**:
     - **[RECOMMENDED] [Miniconda (v3)](https://www.anaconda.com/docs/getting-started/miniconda/install)**
     - *[arm64/aarch64] [Miniforge (v3)](https://github.com/conda-forge/miniforge)*
     - *[Python virutal environment] [venv](https://docs.python.org/3/library/venv.html)*
@@ -319,13 +319,14 @@ pm2 stop ./pm2-process.json && \
 
 ### 🌎 Environment Variables
 
-[**`.env.example`**](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/.env.example):
+[**`.env.example`**](./.env.example):
 
 ```sh
 ## --- Environment variable --- ##
 ENV=LOCAL
 DEBUG=false
 # TZ=Asia/Seoul
+# PYTHONDONTWRITEBYTECODE=0
 
 
 ## -- API configs -- ##
@@ -344,7 +345,7 @@ FT_API_PORT=8000
 
 You can customize the command arguments to debug or run the service with different commands.
 
-[**`compose.override.yml`**](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/templates/compose/compose.override.dev.yml):
+[**`compose.override.yml`**](./templates/compose/compose.override.dev.yml):
 
 ```yml
     command: ["/bin/bash"]
@@ -393,7 +394,7 @@ pip install -r ./requirements/requirements.docs.txt
 # Serve documentation locally (for development):
 ./scripts/docs.sh
 # Or:
-mkdocs serve
+mkdocs serve -a 0.0.0.0:8000
 
 # Or build documentation:
 ./scripts/docs.sh -b
@@ -403,52 +404,7 @@ mkdocs build
 
 ## 📚 Documentation
 
-- [Docs](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs)
-- [Home](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/README.md)
-
-### Getting Started
-
-- [Prerequisites](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/getting-started/prerequisites.md)
-- [Installation](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/getting-started/installation.md)
-- [Quick start](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/getting-started/quick-start.md)
-- [Configuration](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/getting-started/configuration.md)
-- [Examples](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/getting-started/examples.md)
-
-### API Documentation
-
-<!-- - [API Reference](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/api-docs/api-reference.md) -->
-- [openapi.json](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/api-docs/openapi.json)
-- [Error Codes](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/api-docs/error-codes.md)
-
-### Development
-
-- [Test](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/dev/test.md)
-- [Build](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/dev/build.md)
-- [Docs](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/dev/docs.md)
-- [Scripts](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/dev/scripts/README.md)
-- [CI/CD](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/dev/cicd/README.md)
-- [File Structure](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/dev/file-structure.md)
-- [Sitemap](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/dev/sitemap.md)
-- [Related projects](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/dev/related-projects.md)
-- [Roadmap](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/dev/roadmap.md)
-- [Contributing](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/dev/contributing.md)
-
-### Research
-
-- [Reports](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/research/reports.md)
-- [Benchmarks](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/research/benchmarks.md)
-- [References](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/research/references.md)
-
-### [Release Notes](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/release-notes.md)
-
-### [Blog](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/blog/index.md)
-
-### About
-
-- [FAQ](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/about/faq.md)
-- [Authors](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/about/authors.md)
-- [Contact](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/about/contact.md)
-- [License](https://github.com/bybatkhuu/rest.fastapi-template/blob/main/docs/pages/about/license.md)
+- [Docs](./docs)
 
 ---
 

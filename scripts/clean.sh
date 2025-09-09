@@ -8,9 +8,6 @@ _SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 _PROJECT_DIR="$(cd "${_SCRIPT_DIR}/.." >/dev/null 2>&1 && pwd)"
 cd "${_PROJECT_DIR}" || exit 2
 
-# Loading base script:
-# shellcheck disable=SC1091
-source ./scripts/base.sh
 
 # Loading .env file (if exists):
 if [ -f ".env" ]; then
@@ -40,8 +37,8 @@ main()
 					_IS_ALL=true
 					shift;;
 				*)
-					echoError "Failed to parsing input -> ${_input}"
-					echoInfo "USAGE: ${0}  -a, --all"
+					echo "[ERROR]: Failed to parsing input -> ${_input}"
+					echo "[INFO]: USAGE: ${0}  -a, --all"
 					exit 1;;
 			esac
 		done
@@ -56,13 +53,13 @@ main()
 
 	if [ "${_is_docker_running}" == true ]; then
 		if docker compose ps | grep 'Up' > /dev/null 2>&1; then
-			echoWarn "Docker is running, please stop it before cleaning."
+			echo "[WARN]: Docker is running, please stop it before cleaning."
 			exit 1
 		fi
 	fi
 
 
-	echoInfo "Cleaning..."
+	echo "[INFO]: Cleaning..."
 
 	find . -type f -name ".DS_Store" -print -delete || exit 2
 	find . -type f -name ".Thumbs.db" -print -delete || exit 2
@@ -86,7 +83,7 @@ main()
 		rm -rfv "./volumes/storage/${PROJECT_SLUG}/data" || exit 2
 	fi
 
-	echoOk "Done."
+	echo "[OK]: Done."
 }
 
 main "${@:-}"

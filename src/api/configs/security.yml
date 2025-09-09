@@ -21,10 +21,10 @@ api:
       generate: false
       algorithm: "RS256"
       key_size: 2048
-      private_key_fname: "private_key.pem"
+      private_key_fname: "private_key.pem" # pragma: allowlist secret
       public_key_fname: "public_key.pem"
     jwt:
-      secret: "FT_JWT_SECRET123" # This should be a random string, and read from an environment variable!
+      secret: "FT_JWT_SECRET123" # This should be a random string, and read from an environment variable! # pragma: allowlist secret
       algorithm: "HS256"
     password:
       pepper: "FT_PASSWORD_PEPPER123" # This should be a random string, and read from an environment variable!

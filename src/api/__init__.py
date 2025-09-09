@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from api.__version__ import __version__
 
 

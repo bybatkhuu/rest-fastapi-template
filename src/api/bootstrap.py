@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 ## Standard libraries
 import os
 from typing import Union
@@ -46,15 +44,15 @@ def create_app() -> FastAPI:
 
 
 @validate_call(config={"arbitrary_types_allowed": True})
-def run_server(app: Union[ASGIApplication, str] = "main:app") -> None:
+def run_server(app: ASGIApplication | str = "main:app") -> None:
     """Run uvicorn server.
 
     Args:
         app (Union[ASGIApplication, str], optional): ASGI application instance or module path.
     """
 
-    _ssl_keyfile: Union[str, None] = None
-    _ssl_certfile: Union[str, None] = None
+    _ssl_keyfile: str | None = None
+    _ssl_certfile: str | None = None
 
     if config.api.security.ssl.enabled:
         _ssl_keyfile = os.path.join(

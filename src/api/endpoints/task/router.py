@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from typing import List, Tuple, Union
 
 from fastapi import APIRouter, Request, Path, Body, Query, HTTPException
@@ -52,7 +50,7 @@ def get_tasks(
     logger.info(f"[{_request_id}] - Getting task list...")
 
     _message = "Not found any task!"
-    _task_list: List[TaskPM] = []
+    _task_list: list[TaskPM] = []
     _links = {
         "first": None,
         "prev": None,
@@ -62,7 +60,7 @@ def get_tasks(
     _list_count = 0
     _all_count = 0
     try:
-        _result_tuple: Tuple[List[TaskPM], int] = service.get_list(
+        _result_tuple: tuple[list[TaskPM], int] = service.get_list(
             request_id=_request_id, offset=skip, limit=(limit + 1), is_desc=is_desc
         )
         _task_list, _all_count = _result_tuple
@@ -187,7 +185,7 @@ def get_task(
     logger.info(f"[{_request_id}] - Getting task with '{task_id}' ID...")
 
     try:
-        _task: Union[TaskPM, None] = service.get(request_id=_request_id, id=task_id)
+        _task: TaskPM | None = service.get(request_id=_request_id, id=task_id)
 
         if not _task:
             raise BaseHTTPException(
