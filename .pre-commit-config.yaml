@@ -14,11 +14,19 @@ exclude: |
     | env/.*
     | site-packages/.*
     | node_modules/.*
+    | log/.*
     | logs/.*
+    | backup/.*
+    | backups/.*
     | data/.*
+    | dataset/.*
     | datasets/.*
+    | result/.*
+    | results/.*
     | output/.*
     | outputs/.*
+    | volumes/.*
+    | tmp/.*
   )$
 
 repos:

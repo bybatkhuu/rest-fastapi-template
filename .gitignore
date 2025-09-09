@@ -523,10 +523,14 @@ outputs
 env
 *.bak
 pm2-process.json
+docker-compose.yml
+docker-compose.yaml
 compose.override.yml
 compose.override.yaml
 example.py
 test.py
 
-# Specific directories:
-volumes/**
+# Keeps:
+volumes/*
+!volumes/**/
+!volumes/*.gitkeep
