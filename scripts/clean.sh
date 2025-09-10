@@ -37,7 +37,7 @@ main()
 					_IS_ALL=true
 					shift;;
 				*)
-					echo "[ERROR]: Failed to parsing input -> ${_input}"
+					echo "[ERROR]: Failed to parsing input -> ${_input}!"
 					echo "[INFO]: USAGE: ${0}  -a, --all"
 					exit 1;;
 			esac
@@ -53,7 +53,7 @@ main()
 
 	if [ "${_is_docker_running}" == true ]; then
 		if docker compose ps | grep 'Up' > /dev/null 2>&1; then
-			echo "[WARN]: Docker is running, please stop it before cleaning."
+			echo "[WARN]: Docker is running, please stop it before cleaning!"
 			exit 1
 		fi
 	fi
@@ -72,7 +72,6 @@ main()
 	find . -type d -name ".git" -prune -o -type d -name "logs" -exec rm -rfv {} + || exit 2
 
 	rm -rfv "./tmp" || exit 2
-	rm -rfv "./${PROJECT_SLUG}" || exit 2
 
 	if [ "${_IS_ALL}" == true ]; then
 		if [ "${_is_docker_running}" == true ]; then

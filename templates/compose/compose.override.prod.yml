@@ -2,6 +2,7 @@ services:
   api:
     image: bybatkhuu/rest.fastapi-template:7.3.0-250215
     # volumes:
+    #   - "./volumes/storage/rest.fastapi-template/configs:${FT_API_LOGS_DIR:-/etc/rest.fastapi-template}"
     #   - "api-vscode-server:/home/ft-user/.vscode-server"
     # deploy:
     #   replicas: 0

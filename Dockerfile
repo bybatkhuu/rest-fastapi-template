@@ -71,7 +71,7 @@ RUN	--mount=type=cache,target=/root/.cache,sharing=locked \
 	# elif [ "${_BUILD_TARGET_ARCH}" == "aarch64" ]; then \
 	# 	export _REQUIRE_FILE_PATH=./requirements.arm64.txt; \
 	# fi && \
-	# if [ -n "${_REQUIRE_FILE_PATH}" ] && [ -f "${_REQUIRE_FILE_PATH}" ]; then \
+	# if [ -n "${_REQUIRE_FILE_PATH:-}" ] && [ -f "${_REQUIRE_FILE_PATH}" ]; then \
 	# 	/opt/conda/bin/pip install --timeout 60 -r "${_REQUIRE_FILE_PATH}"; \
 	# fi && \
 	/opt/conda/bin/pip install --timeout 60 -r ./requirements.txt
