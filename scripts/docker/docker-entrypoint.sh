@@ -2,12 +2,18 @@
 set -euo pipefail
 
 
-echo "[INFO]: Running 'rest.fastapi-template' docker-entrypoint.sh..."
+echo "[INFO]: Running '${FT_API_SLUG}' docker-entrypoint.sh..."
 
 _doStart()
 {
 	exec python -u ./main.py || exit 2
-	# exec uvicorn main:app --host=0.0.0.0 --port=${FT_API_PORT:-8000} --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips='*' || exit 2
+	# exec uvicorn main:app \
+	# 	--host=0.0.0.0 \
+	# 	--port=${FT_API_PORT:-8000} \
+	# 	--no-access-log \
+	# 	--no-server-header \
+	# 	--proxy-headers \
+	# 	--forwarded-allow-ips='*' || exit 2
 	exit 0
 }
 
@@ -15,10 +21,30 @@ _doStart()
 main()
 {
 	umask 0002 || exit 2
-	find "${FT_HOME_DIR}" "${FT_API_DATA_DIR}" "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -path "*/modules" -prune -o -name ".env" -o -print0 | sudo xargs -0 chown -c "${USER}:${GROUP}" || exit 2
-	find "${FT_API_DIR}" "${FT_API_DATA_DIR}" -type d -not -path "*/modules/*" -exec chmod 770 {} + || exit 2
-	find "${FT_API_DIR}" "${FT_API_DATA_DIR}" -type f -not -path "*/modules/*" -exec chmod 660 {} + || exit 2
-	find "${FT_API_DIR}" "${FT_API_DATA_DIR}" -type d -not -path "*/modules/*" -exec chmod ug+s {} + || exit 2
+
+	find "${FT_HOME_DIR}" \
+		"${FT_API_CONFIGS_DIR}" \
+		"${FT_API_DATA_DIR}" \
+		"${FT_API_LOGS_DIR}" \
+		"${FT_API_TMP_DIR}" \
+		\( \
+			-type d -name "modules" -o \
+			-type f -name ".env" \
+		\) -prune -o -print0 | \
+			sudo xargs -0 chown -c "${USER}:${GROUP}" || exit 2
+
+	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
+		\( -type d -name "modules" \) -prune -o -type d -exec \
+			sudo chmod -c 770 {} + || exit 2
+
+	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
+		\( -type d -name "modules" \) -prune -o -type f -exec \
+			sudo chmod -c 660 {} + || exit 2
+
+	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
+		\( -type d -name "modules" \) -prune -o -type d -exec \
+			sudo chmod -c ug+s {} + || exit 2
+
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type d -exec chmod 775 {} + || exit 2
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type f -exec chmod 664 {} + || exit 2
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type d -exec chmod +s {} + || exit 2

@@ -4,7 +4,7 @@
 import sys
 import logging
 import pprint
-from typing import Dict, Any
+from typing import Any
 
 # Third-party libraries
 import requests

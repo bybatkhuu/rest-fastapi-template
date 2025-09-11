@@ -5,7 +5,7 @@ import sys
 import logging
 import pprint
 import asyncio
-from typing import Dict, Any
+from typing import Any
 
 # Third-party libraries
 import aiohttp
