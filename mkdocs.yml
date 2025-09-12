@@ -1,4 +1,4 @@
-site_name: "FastAPI Template"
+site_name: FastAPI Template
 site_description: "This is a template repo for FastAPI web service projects."
 site_url: https://ft-docs.bybatkhuu.dev
 repo_name: bybatkhuu/rest.fastapi-template

@@ -12,7 +12,6 @@ This script is designed to clean up the build environment by removing artifacts 
 
 The script performs the following operations:
 
-- **Loading base script**: Includes the `base.sh` script to gain access to utility functions and environment variables.
 - **Environment variables**: Loads environment variables from a `.env` file if it exists.
 - **Delete system files**: Finds and deletes all `.DS_Store`, `.Thumbs.db`, and `.coverage*` files in the project directory and its subdirectories.
 - **Delete cache directories**: Finds and deletes all `__pycache__`, `.benchmarks`, and `.pytest_cache` directories in the project directory and its subdirectories.

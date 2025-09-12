@@ -10,7 +10,6 @@ This script automates the generation and updating of a `CHANGELOG.md` file using
 
 ## Operations
 
-- **Load base script**: Sources the `base.sh` script from the `scripts` directory to leverage utility functions.
 - **Load environment variables**: Loads environment variables from a `.env` file if it exists in the project root, which may override default values.
 - **GitHub CLI check**: Ensures that the GitHub CLI (`gh`) is installed and authenticated; if not, it prompts the user to log in.
 - **Variables Setup**: `CHANGELOG_FILE_PATH` specifies the path of the changelog file, defaulting to `CHANGELOG.md`.

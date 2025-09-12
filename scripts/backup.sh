@@ -13,6 +13,11 @@ if [ -f ".env" ]; then
 	# shellcheck disable=SC1091
 	source .env
 fi
+
+if [ -z "$(which tar)" ]; then
+	echo "[ERROR]: 'tar' not found or not installed!"
+	exit 1
+fi
 ## --- Base --- ##
 
 
