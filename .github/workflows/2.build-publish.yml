@@ -12,7 +12,7 @@ on:
       - "v*.*.*-*"
 
 env:
-  _VERSION: 7.3.0-250215
+  _VERSION: 0.0.0-250101
 
 jobs:
   build_publish:
@@ -24,6 +24,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+      - name: Get latest version
+        run: |
+          git pull origin main
+          echo "Current version: v$(./scripts/get-version.sh)"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:

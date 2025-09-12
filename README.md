@@ -341,19 +341,6 @@ FT_API_PORT=8000
 # FT_API_DOCS_REDOC_URL="{api_prefix}/redoc"
 ```
 
-### 🔧 Command arguments
-
-You can customize the command arguments to debug or run the service with different commands.
-
-[**`compose.override.yml`**](./templates/compose/compose.override.dev.yml):
-
-```yml
-    command: ["/bin/bash"]
-    command: ["-b", "pwd && ls -al && /bin/bash"]
-    command: ["-b", "python -u -m api"]
-    command: ["-b", "uvicorn main:app --host=0.0.0.0 --port=${FT_API_PORT:-8000} --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips='*'"]
-```
-
 ---
 
 ## 🧪 Running Tests

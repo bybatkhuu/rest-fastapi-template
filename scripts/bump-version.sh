@@ -102,6 +102,8 @@ main()
 	echo -e "__version__ = \"${_new_version}\"" > "${VERSION_FILE_PATH}" || exit 2
 	echo "[OK]: New version: '${_new_version}'"
 
+	./scripts/sync-versions.sh -a || exit 2
+
 	if [ "${_IS_COMMIT}" == true ]; then
 		echo "[INFO]: Committing bump version 'v${_new_version}'..."
 		# Commit the updated version file:
