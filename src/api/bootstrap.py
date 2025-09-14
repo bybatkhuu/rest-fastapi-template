@@ -1,6 +1,5 @@
 ## Standard libraries
 import os
-from typing import Union
 
 ## Third-party libraries
 import uvicorn

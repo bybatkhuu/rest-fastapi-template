@@ -227,6 +227,9 @@ pm2 start ./pm2-process.json && \
 **OPTION C.** Run server as **python script**:
 
 ```sh
+python -u ./src/main.py
+
+# Or:
 cd src
 python -u ./main.py
 ```
@@ -254,7 +257,7 @@ cd src
 uvicorn main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
 
 # For DEVELOPMENT:
-uvicorn main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload --reload-include="*.yml" --reload-include=".env"
+uvicorn main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload
 ```
 
 **OPTION F.** Run with **fastapi** cli:
