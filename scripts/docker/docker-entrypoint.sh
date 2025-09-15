@@ -39,7 +39,10 @@ main()
 			sudo chmod -c 770 {} + || exit 2
 
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
-		\( -type d -name "modules" \) -prune -o -type f -exec \
+		\( \
+			-type d -name "modules" -o \
+			-type f -name "main.py" \
+		\) -prune -o -type f -exec \
 			sudo chmod -c 660 {} + || exit 2
 
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
