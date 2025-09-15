@@ -1,7 +1,10 @@
 #!/usr/bin/env python
 
 ## Third-party libraries
+from dotenv import load_dotenv
 from fastapi import FastAPI
+
+load_dotenv(override=True)
 
 ## Internal modules
 from api.bootstrap import create_app, run_server
