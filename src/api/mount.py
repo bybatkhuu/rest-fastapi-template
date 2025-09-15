@@ -10,7 +10,7 @@ def add_mounts(app: FastAPI) -> None:
         app (FastAPI): FastAPI app instance.
     """
 
-    ## Add mounts here
+    # Add mounts here
 
     return
 

@@ -1,4 +1,3 @@
-from typing import Union, List, Optional
 from typing_extensions import Self
 
 from pydantic import Field, model_validator, ConfigDict
@@ -11,7 +10,7 @@ from api.core.schemas import IdPM, TimestampPM, BasePM, BaseResPM, LinksResPM
 _tasks_base_url = f"{config.api.prefix}/tasks"
 
 
-## Tasks
+# Tasks
 class TaskBasePM(BasePM):
     name: str = Field(
         ...,
@@ -115,7 +114,7 @@ class ResTasksPM(BaseResPM):
     )
 
 
-## Tasks
+# Tasks
 
 
 __all__ = [

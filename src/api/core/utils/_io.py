@@ -2,7 +2,6 @@ import os
 import errno
 import shutil
 import hashlib
-from typing import List
 
 import aioshutil
 import aiofiles.os
@@ -15,7 +14,7 @@ from api.core.constants import WarnEnum, HashAlgoEnum
 _path_max_length = 1024
 
 
-## Async:
+# Async:
 @validate_call
 async def async_create_dir(
     create_dir: constr(strip_whitespace=True, min_length=1, max_length=_path_max_length),  # type: ignore
@@ -25,7 +24,8 @@ async def async_create_dir(
 
     Args:
         create_dir (str, required): Create directory path.
-        warn_mode  (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode  (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                        Defaults to 'DEBUG'.
 
     Raises:
         OSError: When warning mode is set to ERROR and directory already exists.
@@ -69,7 +69,8 @@ async def async_remove_dir(
 
     Args:
         remove_dir (str, required): Remove directory path.
-        warn_mode  (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode  (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                        Defaults to 'DEBUG'.
 
     Raises:
         OSError: When warning mode is set to ERROR and directory doesn't exist.
@@ -113,7 +114,8 @@ async def async_remove_dirs(
 
     Args:
         remove_dirs (List[str], required): Remove directories paths as list.
-        warn_mode   (str      , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode   (str      , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                                Defaults to 'DEBUG'.
     """
 
     for _remove_dir in remove_dirs:
@@ -131,7 +133,8 @@ async def async_remove_file(
 
     Args:
         file_path (str, required): Remove file path.
-        warn_mode (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                        Defaults to 'DEBUG'.
 
     Raises:
         OSError: When warning mode is set to ERROR and file doesn't exist.
@@ -175,7 +178,8 @@ async def async_remove_files(
 
     Args:
         file_paths (List[str], required): Remove file paths as list.
-        warn_mode  (str      , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode  (str      , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                                Defaults to 'DEBUG'.
     """
 
     for _file_path in file_paths:
@@ -197,7 +201,8 @@ async def async_get_file_checksum(
         file_path   (str         , required): Target file path.
         hash_method (HashAlgoEnum, optional): Hash method. Defaults to `HashAlgoEnum.md5`.
         chunk_size  (int         , optional): Chunk size. Defaults to 4096.
-        warn_mode   (str         , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode   (str         , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                                    Defaults to 'DEBUG'.
 
     Raises:
         OSError: When warning mode is set to ERROR and file doesn't exist.
@@ -229,7 +234,7 @@ async def async_get_file_checksum(
     return _file_checksum
 
 
-## Sync:
+# Sync:
 @validate_call
 def create_dir(
     create_dir: constr(strip_whitespace=True, min_length=1, max_length=_path_max_length),  # type: ignore
@@ -239,7 +244,8 @@ def create_dir(
 
     Args:
         create_dir (str, required): Create directory path.
-        warn_mode  (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode  (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                        Defaults to 'DEBUG'.
 
     Raises:
         OSError: When warning mode is set to ERROR and directory already exists.
@@ -283,7 +289,8 @@ def remove_dir(
 
     Args:
         remove_dir (str, required): Remove directory path.
-        warn_mode  (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode  (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                        Defaults to 'DEBUG'.
 
     Raises:
         OSError: When warning mode is set to ERROR and directory doesn't exist.
@@ -327,7 +334,8 @@ def remove_dirs(
 
     Args:
         remove_dirs (List[str], required): Remove directory paths as list.
-        warn_mode   (str      , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode   (str      , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                                Defaults to 'DEBUG'.
     """
 
     for _remove_dir in remove_dirs:
@@ -345,7 +353,8 @@ def remove_file(
 
     Args:
         file_path (str, required): Remove file path.
-        warn_mode (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode (str, optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                        Defaults to 'DEBUG'.
 
     Raises:
         OSError: When warning mode is set to ERROR and file doesn't exist.
@@ -389,7 +398,8 @@ def remove_files(
 
     Args:
         file_paths (List[str], required): Remove file paths as list.
-        warn_mode  (str      , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode  (str      , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                                Defaults to 'DEBUG'.
     """
 
     for _file_path in file_paths:
@@ -411,7 +421,8 @@ def get_file_checksum(
         file_path   (str         , required): Target file path.
         hash_method (HashAlgoEnum, optional): Hash method. Defaults to `HashAlgoEnum.md5`.
         chunk_size  (int         , optional): Chunk size. Defaults to 4096.
-        warn_mode   (str         , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'. Defaults to 'DEBUG'.
+        warn_mode   (str         , optional): Warning message mode, for example: 'ERROR', 'ALWAYS', 'DEBUG', 'IGNORE'.
+                                                Defaults to 'DEBUG'.
 
     Raises:
         OSError: When warning mode is set to ERROR and file doesn't exist.

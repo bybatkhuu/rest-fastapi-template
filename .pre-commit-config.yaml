@@ -102,7 +102,7 @@ repos:
     hooks:
       - id: detect-secrets
         name: "🔐 detect-secrets - Detect secrets in code"
-        exclude: docs/pages/api-docs/openapi.json
+        exclude: docs/api-docs/openapi.json
 
   # --- Shell scripts ---
   - repo: https://github.com/shellcheck-py/shellcheck-py

@@ -1,6 +1,5 @@
 import time
 from enum import Enum
-from typing import Union, Optional
 from zoneinfo import ZoneInfo
 from datetime import datetime, timezone, tzinfo, timedelta
 

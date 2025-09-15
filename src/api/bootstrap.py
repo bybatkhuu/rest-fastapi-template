@@ -1,13 +1,13 @@
-## Standard libraries
+# Standard libraries
 import os
 
-## Third-party libraries
+# Third-party libraries
 import uvicorn
 from uvicorn._types import ASGIApplication
 from pydantic import validate_call
 from fastapi import FastAPI
 
-## Internal modules
+# Internal modules
 from api.config import config
 from api.lifespan import lifespan, pre_init
 from api.middleware import add_middlewares

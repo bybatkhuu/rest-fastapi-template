@@ -1,5 +1,3 @@
-from typing import Union
-
 from fastapi import HTTPException, Request
 
 from api.core.constants import ErrorCodeEnum
@@ -7,7 +5,7 @@ from api.core import utils
 from api.core.responses import BaseResponse
 
 
-## For HTTPException error:
+# For HTTPException error:
 async def http_exception_handler(request: Request, exc: HTTPException) -> BaseResponse:
     """HTTPException handler.
 

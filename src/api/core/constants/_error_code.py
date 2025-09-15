@@ -1,6 +1,6 @@
 from enum import Enum
 from http import HTTPStatus
-from typing import Union, Optional, Any
+from typing import Union, Any
 
 from pydantic import BaseModel, Field, constr
 

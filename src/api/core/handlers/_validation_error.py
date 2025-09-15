@@ -5,7 +5,7 @@ from api.core.constants import ErrorCodeEnum
 from api.core.responses import BaseResponse
 
 
-## For RequestValidationError error:
+# For RequestValidationError error:
 async def validation_error_handler(
     request: Request, exc: RequestValidationError
 ) -> BaseResponse:

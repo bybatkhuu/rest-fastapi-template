@@ -4,7 +4,7 @@ from api.core.constants import ErrorCodeEnum
 from api.core.responses import BaseResponse
 
 
-## For 404 status code:
+# For 404 status code:
 async def not_found_handler(request: Request, exc: HTTPException) -> BaseResponse:
     """404 status code handler.
 

@@ -1,5 +1,4 @@
 import re
-from typing import List, Union
 from re import Pattern
 
 from pydantic import validate_call

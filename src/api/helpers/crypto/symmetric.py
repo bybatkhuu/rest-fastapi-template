@@ -1,5 +1,4 @@
 import base64
-from typing import Union
 
 from cryptography.hazmat.primitives import ciphers
 from cryptography.hazmat.primitives.ciphers import algorithms, modes
@@ -25,7 +24,8 @@ def decrypt_aes_cbc(
         key           (bytes            , required): The key to use for decryption.
         iv            (bytes            , required): The initialization vector to use for decryption.
         base64_decode (bool             , optional): Whether to decode the ciphertext from base64. Defaults to False.
-        as_str        (bool             , optional): Whether to return the plaintext as a string or bytes. Defaults to False.
+        as_str        (bool             , optional): Whether to return the plaintext as a string or bytes.
+                                                        Defaults to False.
         warn_mode     (WarnEnum         , optional): The warning mode to use. Defaults to WarnEnum.DEBUG.
 
     Raises:

@@ -1,7 +1,6 @@
 import os
 import errno
 import base64
-from typing import Tuple, Union
 
 import aiofiles
 from cryptography.hazmat.primitives.asymmetric import rsa, padding

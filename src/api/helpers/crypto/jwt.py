@@ -1,4 +1,4 @@
-from typing import Dict, Any, Union
+from typing import Any
 
 import jwt
 from cryptography.hazmat.primitives.asymmetric.types import (

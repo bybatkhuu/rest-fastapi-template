@@ -1,7 +1,6 @@
 import os
 import errno
 from datetime import timedelta
-from typing import Union
 
 import aiofiles
 import aiofiles.os

@@ -1,5 +1,5 @@
 from http import HTTPStatus
-from typing import Any, Optional, Dict, Type
+from typing import Any
 
 from pydantic import validate_call, conint, constr
 from starlette.background import BackgroundTask
@@ -41,13 +41,17 @@ class BaseResponse(JSONResponse):
         This will prepare the most response data and pass it to `JSONResponse` parent class constructor.
 
         Args:
-            content         (Any                      , optional): Main data content for response. Defaults to None.
-            status_code     (Optional[int]            , optional): HTTP status code: [100 <= status_code <= 599]. Defaults to 200.
+            content         (Any                      , optional): Main data content for response.
+                                                                        Defaults to None.
+            status_code     (Optional[int]            , optional): HTTP status code: [100 <= status_code <= 599].
+                                                                        Defaults to 200.
             headers         (Optional[Dict[str, str]] , optional): HTTP headers. Defaults to None.
-            media_type      (Optional[str]            , optional): Media type for 'Content-Type' header. Defaults to None.
+            media_type      (Optional[str]            , optional): Media type for 'Content-Type' header.
+                                                                        Defaults to None.
             background      (Optional[BackgroundTask] , optional): Background task. Defaults to None.
             request         (Optional[Request]        , optional): Request object from FastAPI. Defaults to None.
-            message         (Optional[str]            , optional): Message for response: [1 <= len(message) <= 256]. Defaults to None.
+            message         (Optional[str]            , optional): Message for response: [1 <= len(message) <= 256].
+                                                                        Defaults to None.
             links           (Optional[Dict[str, Any]] , optional): Links for response. Defaults to None.
             meta            (Optional[Dict[str, Any]] , optional): Meta data for response. Defaults to None.
             error           (Any                      , optional): Error data for response. Defaults to None.

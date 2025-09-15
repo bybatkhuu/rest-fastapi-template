@@ -1,3 +1,5 @@
+# flake8: noqa
+
 from ._base import *
 from ._secure import *
 from ._http import *

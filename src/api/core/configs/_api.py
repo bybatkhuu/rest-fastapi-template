@@ -1,5 +1,5 @@
 import sys
-from typing import Any, Dict
+from typing import Any
 
 from pydantic import Field, constr, field_validator, ValidationInfo, model_validator
 from pydantic_settings import SettingsConfigDict
@@ -123,7 +123,7 @@ class ApiConfig(BaseConfig):
                 values["bind_host"] = "127.0.0.1"
 
                 if sys.argv[0].endswith("fastapi") and sys.argv[1] == "run":
-                    values["bind_host"] = "0.0.0.0"
+                    values["bind_host"] = "0.0.0.0"  # nosec B104
 
         elif values["security"]["ssl"]["enabled"]:
             values["http_scheme"] = HTTPSchemeEnum.https

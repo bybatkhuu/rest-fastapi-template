@@ -1,4 +1,3 @@
-from typing import Tuple, Union
 from urllib import request
 from http import HTTPStatus
 from http.client import HTTPResponse
@@ -88,7 +87,7 @@ async def async_is_connectable(
                 if check_status:
                     return _response.status == 200
                 return True
-    except:
+    except Exception:
         return False
 
 
@@ -110,11 +109,11 @@ def is_connectable(
     """
 
     try:
-        _response: HTTPResponse = request.urlopen(url, timeout=timeout)
+        _response: HTTPResponse = request.urlopen(url, timeout=timeout)  # nosec B310
         if check_status:
             return _response.getcode() == 200
         return True
-    except:
+    except Exception:
         return False
 
 

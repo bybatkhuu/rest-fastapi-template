@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional, List
+from typing import Any
 
 from jwt import ExpiredSignatureError, InvalidTokenError
 from fastapi import Security, Depends, Request
@@ -22,7 +22,8 @@ def auth_jwt(
 
     Args:
         request       (Request                     , required): The FastAPI request object.
-        authorization (HTTPAuthorizationCredentials, required): 'Authorization: Bearer <access_token>' header credentials.
+        authorization (HTTPAuthorizationCredentials, required): 'Authorization: Bearer <access_token>'
+                                                                    header credentials.
 
     Raises:
         BaseHTTPException: If the access token is missing.
@@ -137,7 +138,10 @@ class AuthScopeDep:
                 message="You do not have enough scope permissions!",
                 description="The request requires more scope permissions.",
                 headers={
-                    "WWW-Authenticate": 'Bearer error="insufficient_scope", error_description="The request requires more scope permissions."'
+                    "WWW-Authenticate": (
+                        'Bearer error="insufficient_scope", '
+                        'error_description="The request requires more scope permissions."'
+                    )
                 },
             )
 

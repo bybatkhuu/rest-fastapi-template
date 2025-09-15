@@ -47,7 +47,7 @@ async def _async_create_dirs() -> None:
 
     try:
         await utils.async_create_dir(config.api.paths.data_dir)
-        ## Add directories needs to be created here...
+        # Add directories needs to be created here...
     except Exception:
         logger.exception("Failed to create directories:")
         raise SystemExit(1)
@@ -74,7 +74,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
             public_key_fname=config.api.security.asymmetric.public_key_fname,
         )
 
-    ## Add startup code here...
+    # Add startup code here...
     logger.success("Finished preparation to startup.")
     logger.opt(colors=True).info(f"Version: <c>{config.version}</c>")
     logger.opt(colors=True).info(f"API version: <c>{config.api.version}</c>")
@@ -86,7 +86,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     yield
 
     logger.info("Praparing to shutdown...")
-    ## Add shutdown code here...
+    # Add shutdown code here...
     logger.success("Finished preparation to shutdown.")
 
 

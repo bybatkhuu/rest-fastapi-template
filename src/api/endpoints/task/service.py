@@ -1,5 +1,3 @@
-from typing import List, Tuple, Union
-
 from pydantic import validate_call
 
 from api.core.constants import ErrorCodeEnum, WarnEnum
@@ -10,7 +8,7 @@ from api.logger import log_mode
 from .schemas import TaskPM, TaskBasePM
 
 
-## NOTE: This is a mock database for demonstration purposes.
+# NOTE: This is a mock database for demonstration purposes.
 _TASKS_DB: list[TaskPM] = []
 for _i in range(1, 101):
     _task = TaskPM(name=f"Task {_i}", point=_i)
@@ -45,7 +43,7 @@ def get_list(
     if is_desc:
         _task_list = _task_list[::-1]
 
-    _task_list = _task_list[offset : offset + limit]
+    _task_list = _task_list[offset : offset + limit]  # noqa: E203
 
     log_mode(
         message=f"[{request_id}] - Successfully retrieved task list.",

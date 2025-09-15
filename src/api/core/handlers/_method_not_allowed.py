@@ -4,7 +4,7 @@ from api.core.constants import ErrorCodeEnum
 from api.core.responses import BaseResponse
 
 
-## For 405 status code:
+# For 405 status code:
 async def method_not_allowed_handler(
     request: Request, exc: HTTPException
 ) -> BaseResponse:
