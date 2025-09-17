@@ -1,7 +1,7 @@
 import os
 from typing import Any
 
-from pydantic import Field, constr, model_validator, field_validator
+from pydantic import Field, model_validator, field_validator
 from pydantic_settings import SettingsConfigDict
 
 from api.core.constants import ENV_PREFIX_API
@@ -9,24 +9,22 @@ from ._base import BaseConfig
 
 
 class PathsConfig(BaseConfig):
-    tmp_dir: constr(strip_whitespace=True) = Field(..., min_length=2, max_length=1024)  # type: ignore
-    uploads_dir: constr(strip_whitespace=True) = Field(  # type: ignore
-        ..., min_length=2, max_length=1024
+    tmp_dir: str = Field(default="../tmp", min_length=2, max_length=1024)
+    uploads_dir: str = Field(default="{tmp_dir}/uploads", min_length=2, max_length=1024)
+    data_dir: str = Field(default="../data", min_length=2, max_length=1024)
+    security_dir: str = Field(
+        default="{data_dir}/security", min_length=2, max_length=1024
     )
-    data_dir: constr(strip_whitespace=True) = Field(  # type: ignore
-        ..., min_length=2, max_length=1024
+    ssl_dir: str = Field(
+        default="{data_dir}/security/ssl", min_length=2, max_length=1024
     )
-    security_dir: constr(strip_whitespace=True) = Field(  # type: ignore
-        ..., min_length=2, max_length=1024
+    asymmetric_keys_dir: str = Field(
+        default="{data_dir}/security/asymmetric_keys", min_length=2, max_length=1024
     )
-    ssl_dir: constr(strip_whitespace=True) = Field(..., min_length=2, max_length=1024)  # type: ignore
-    asymmetric_keys_dir: constr(strip_whitespace=True) = Field(  # type: ignore
-        ..., min_length=2, max_length=1024
-    )
-    # models_dir: constr(strip_whitespace=True) = Field(  # type: ignore
-    #     ..., min_length=2, max_length=1024
+    # models_dir: str = Field(default="{data_dir}/models", min_length=2, max_length=1024)
+    # model_dir: str = Field(
+    #     default="{data_dir}/models/{{model_id}}", min_length=2, max_length=1024
     # )
-    # model_dir: constr(strip_whitespace=True) = Field(..., min_length=2, max_length=1024)  # type: ignore
 
     @field_validator("data_dir")
     @classmethod

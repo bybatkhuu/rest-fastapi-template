@@ -8,13 +8,13 @@ from ._base import BaseConfig
 
 
 class DevConfig(BaseConfig):
-    reload: bool = Field(...)
-    reload_includes: None | (
+    reload: bool = Field(default=False)
+    reload_includes: (
         list[constr(strip_whitespace=True, min_length=1, max_length=256)]  # type: ignore
-    ) = Field(default=None)
-    reload_excludes: None | (
-        list[constr(strip_whitespace=True, min_length=1, max_length=256)]  # type: ignore
-    ) = Field(default=None)
+    ) | None = Field(default=["*.json", "*.yml", "*.yaml", "*.toml", "*.md"])
+    reload_excludes: (
+        list[constr(strip_whitespace=True, min_length=1, max_length=256)] | None  # type: ignore
+    ) = Field(default=[".*", "~*", ".py[cod]", ".sw.*", "__pycache__", "*.log", "logs"])
 
     model_config = SettingsConfigDict(env_prefix=f"{ENV_PREFIX_API}DEV_")
 

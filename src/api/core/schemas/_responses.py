@@ -3,7 +3,9 @@ from typing import Any
 
 from pydantic import Field, constr
 
+from api.__version__ import __version__
 from api.config import config
+
 from ._base import ExtraBasePM, BasePM
 
 
@@ -92,12 +94,12 @@ class MetaResPM(ExtraBasePM):
         examples=[config.api.version],
     )
     version: constr(strip_whitespace=True) = Field(  # type: ignore
-        default=config.version,
+        default=__version__,
         min_length=5,
         max_length=32,
         title="Version",
         description="Current system version.",
-        examples=[config.version],
+        examples=[__version__],
     )
 
 

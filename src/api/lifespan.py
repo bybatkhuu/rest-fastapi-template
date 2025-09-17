@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from api.__version__ import __version__
 from api.core import utils
 from api.config import config
 from api.helpers.crypto import asymmetric as asymmetric_helper
@@ -76,7 +77,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
 
     # Add startup code here...
     logger.success("Finished preparation to startup.")
-    logger.opt(colors=True).info(f"Version: <c>{config.version}</c>")
+    logger.opt(colors=True).info(f"Version: <c>{__version__}</c>")
     logger.opt(colors=True).info(f"API version: <c>{config.api.version}</c>")
     logger.opt(colors=True).info(f"API prefix: <c>{config.api.prefix}</c>")
     logger.opt(colors=True).info(

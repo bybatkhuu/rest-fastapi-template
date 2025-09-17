@@ -8,6 +8,7 @@ from pydantic import validate_call
 from fastapi import FastAPI
 
 # Internal modules
+from api.__version__ import __version__
 from api.config import config
 from api.lifespan import lifespan, pre_init
 from api.middleware import add_middlewares
@@ -28,7 +29,7 @@ def create_app() -> FastAPI:
 
     app = FastAPI(
         title=config.api.name,
-        version=config.version,
+        version=__version__,
         lifespan=lifespan,
         default_response_class=BaseResponse,
         **config.api.docs.model_dump(exclude={"enabled"}),

@@ -1,12 +1,11 @@
 import os
 from typing_extensions import Self
 
-from pydantic import Field, constr, field_validator, ValidationInfo, model_validator
+from pydantic import Field, field_validator, ValidationInfo, model_validator
 from pydantic_settings import SettingsConfigDict
 
 from beans_logging import LoggerConfigPM
 
-from api.__version__ import __version__
 from api.core.constants import EnvEnum, ENV_PREFIX, ENV_PREFIX_API
 from api.core.utils import validator
 from ._base import FrozenBaseConfig
@@ -16,12 +15,9 @@ from ._api import ApiConfig, FrozenApiConfig
 
 # Main config schema:
 class MainConfig(FrozenBaseConfig):
-    env: EnvEnum = Field(...)
-    debug: bool = Field(...)
-    version: constr(strip_whitespace=True) = Field(  # type: ignore
-        default=__version__, min_length=3, max_length=32
-    )
-    api: ApiConfig = Field(...)
+    env: EnvEnum = Field(default=EnvEnum.LOCAL)
+    debug: bool = Field(default=False)
+    api: ApiConfig = Field(default_factory=ApiConfig)
     logger: LoggerConfigPM = Field(default_factory=LoggerConfigPM)
 
     @field_validator("env")
@@ -42,12 +38,6 @@ class MainConfig(FrozenBaseConfig):
             val = os.getenv(_debug_env)
             val = validator.is_truthy(val)
 
-        return val
-
-    @field_validator("version")
-    @classmethod
-    def _check_version(cls, val: str) -> str:
-        val = __version__
         return val
 
     @field_validator("api")

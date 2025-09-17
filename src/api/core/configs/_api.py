@@ -1,7 +1,7 @@
 import sys
 from typing import Any
 
-from pydantic import Field, constr, field_validator, ValidationInfo, model_validator
+from pydantic import Field, field_validator, ValidationInfo, model_validator
 from pydantic_settings import SettingsConfigDict
 
 from api.core.constants import ENV_PREFIX_API, HTTPSchemeEnum
@@ -13,20 +13,20 @@ from ._paths import PathsConfig, FrozenPathsConfig
 
 
 class ApiConfig(BaseConfig):
-    name: constr(strip_whitespace=True) = Field(..., min_length=2, max_length=128)  # type: ignore
-    slug: constr(strip_whitespace=True) = Field(..., min_length=2, max_length=128)  # type: ignore
+    name: str = Field(default="FastAPI Template", min_length=2, max_length=128)
+    slug: str = Field(default="rest.fastapi-template", min_length=2, max_length=128)
     http_scheme: HTTPSchemeEnum = Field(default=HTTPSchemeEnum.http)
-    bind_host: constr(strip_whitespace=True) = Field(..., min_length=2, max_length=128)  # type: ignore
-    port: int = Field(..., ge=80, lt=65536)
-    version: constr(strip_whitespace=True) = Field(..., min_length=1, max_length=16)  # type: ignore
-    prefix: constr(strip_whitespace=True) = Field(..., max_length=128)  # type: ignore
-    gzip_min_size: int = Field(..., ge=0, le=10_485_760)  # 512 bytes
-    behind_proxy: bool = Field(...)
-    behind_cf_proxy: bool = Field(...)
-    dev: DevConfig = Field(...)
-    security: SecurityConfig = Field(...)
-    docs: DocsConfig = Field(...)
-    paths: PathsConfig = Field(...)
+    bind_host: str = Field(default="0.0.0.0", min_length=2, max_length=128)
+    port: int = Field(default=8000, ge=80, lt=65536)
+    version: str = Field(default="1", min_length=1, max_length=16)
+    prefix: str = Field(default="/api/v{api_version}", max_length=128)
+    gzip_min_size: int = Field(default=1024, ge=0, le=10_485_760)  # 512 bytes
+    behind_proxy: bool = Field(default=True)
+    behind_cf_proxy: bool = Field(default=True)
+    dev: DevConfig = Field(default_factory=DevConfig)
+    security: SecurityConfig = Field(default_factory=SecurityConfig)
+    docs: DocsConfig = Field(default_factory=DocsConfig)
+    paths: PathsConfig = Field(default_factory=PathsConfig)
 
     @field_validator("slug")
     @classmethod

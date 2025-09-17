@@ -11,30 +11,49 @@ from ._base import BaseConfig
 
 
 class DocsConfig(BaseConfig):
-    enabled: bool = Field(...)
-    openapi_url: None | (
-        constr(strip_whitespace=True, max_length=128)  # type: ignore
-    ) = Field(default=None)
-    docs_url: None | (constr(strip_whitespace=True, max_length=128)) = (  # type: ignore
-        Field(default=None)
+    enabled: bool = Field(default=True)
+    openapi_url: constr(strip_whitespace=True, max_length=128) | None = Field(  # type: ignore
+        default="{api_prefix}/openapi.json"
     )
-    redoc_url: None | (
-        constr(strip_whitespace=True, max_length=128)  # type: ignore
-    ) = Field(default=None)
-    swagger_ui_oauth2_redirect_url: None | (
-        constr(strip_whitespace=True, max_length=128)  # type: ignore
-    ) = Field(default=None)
-    summary: None | (
-        constr(strip_whitespace=True, min_length=2, max_length=128)  # type: ignore
-    ) = Field(default=None)
+    docs_url: (constr(strip_whitespace=True, max_length=128)) | None = (  # type: ignore
+        Field(default="{api_prefix}/docs")
+    )
+    redoc_url: constr(strip_whitespace=True, max_length=128) | None = Field(  # type: ignore
+        default="{api_prefix}/redoc"
+    )
+    swagger_ui_oauth2_redirect_url: (
+        constr(strip_whitespace=True, max_length=128) | None  # type: ignore
+    ) = Field(default="{api_prefix}/docs/oauth2-redirect")
+    summary: constr(strip_whitespace=True, min_length=2, max_length=128) | None = Field(  # type: ignore
+        default="This is a REST API service."
+    )
     description: str = Field(default="", max_length=8192)
-    terms_of_service: None | (
-        constr(strip_whitespace=True, min_length=1, max_length=256)  # type: ignore
-    ) = Field(default=None)
-    contact: dict[str, Any] | None = Field(default=None)
-    license_info: dict[str, Any] | None = Field(default=None)
-    openapi_tags: list[dict[str, Any]] | None = Field(default=None)
-    swagger_ui_parameters: dict[str, Any] | None = Field(default=None)
+    terms_of_service: (
+        constr(strip_whitespace=True, min_length=1, max_length=256) | None  # type: ignore
+    ) = Field(default="https://example.com/terms")
+    contact: dict[str, Any] | None = Field(
+        default={
+            "name": "Support Team",
+            "email": "support@example.com",
+            "url": "https://example.com/contact",
+        }
+    )
+    license_info: dict[str, Any] | None = Field(
+        default={
+            "name": "MIT License",
+            "url": "https://opensource.org/licenses/MIT",
+        }
+    )
+    openapi_tags: list[dict[str, Any]] | None = Field(
+        default=[
+            {"name": "Utils", "description": "Useful utility endpoints."},
+            {"name": "Tasks", "description": "Endpoints to manage tasks."},
+            {"name": "Default", "description": "Redirection of default endpoints."},
+        ]
+    )
+    swagger_ui_parameters: dict[str, Any] | None = Field(
+        default={"syntaxHighlight": {"theme": "nord"}}
+    )
 
     model_config = SettingsConfigDict(env_prefix=f"{ENV_PREFIX_API}DOCS_")
 
