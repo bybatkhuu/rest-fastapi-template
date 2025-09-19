@@ -1,5 +1,4 @@
 # syntax=docker/dockerfile:1
-# check=skip=SecretsUsedInArgOrEnv
 
 # ARG BASE_IMAGE=ubuntu:22.04
 ARG BASE_IMAGE=ubuntu:24.04
@@ -91,9 +90,6 @@ ARG FT_API_LOGS_DIR="/var/log/${FT_API_SLUG}"
 ARG FT_API_TMP_DIR="/tmp/${FT_API_SLUG}"
 # ARG FT_API_MODELS_DIR="${FT_API_DATA_DIR}/models"
 ARG FT_API_PORT=8000
-## IMPORTANT!: Get hashed password from build-arg!
-## echo "FT_USER_PASSWORD123" | openssl passwd -5 -stdin
-ARG HASH_PASSWORD="\$5\$UN1S7dZEa/qDoijJ\$hJ5o.Wpp5aP2kp.46Y7lWgcsRE8/oRLVswU6Swi13fB"
 ARG UID=1000
 ARG GID=11000
 ARG USER=ft-user
@@ -118,7 +114,9 @@ ENV FT_API_SLUG="${FT_API_SLUG}" \
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-RUN rm -vrf /var/lib/apt/lists/* /var/cache/apt/archives/* /tmp/* /root/.cache/* && \
+
+RUN --mount=type=secret,id=HASH_PASSWORD \
+	rm -vrf /var/lib/apt/lists/* /var/cache/apt/archives/* /tmp/* /root/.cache/* && \
 	apt-get clean -y && \
 	apt-get update --fix-missing -o Acquire::CompressionTypes::Order::=gz && \
 	apt-get install -y --no-install-recommends \
@@ -144,7 +142,10 @@ RUN rm -vrf /var/lib/apt/lists/* /var/cache/apt/archives/* /tmp/* /root/.cache/*
 	usermod -l ${USER} -m -d /home/${USER} -s /bin/bash -g ${GROUP} -aG sudo ubuntu && \
 	echo "${USER} ALL=(ALL) NOPASSWD: ALL" > "/etc/sudoers.d/${USER}" && \
 	chmod 0440 "/etc/sudoers.d/${USER}" && \
-	echo -e "${USER}:${HASH_PASSWORD}" | chpasswd -e && \
+	if [ -f "/run/secrets/HASH_PASSWORD" ]; then \
+		## echo "FT_USER_PASSWORD123" | openssl passwd -5 -stdin
+		echo -e "${USER}:$(cat /run/secrets/HASH_PASSWORD)" | chpasswd -e; \
+	fi && \
 	echo -e "\nalias ls='ls -aF --group-directories-first --color=auto'" >> /root/.bashrc && \
 	echo -e "alias ll='ls -alhF --group-directories-first --color=auto'\n" >> /root/.bashrc && \
 	echo -e "\numask 0002" >> "/home/${USER}/.bashrc" && \
