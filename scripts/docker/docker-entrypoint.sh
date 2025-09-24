@@ -36,18 +36,18 @@ main()
 
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
 		\( -type d -name "modules" \) -prune -o -type d -exec \
-			sudo chmod -c 770 {} + || exit 2
+			sudo chmod 770 {} + || exit 2
 
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
 		\( \
 			-type d -name "modules" -o \
 			-type f -name "main.py" \
 		\) -prune -o -type f -exec \
-			sudo chmod -c 660 {} + || exit 2
+			sudo chmod 660 {} + || exit 2
 
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
 		\( -type d -name "modules" \) -prune -o -type d -exec \
-			sudo chmod -c ug+s {} + || exit 2
+			sudo chmod ug+s {} + || exit 2
 
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type d -exec chmod 775 {} + || exit 2
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type f -exec chmod 664 {} + || exit 2
