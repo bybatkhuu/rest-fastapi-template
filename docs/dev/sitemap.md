@@ -44,7 +44,6 @@ title: Sitemap
     - [Benchmarks](../research/benchmarks.md)
     - [References](../research/references.md)
 - [Release notes](../release-notes.md)
-- [Blog](../blog/index.md)
 - About
     - [FAQ](../about/faq.md)
     - [Authors](../about/authors.md)
