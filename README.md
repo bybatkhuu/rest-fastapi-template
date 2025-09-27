@@ -328,7 +328,7 @@ pm2 stop ./pm2-process.json && \
 ## --- Environment variable --- ##
 ENV=LOCAL
 DEBUG=false
-# TZ=Asia/Seoul
+# TZ=UTC
 # PYTHONDONTWRITEBYTECODE=0
 
 
