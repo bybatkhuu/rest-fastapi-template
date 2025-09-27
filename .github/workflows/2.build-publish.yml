@@ -1,12 +1,11 @@
 name: 2. Build and Publish
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["1. Bump Version"]
     types:
       - completed
-    branches:
-      - main
   push:
     tags:
       - "v*.*.*-*"
