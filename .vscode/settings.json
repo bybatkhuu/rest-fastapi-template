@@ -8,6 +8,9 @@
 	"editor.fontWeight": "500",
 	"editor.renderWhitespace": "all",
 	"editor.smoothScrolling": true,
+	"editor.rulers": [
+		120
+	],
 	"editor.detectIndentation": false,
 	"editor.insertSpaces": false,
 	"editor.tabSize": 4,
