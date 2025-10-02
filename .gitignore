@@ -530,7 +530,9 @@ compose.override.yaml
 example.py
 test.py
 
-# Keeps:
-volumes/*
+
+# Volumes:
+volumes/**
 !volumes/**/
-!volumes/*.gitkeep
+!volumes/**/*.gitkeep
+
