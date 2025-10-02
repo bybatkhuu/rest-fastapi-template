@@ -4,7 +4,7 @@ set -euo pipefail
 
 echo "[INFO]: Running '${FT_API_SLUG}' docker-entrypoint.sh..."
 
-_doStart()
+_start()
 {
 	# exec python -u ./main.py || exit 2
 	exec python -m api || exit 2
@@ -58,7 +58,7 @@ main()
 	## Parsing input:
 	case ${1:-} in
 		"" | -s | --start | start | --run | run)
-			_doStart;;
+			_start;;
 			# shift;;
 		-b | --bash | bash | /bin/bash)
 			shift

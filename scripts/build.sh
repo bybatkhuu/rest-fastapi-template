@@ -64,7 +64,7 @@ _IMG_LATEST_FULLNAME=${_IMG_NAME}:latest${IMG_SUBTAG}
 
 
 ## --- Functions --- ##
-_buildImages()
+_build_images()
 {
 	echo "[INFO]: Building image (${IMG_PLATFORM}): ${_IMG_FULLNAME}"
 	# shellcheck disable=SC2086
@@ -81,7 +81,7 @@ _buildImages()
 	echo "[OK]: Done."
 }
 
-_crossBuildPush()
+_build_cross_push()
 {
 	if ! docker buildx ls | grep new_builder > /dev/null 2>&1; then
 		echo "[INFO]: Creating new builder..."
@@ -109,7 +109,7 @@ _crossBuildPush()
 	echo "[OK]: Done."
 }
 
-_removeCaches()
+_remove_caches()
 {
 	echo "[INFO]: Removing leftover cache images..."
 	# shellcheck disable=SC2046
@@ -117,7 +117,7 @@ _removeCaches()
 	echo "[OK]: Done."
 }
 
-_pushImages()
+_push_images()
 {
 	echo "[INFO]: Pushing images..."
 	docker push "${_IMG_FULLNAME}" || exit 2
@@ -127,7 +127,7 @@ _pushImages()
 	echo "[OK]: Done."
 }
 
-_cleanImages()
+_clean_images()
 {
 	echo "[INFO]: Cleaning images..."
 	docker rmi -f "${_IMG_FULLNAME}" || exit 2
@@ -220,18 +220,18 @@ main()
 
 	## --- Tasks --- ##
 	if [ ${_IS_CROSS_COMPILE} == false ]; then
-		_buildImages
+		_build_images
 	else
-		_crossBuildPush
+		_build_cross_push
 	fi
 
-	_removeCaches
+	_remove_caches
 
 	if [ ${_IS_PUSH_IMAGES} == true ] && [ ${_IS_CROSS_COMPILE} == false ]; then
-		_pushImages
+		_push_images
 
 		if  [ ${_IS_CLEAN_IMAGES} == true ]; then
-			_cleanImages
+			_clean_images
 		fi
 	fi
 	## --- Tasks --- ##

@@ -39,31 +39,31 @@ _DEFAULT_SERVICE="api"
 
 
 ## --- Functions --- ##
-_doBuild()
+_build()
 {
 	./scripts/build.sh || exit 2
 	# docker compose --progress=plain build || exit 2
 }
 
-_doValidate()
+_validate()
 {
 	docker compose config || exit 2
 }
 
-_doStart()
+_start()
 {
 	if [ "${1:-}" == "-l" ]; then
 		shift
 		# shellcheck disable=SC2068
 		docker compose up -d --remove-orphans --force-recreate ${@:-} || exit 2
-		_doLogs "${@:-}"
+		_logs "${@:-}"
 	else
 		# shellcheck disable=SC2068
 		docker compose up -d --remove-orphans --force-recreate ${@:-} || exit 2
 	fi
 }
 
-_doStop()
+_stop()
 {
 	if [ -z "${1:-}" ]; then
 		docker compose down --remove-orphans || exit 2
@@ -73,20 +73,20 @@ _doStop()
 	fi
 }
 
-_doRestart()
+_restart()
 {
 	if [ "${1:-}" == "-l" ]; then
 		shift
-		_doStop "${@:-}" || exit 2
-		_doStart -l "${@:-}" || exit 2
+		_stop "${@:-}" || exit 2
+		_start -l "${@:-}" || exit 2
 	else
-		_doStop "${@:-}" || exit 2
-		_doStart "${@:-}" || exit 2
+		_stop "${@:-}" || exit 2
+		_start "${@:-}" || exit 2
 	fi
 	# docker compose restart ${@:-} || exit 2
 }
 
-_doLogs()
+_logs()
 {
 	if [ -n "${1:-}" ]; then
 		# docker compose logs -f --tail 100 ${@} || exit 2
@@ -97,24 +97,24 @@ _doLogs()
 	fi
 }
 
-_doList()
+_list()
 {
 	docker compose ps || exit 2
 }
 
-_doPs()
+_ps()
 {
 	# shellcheck disable=SC2068
 	docker compose top ${@:-} || exit 2
 }
 
-_doStats()
+_stats()
 {
 	# shellcheck disable=SC2046
 	docker stats $(docker compose ps -q) || exit 2
 }
 
-_doExec()
+_exec()
 {
 	if [ -z "${1:-}" ]; then
 		echo "[ERROR]: Not found any input!"
@@ -125,7 +125,7 @@ _doExec()
 	docker compose exec "${_DEFAULT_SERVICE}" ${@} || exit 2
 }
 
-_doEnter()
+_enter()
 {
 	_service="${_DEFAULT_SERVICE}"
 	if [ -n "${1:-}" ]; then
@@ -136,22 +136,22 @@ _doEnter()
 	docker compose exec "${_service}" /bin/bash || exit 2
 }
 
-_doImages()
+_images()
 {
 	# shellcheck disable=SC2068
 	docker compose images ${@:-} || exit 2
 }
 
-_doClean()
+_clean()
 {
 	# shellcheck disable=SC2068
 	docker compose down -v --remove-orphans ${@:-} || exit 2
 }
 
-_doUpdate()
+_update()
 {
 	if docker compose ps | grep 'Up' > /dev/null 2>&1; then
-		_doStop "${@:-}" || exit 2
+		_stop "${@:-}" || exit 2
 	fi
 
 	# shellcheck disable=SC2068
@@ -159,13 +159,13 @@ _doUpdate()
 	# shellcheck disable=SC2046
 	docker rmi -f $(docker images --filter "dangling=true" -q --no-trunc) > /dev/null 2>&1 || true
 
-	# _doStart "${@:-}" || exit 2
+	# _start "${@:-}" || exit 2
 }
 ## --- Functions --- ##
 
 
 ## --- Menu arguments --- ##
-_exitOnWrongParams()
+_error_params()
 {
 	echo "[INFO]: USAGE: ${0}  build | validate | start | stop | restart | logs | list | ps | stats | exec | enter | images | clean | update"
 	exit 1
@@ -175,54 +175,54 @@ main()
 {
 	if [ -z "${1:-}" ]; then
 		echo "[ERROR]: Not found any input!"
-		_exitOnWrongParams
+		_error_params
 	fi
 
 	case ${1} in
 		build)
 			shift
-			_doBuild;;
+			_build;;
 		validate | valid | config)
 			shift
-			_doValidate;;
+			_validate;;
 		start | run | up)
 			shift
-			_doStart "${@:-}";;
+			_start "${@:-}";;
 		stop | down | remove | rm | delete | del)
 			shift
-			_doStop "${@:-}";;
+			_stop "${@:-}";;
 		restart)
 			shift
-			_doRestart "${@:-}";;
+			_restart "${@:-}";;
 		logs)
 			shift
-			_doLogs "${@:-}";;
+			_logs "${@:-}";;
 		list)
-			_doList;;
+			_list;;
 		ps)
 			shift
-			_doPs "${@:-}";;
+			_ps "${@:-}";;
 		stats | resource | limit)
 			shift
-			_doStats;;
+			_stats;;
 		exec)
 			shift
-			_doExec "${@:-}";;
+			_exec "${@:-}";;
 		enter)
 			shift
-			_doEnter "${@:-}";;
+			_enter "${@:-}";;
 		images)
 			shift
-			_doImages "${@:-}";;
+			_images "${@:-}";;
 		clean | clear)
 			shift
-			_doClean "${@:-}";;
+			_clean "${@:-}";;
 		update | pull)
 			shift
-			_doUpdate "${@:-}";;
+			_update "${@:-}";;
 		*)
 			echo "[ERROR]: Failed to parsing input: ${*}!"
-			_exitOnWrongParams;;
+			_error_params;;
 	esac
 
 	exit
