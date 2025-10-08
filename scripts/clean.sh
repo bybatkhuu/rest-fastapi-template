@@ -31,6 +31,7 @@ main()
 {
 	## --- Menu arguments --- ##
 	if [ -n "${1:-}" ]; then
+		local _input
 		for _input in "${@:-}"; do
 			case ${_input} in
 				-a | --all)
@@ -46,7 +47,7 @@ main()
 	## --- Menu arguments --- ##
 
 
-	_is_docker_running=false
+	local _is_docker_running=false
 	if [ -n "$(which docker)" ] && docker info > /dev/null 2>&1; then
 		_is_docker_running=true
 	fi

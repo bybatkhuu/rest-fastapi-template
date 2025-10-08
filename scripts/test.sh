@@ -34,6 +34,7 @@ main()
 {
 	## --- Menu arguments --- ##
 	if [ -n "${1:-}" ]; then
+		local _input
 		for _input in "${@:-}"; do
 			case ${_input} in
 				-l | --log)
@@ -63,9 +64,9 @@ main()
 	fi
 
 
-	_logging_param=""
-	_coverage_param=""
-	_verbose_param=""
+	local _logging_param=""
+	local _coverage_param=""
+	local _verbose_param=""
 	if [ "${_IS_LOGGING}" == true ]; then
 		_logging_param="-o log_cli=true"
 	fi

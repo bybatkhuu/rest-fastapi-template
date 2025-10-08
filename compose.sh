@@ -127,7 +127,7 @@ _exec()
 
 _enter()
 {
-	_service="${_DEFAULT_SERVICE}"
+	local _service="${_DEFAULT_SERVICE}"
 	if [ -n "${1:-}" ]; then
 		_service=${1}
 	fi
