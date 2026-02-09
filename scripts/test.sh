@@ -1,21 +1,20 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 
 ## --- Base --- ##
-# Getting path of this script file:
-_SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
+_SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]:-"$0"}")" >/dev/null 2>&1 && pwd -P)"
 _PROJECT_DIR="$(cd "${_SCRIPT_DIR}/.." >/dev/null 2>&1 && pwd)"
 cd "${_PROJECT_DIR}" || exit 2
 
 
-if [ -z "$(which python)" ]; then
-	echo "[ERROR]: 'python' not found or not installed!"
+if ! command -v python >/dev/null 2>&1; then
+	echo "[ERROR]: Not found 'python' command, please install it first!" >&2
 	exit 1
 fi
 
-if [ -z "$(which pytest)" ]; then
-	echo "[ERROR]: 'pytest' not found or not installed!"
+if ! command -v pytest >/dev/null 2>&1; then
+	echo "[ERROR]: Not found 'pytest' command, please install it first!" >&2
 	exit 1
 fi
 ## --- Base --- ##
@@ -29,41 +28,57 @@ _IS_VERBOSE=false
 ## --- Variables --- ##
 
 
+## --- Menu arguments --- ##
+_usage_help() {
+	cat <<EOF
+USAGE: ${0} [options]
+
+OPTIONS:
+    -l, --log        Enable logging. Default: false
+    -c, --cov        Enable coverage. Default: false
+    -v, --verbose    Enable verbose output. Default: false
+    -h, --help       Show this help message.
+
+EXAMPLES:
+    ${0} -l -c -v
+    ${0} --log
+EOF
+}
+
+while [ $# -gt 0 ]; do
+	case "${1}" in
+		-l | --log)
+			_IS_LOGGING=true
+			shift;;
+		-c | --cov)
+			_IS_COVERAGE=true
+			shift;;
+		-v | --verbose)
+			_IS_VERBOSE=true
+			shift;;
+		-h | --help)
+			_usage_help
+			exit 0;;
+		*)
+			echo "[ERROR]: Failed to parse argument -> ${1}!" >&2
+			_usage_help
+			exit 1;;
+	esac
+done
+## --- Menu arguments --- ##
+
+
+if [ "${_IS_COVERAGE}" == true ]; then
+	if ! python -c "import pytest_cov" &> /dev/null; then
+		echo "[ERROR]: 'pytest-cov' python package is not installed!" >&2
+		exit 1
+	fi
+fi
+
+
 ## --- Main --- ##
 main()
 {
-	## --- Menu arguments --- ##
-	if [ -n "${1:-}" ]; then
-		local _input
-		for _input in "${@:-}"; do
-			case ${_input} in
-				-l | --log)
-					_IS_LOGGING=true
-					shift;;
-				-c | --cov)
-					_IS_COVERAGE=true
-					shift;;
-				-v | --verbose)
-					_IS_VERBOSE=true
-					shift;;
-				*)
-					echo "[ERROR]: Failed to parsing input -> ${_input}!"
-					echo "[INFO]: USAGE: ${0}  -l, --log | -c, --cov | -v, --verbose"
-					exit 1;;
-			esac
-		done
-	fi
-	## --- Menu arguments --- ##
-
-
-	if [ "${_IS_COVERAGE}" == true ]; then
-		if ! python -c "import pytest_cov" &> /dev/null; then
-			echo "[ERROR]: 'pytest-cov' python package is not installed!"
-			exit 1
-		fi
-	fi
-
-
 	local _logging_param=""
 	local _coverage_param=""
 	local _verbose_param=""
@@ -85,5 +100,5 @@ main()
 	echo "[OK]: Done."
 }
 
-main "${@:-}"
+main
 ## --- Main --- ##

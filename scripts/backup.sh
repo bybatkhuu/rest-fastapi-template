@@ -23,7 +23,7 @@ fi
 
 
 ## --- Variables --- ##
-# Load from envrionment variables:
+# Load from environment variables:
 PROJECT_SLUG="${PROJECT_SLUG:-rest.fastapi-template}"
 BACKUPS_DIR="${BACKUPS_DIR:-./volumes/backups}"
 ## --- Variables --- ##

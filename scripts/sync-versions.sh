@@ -24,7 +24,7 @@ fi
 
 
 ## --- Variables --- ##
-# Load from envrionment variables:
+# Load from environment variables:
 VERSION_FILE_PATH="${VERSION_FILE_PATH:-./src/api/__version__.py}"
 COMPOSE_FILE_PATH="${COMPOSE_FILE_PATH:-./templates/compose/compose.override.prod.yml}"
 COMPOSE_GPU_FILE_PATH="${COMPOSE_GPU_FILE_PATH:-./templates/compose/compose.override.prod.gpu.yml}"

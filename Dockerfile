@@ -114,7 +114,6 @@ ENV FT_API_SLUG="${FT_API_SLUG}" \
 
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
-
 RUN --mount=type=secret,id=HASH_PASSWORD \
 	rm -vrf /var/lib/apt/lists/* /var/cache/apt/archives/* /tmp/* /root/.cache/* && \
 	apt-get clean -y && \

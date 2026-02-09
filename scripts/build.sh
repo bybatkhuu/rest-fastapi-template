@@ -34,7 +34,7 @@ fi
 
 
 ## --- Variables --- ##
-# Load from envrionment variables:
+# Load from environment variables:
 BASE_IMAGE=${BASE_IMAGE:-}
 IMG_REGISTRY=${IMG_REGISTRY:-bybatkhuu}
 IMG_REPO=${PROJECT_SLUG:-rest.fastapi-template}

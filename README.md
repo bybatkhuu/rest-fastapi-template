@@ -1,8 +1,8 @@
 # FastAPI Template
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit)
-[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/bybatkhuu/rest.fastapi-template/3.create-release.yml?logo=GitHub)](https://github.com/bybatkhuu/rest.fastapi-template/actions/workflows/3.create-release.yml)
-[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/bybatkhuu/rest.fastapi-template?logo=GitHub)](https://github.com/bybatkhuu/rest.fastapi-template/releases)
+[![GitHub Workflow Status](https://img.shields.io/github/actions/workflow/status/bybatkhuu/rest-fastapi-template/3.create-release.yml?logo=GitHub)](https://github.com/bybatkhuu/rest-fastapi-template/actions/workflows/3.create-release.yml)
+[![GitHub release (latest SemVer)](https://img.shields.io/github/v/release/bybatkhuu/rest-fastapi-template?logo=GitHub)](https://github.com/bybatkhuu/rest-fastapi-template/releases)
 
 This is a template repository for FastAPI web service projects.
 
@@ -28,18 +28,18 @@ This is a template repository for FastAPI web service projects.
 
 - You can use this template repository as reference to create a new repository with the same structure or clone the repository to start a new project. It will help you to organize your project structure and files. It works out of the box for most REST API service projects.
 - You can customize (remove, modify or add) the files and directories as needed to meet your project requirements.
-- If you want to use the template repository directly, just click the **[Use this template](https://github.com/new?template_name=rest.fastapi-template&template_owner=bybatkhuu)** button and follow the instructions.
-- You can use **cookiecutter** to generate a new project from **[cookiecutter](https://github.com/bybatkhuu/rest.fastapi-template/tree/cookiecutter)** branch:
+- If you want to use the template repository directly, just click the **[Use this template](https://github.com/new?template_name=rest-fastapi-template&template_owner=bybatkhuu)** button and follow the instructions.
+- You can use **cookiecutter** to generate a new project from **[cookiecutter](https://github.com/bybatkhuu/rest-fastapi-template/tree/cookiecutter)** branch:
 
     ```sh
     # Clone the cookiecutter branch:
-    git clone -b cookiecutter https://github.com/bybatkhuu/rest.fastapi-template.git
+    git clone -b cookiecutter https://github.com/bybatkhuu/rest-fastapi-template.git
 
     # Install cookiecutter:
     pip install cookiecutter
 
     # Generate a new project from the cookiecutter template:
-    cookiecutter -f ./rest.fastapi-template
+    cookiecutter -f ./rest-fastapi-template
     ```
 
 ---
@@ -55,7 +55,7 @@ This is a template repository for FastAPI web service projects.
 [RECOMMENDED] For **docker** runtime:
 
 - Install [**docker** and **docker compose**](https://docs.docker.com/engine/install)
-    - Docker image: [**bybatkhuu/rest.fastapi-template**](https://hub.docker.com/r/bybatkhuu/rest.fastapi-template)
+    - Docker image: [**bybatkhuu/rest-fastapi-template**](https://hub.docker.com/r/bybatkhuu/rest-fastapi-template)
 <!-- - *[OPTIONAL]* For **GPU (NVIDIA)**:
     - Install **[NVIDIA Container Toolkit](https://docs.nvidia.com/datacenter/cloud-native/container-toolkit/latest/install-guide.html) (>= v1)** -->
 
@@ -71,7 +71,7 @@ For **standalone** runtime:
 [OPTIONAL] For **DEVELOPMENT** environment:
 
 - Install [**git**](https://git-scm.com/downloads)
-- Setup an [**SSH key**](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) ([video tutorial](https://www.youtube.com/watch?v=snCP3c7wXw0))
+- Setup an [**SSH key**](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
 
 ### 2. 📥 Download or clone the repository
 
@@ -90,20 +90,20 @@ cd ~/workspaces/projects
 **OPTION A.** Clone the repository:
 
 ```sh
-git clone https://github.com/bybatkhuu/rest.fastapi-template.git && \
-    cd rest.fastapi-template
+git clone https://github.com/bybatkhuu/rest-fastapi-template.git && \
+    cd rest-fastapi-template
 ```
 
 **OPTION B.** Clone the repository (for **DEVELOPMENT**: git + ssh key):
 
 ```sh
-git clone git@github.com:bybatkhuu/rest.fastapi-template.git && \
-    cd rest.fastapi-template
+git clone git@github.com:bybatkhuu/rest-fastapi-template.git && \
+    cd rest-fastapi-template
 ```
 
 **OPTION C.** Download source code:
 
-1. Download archived **zip** or **tar.gz** file from [**releases**](https://github.com/bybatkhuu/rest.fastapi-template/releases).
+1. Download archived **zip** or **tar.gz** file from [**releases**](https://github.com/bybatkhuu/rest-fastapi-template/releases).
 2. Extract it into the projects directory.
 3. Enter into the project directory.
 
@@ -334,8 +334,8 @@ DEBUG=false
 
 ## -- API configs -- ##
 FT_API_PORT=8000
-# FT_API_LOGS_DIR="/var/log/rest.fastapi-template"
-# FT_API_DATA_DIR="/var/lib/rest.fastapi-template"
+# FT_API_LOGS_DIR="/var/log/rest-fastapi-template"
+# FT_API_DATA_DIR="/var/lib/rest-fastapi-template"
 # FT_API_VERSION="1"
 # FT_API_PREFIX="/api/v{api_version}"
 # FT_API_DOCS_ENABLED=true
