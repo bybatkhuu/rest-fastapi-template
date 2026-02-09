@@ -198,7 +198,7 @@ docker compose config
 ./compose.sh start -l
 # Or:
 docker compose up -d --remove-orphans --force-recreate && \
-    docker compose logs -f --tail 100
+    docker compose logs -f -n 100
 ```
 
 #### Standalone runtime (PM2)
@@ -329,7 +329,7 @@ pm2 stop ./pm2-process.json && \
 ENV=LOCAL
 DEBUG=false
 # TZ=UTC
-# PYTHONDONTWRITEBYTECODE=0
+# PYTHONDONTWRITEBYTECODE=1
 
 
 ## -- API configs -- ##
@@ -384,7 +384,7 @@ pip install -r ./requirements/requirements.docs.txt
 # Serve documentation locally (for development):
 ./scripts/docs.sh
 # Or:
-mkdocs serve -a 0.0.0.0:8000
+mkdocs serve -a 0.0.0.0:8000 --livereload
 
 # Or build documentation:
 ./scripts/docs.sh -b
