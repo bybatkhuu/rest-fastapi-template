@@ -12,13 +12,9 @@ services:
       - path: .env
         required: false
     volumes:
-      - "api-logs:${FT_API_LOGS_DIR:-/var/log/rest-fastapi-template}"
-      - "api-data:${FT_API_DATA_DIR:-/var/lib/rest-fastapi-template}"
+      - "./volumes/configs/rest-fastapi-template:${FT_API_CONFIGS_DIR:-/etc/rest-fastapi-template}"
+      - "./volumes/storage/rest-fastapi-template/logs:${FT_API_LOGS_DIR:-/var/log/rest-fastapi-template}"
+      - "./volumes/storage/rest-fastapi-template/data:${FT_API_DATA_DIR:-/var/lib/rest-fastapi-template}"
     ports:
       - "${FT_API_PORT:-8000}:${FT_API_PORT:-8000}"
     tty: true
-
-
-volumes:
-  api-logs:
-  api-data:

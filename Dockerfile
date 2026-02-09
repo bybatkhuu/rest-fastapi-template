@@ -91,7 +91,6 @@ ARG FT_API_LOGS_DIR="/var/log/${FT_API_SLUG}"
 ARG FT_API_TMP_DIR="/tmp/${FT_API_SLUG}"
 # ARG FT_API_MODELS_DIR="${FT_API_DATA_DIR}/models"
 ARG FT_API_PORT=8000
-## IMPORTANT!: Get hashed password from build-arg!
 ## echo "FT_USER_PASSWORD123" | openssl passwd -6 -stdin
 ARG HASH_PASSWORD="\$6\$eSagViAo6pFQdS4Z\$j4shoN7RMcC/n1U4AO4TcQmDYQJjvoy4LnUcs/kPY8kg59BNSsoUXRI6w2U1yIq0/Mst0plVRBnAxdZ47w.73/"
 ARG UID=1000
