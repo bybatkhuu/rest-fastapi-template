@@ -1,4 +1,5 @@
 # syntax=docker/dockerfile:1
+# check=skip=SecretsUsedInArgOrEnv
 
 # ARG BASE_IMAGE=ubuntu:22.04
 ARG BASE_IMAGE=ubuntu:24.04
@@ -37,7 +38,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=private \
 		ca-certificates \
 		build-essential \
 		wget && \
-	_MINICONDA_VERSION=py310_25.7.0-2 && \
+	_MINICONDA_VERSION=py310_25.11.1-1 && \
 	if [ "${_BUILD_TARGET_ARCH}" == "x86_64" ]; then \
 		_MINICONDA_FILENAME=Miniconda3-${_MINICONDA_VERSION}-Linux-x86_64.sh && \
 		export _MINICONDA_URL=https://repo.anaconda.com/miniconda/${_MINICONDA_FILENAME}; \
@@ -58,7 +59,7 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=private \
 	/opt/conda/condabin/conda config --append channels conda-forge && \
 	/opt/conda/condabin/conda update -y conda && \
 	/opt/conda/condabin/conda install -y python=${PYTHON_VERSION} pip && \
-	/opt/conda/bin/pip install --timeout 60 -U pip
+	/opt/conda/bin/pip install --timeout 60 -U pip uv
 
 COPY ./requirements* ./
 RUN	--mount=type=cache,target=/root/.cache,sharing=locked \
@@ -71,9 +72,9 @@ RUN	--mount=type=cache,target=/root/.cache,sharing=locked \
 	# 	export _REQUIRE_FILE_PATH=./requirements.arm64.txt; \
 	# fi && \
 	# if [ -n "${_REQUIRE_FILE_PATH:-}" ] && [ -f "${_REQUIRE_FILE_PATH}" ]; then \
-	# 	/opt/conda/bin/pip install --timeout 60 -r "${_REQUIRE_FILE_PATH}"; \
+	# 	/opt/conda/bin/python -m uv pip install -r "${_REQUIRE_FILE_PATH}"; \
 	# fi && \
-	/opt/conda/bin/pip install --timeout 60 -r ./requirements.txt
+	/opt/conda/bin/python -m uv pip install -r ./requirements.txt
 
 
 ## Here is the base image:
@@ -90,6 +91,9 @@ ARG FT_API_LOGS_DIR="/var/log/${FT_API_SLUG}"
 ARG FT_API_TMP_DIR="/tmp/${FT_API_SLUG}"
 # ARG FT_API_MODELS_DIR="${FT_API_DATA_DIR}/models"
 ARG FT_API_PORT=8000
+## IMPORTANT!: Get hashed password from build-arg!
+## echo "FT_USER_PASSWORD123" | openssl passwd -6 -stdin
+ARG HASH_PASSWORD="\$6\$eSagViAo6pFQdS4Z\$j4shoN7RMcC/n1U4AO4TcQmDYQJjvoy4LnUcs/kPY8kg59BNSsoUXRI6w2U1yIq0/Mst0plVRBnAxdZ47w.73/"
 ARG UID=1000
 ARG GID=11000
 ARG USER=ft-user
@@ -142,8 +146,9 @@ RUN --mount=type=secret,id=HASH_PASSWORD \
 	echo "${USER} ALL=(ALL) NOPASSWD: ALL" > "/etc/sudoers.d/${USER}" && \
 	chmod 0440 "/etc/sudoers.d/${USER}" && \
 	if [ -f "/run/secrets/HASH_PASSWORD" ]; then \
-		## echo "FT_USER_PASSWORD123" | openssl passwd -5 -stdin
 		echo -e "${USER}:$(cat /run/secrets/HASH_PASSWORD)" | chpasswd -e; \
+	else \
+		echo -e "${USER}:${HASH_PASSWORD}" | chpasswd -e; \
 	fi && \
 	echo -e "\nalias ls='ls -aF --group-directories-first --color=auto'" >> /root/.bashrc && \
 	echo -e "alias ll='ls -alhF --group-directories-first --color=auto'\n" >> /root/.bashrc && \
@@ -154,7 +159,12 @@ RUN --mount=type=secret,id=HASH_PASSWORD \
 	echo "conda activate base" >> "/home/${USER}/.bashrc" && \
 	rm -rfv /var/lib/apt/lists/* /var/cache/apt/archives/* /tmp/* /root/.cache/* "/home/${USER}/.cache/*" && \
 	mkdir -pv "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" && \
-	chown -Rc "${USER}:${GROUP}" "${FT_HOME_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" && \
+	chown -Rc "${USER}:${GROUP}" \
+		"${FT_HOME_DIR}" \
+		"${FT_API_CONFIGS_DIR}" \
+		"${FT_API_DATA_DIR}" \
+		"${FT_API_LOGS_DIR}" \
+		"${FT_API_TMP_DIR}" && \
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" -type d -exec chmod -c 770 {} + && \
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" -type d -exec chmod -c ug+s {} + && \
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type d -exec chmod -c 775 {} + && \

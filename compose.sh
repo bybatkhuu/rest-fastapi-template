@@ -86,7 +86,7 @@ _restart()
 _logs()
 {
 	# shellcheck disable=SC2068
-	docker compose logs -f --tail 100 ${@:-} || exit 2
+	docker compose logs -f -n 100 ${@:-} || exit 2
 }
 
 _list()
