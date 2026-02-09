@@ -37,8 +37,9 @@ _DEFAULT_SERVICE="api"
 ## --- Functions --- ##
 _build()
 {
-	./scripts/build.sh || exit 2
-	# docker compose --progress=plain build || exit 2
+	# shellcheck disable=SC2068
+	./scripts/build.sh ${@:-} || exit 2
+	# docker compose --progress=plain build ${@:-} || exit 2
 }
 
 _validate()
@@ -85,7 +86,7 @@ _restart()
 _logs()
 {
 	# shellcheck disable=SC2068
-	docker compose logs -f --tail 100 ${@} || exit 2
+	docker compose logs -f --tail 100 ${@:-} || exit 2
 }
 
 _list()
@@ -114,7 +115,7 @@ _exec()
 
 	echo "[INFO]: Executing command inside '${_DEFAULT_SERVICE}' container..."
 	# shellcheck disable=SC2068
-	docker compose exec "${_DEFAULT_SERVICE}" ${@} || exit 2
+	docker compose exec "${_DEFAULT_SERVICE}" ${@:-} || exit 2
 }
 
 _enter()
@@ -224,7 +225,7 @@ while [ $# -gt 0 ]; do
 			exit 0;;
 		stats | resource | limit)
 			shift
-			_stats
+			_stats "${@:-}"
 			exit 0;;
 		exec)
 			shift

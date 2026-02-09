@@ -53,7 +53,7 @@ To execute the script, use the following command:
 # -x, --cross-compile                           Enable cross compiling.
 # -b=BASE_IMAGE, --base-image=BASE_IMAGE        Base image name. Default is "ubuntu:24.04".
 # -g=REGISTRY, --registry=REGISTRY              Docker image registry (docker registry and username). Default is "bybatkhuu".
-# -r=REPO, --repo=REPO                          Docker image repository. Default is "rest.fastapi-template".
+# -r=REPO, --repo=REPO                          Docker image repository. Default is "rest-fastapi-template".
 # -v=VERSION, --version=VERSION                 Docker image version. Default read from "./src/api/__version__.py" file.
 # -s=SUBTAG, --subtag=SUBTAG                    Docker image subtag. Default is "".
 # -d=DOCKERFILE, --dockerfile=DOCKERFILE        Dockerfile path. Default is "./Dockerfile".
@@ -67,5 +67,5 @@ To execute the script, use the following command:
 ./scripts/build.sh -x
 
 # Or:
-./scripts/build.sh -p=arm64 -b=ubuntu:24.04 -n=bybatkhuu -r=rest.fastapi-template -v=1.0.0 -s=-arm64 -d=./Dockerfile -t=. -u -c
+./scripts/build.sh -p=arm64 -b=ubuntu:24.04 -n=bybatkhuu -r=rest-fastapi-template -v=1.0.0 -s=-arm64 -d=./Dockerfile -t=. -u -c
 ```

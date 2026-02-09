@@ -10,7 +10,7 @@ ARG BASE_IMAGE=ubuntu:24.04
 # ARG BASE_IMAGE=nvidia/cuda:13.0.0-tensorrt-runtime-ubuntu24.04
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG FT_API_SLUG="rest.fastapi-template"
+ARG FT_API_SLUG="rest-fastapi-template"
 
 
 ## Here is the builder image:

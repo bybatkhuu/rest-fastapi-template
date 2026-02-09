@@ -21,20 +21,20 @@ cd ~/workspaces/projects
 **OPTION A.** Clone the repository:
 
 ```sh
-git clone https://github.com/bybatkhuu/rest.fastapi-template.git && \
-    cd rest.fastapi-template
+git clone https://github.com/bybatkhuu/rest-fastapi-template.git && \
+    cd rest-fastapi-template
 ```
 
 **OPTION B.** Clone the repository (for **DEVELOPMENT**: git + ssh key):
 
 ```sh
-git clone git@github.com:bybatkhuu/rest.fastapi-template.git && \
-    cd rest.fastapi-template
+git clone git@github.com:bybatkhuu/rest-fastapi-template.git && \
+    cd rest-fastapi-template
 ```
 
 **OPTION C.** Download source code:
 
-1. Download archived **zip** or **tar.gz** file from [**releases**](https://github.com/bybatkhuu/rest.fastapi-template/releases).
+1. Download archived **zip** or **tar.gz** file from [**releases**](https://github.com/bybatkhuu/rest-fastapi-template/releases).
 2. Extract it into the projects directory.
 3. Enter into the project directory.
 

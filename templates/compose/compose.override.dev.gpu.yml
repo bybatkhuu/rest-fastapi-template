@@ -1,6 +1,6 @@
 services:
   api:
-    image: bybatkhuu/rest.fastapi-template:latest-gpu
+    image: bybatkhuu/rest-fastapi-template:latest-gpu
     runtime: nvidia
     build:
       args:
@@ -9,11 +9,11 @@ services:
       NVIDIA_VISIBLE_DEVICES: ${NVIDIA_VISIBLE_DEVICES:-all}
       CUDA_VISIBLE_DEVICES: ${CUDA_VISIBLE_DEVICES:-all}
     volumes:
-      - "./volumes/storage/rest.fastapi-template/configs:${FT_API_LOGS_DIR:-/etc/rest.fastapi-template}"
-      - "./volumes/storage/rest.fastapi-template/logs:${FT_API_LOGS_DIR:-/var/log/rest.fastapi-template}"
-      - "./volumes/storage/rest.fastapi-template/data:${FT_API_DATA_DIR:-/var/lib/rest.fastapi-template}"
+      - "./volumes/storage/rest-fastapi-template/configs:${FT_API_LOGS_DIR:-/etc/rest-fastapi-template}"
+      - "./volumes/storage/rest-fastapi-template/logs:${FT_API_LOGS_DIR:-/var/log/rest-fastapi-template}"
+      - "./volumes/storage/rest-fastapi-template/data:${FT_API_DATA_DIR:-/var/lib/rest-fastapi-template}"
       - "./scripts/docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh"
-      - "./src:/app/rest.fastapi-template"
+      - "./src:/app/rest-fastapi-template"
       - "./volumes/.vscode-server:/home/ft-user/.vscode-server"
     # deploy:
     #   replicas: 0

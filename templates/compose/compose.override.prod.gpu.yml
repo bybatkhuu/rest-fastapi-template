@@ -1,6 +1,6 @@
 services:
   api:
-    image: bybatkhuu/rest.fastapi-template:7.3.0-250215-gpu
+    image: bybatkhuu/rest-fastapi-template:7.3.0-250215-gpu
     runtime: nvidia
     build:
       args:
@@ -9,7 +9,7 @@ services:
       NVIDIA_VISIBLE_DEVICES: ${NVIDIA_VISIBLE_DEVICES:-all}
       CUDA_VISIBLE_DEVICES: ${CUDA_VISIBLE_DEVICES:-all}
     # volumes:
-    #   - "./volumes/storage/rest.fastapi-template/configs:${FT_API_LOGS_DIR:-/etc/rest.fastapi-template}"
+    #   - "./volumes/storage/rest-fastapi-template/configs:${FT_API_LOGS_DIR:-/etc/rest-fastapi-template}"
     #   - "api-vscode-server:/home/ft-user/.vscode-server"
     # deploy:
     #   replicas: 0

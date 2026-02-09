@@ -1,6 +1,6 @@
 services:
   api:
-    image: bybatkhuu/rest.fastapi-template:latest
+    image: bybatkhuu/rest-fastapi-template:latest
     build:
       context: .
     restart: unless-stopped
@@ -12,8 +12,8 @@ services:
       - path: .env
         required: false
     volumes:
-      - "api-logs:${FT_API_LOGS_DIR:-/var/log/rest.fastapi-template}"
-      - "api-data:${FT_API_DATA_DIR:-/var/lib/rest.fastapi-template}"
+      - "api-logs:${FT_API_LOGS_DIR:-/var/log/rest-fastapi-template}"
+      - "api-data:${FT_API_DATA_DIR:-/var/lib/rest-fastapi-template}"
     ports:
       - "${FT_API_PORT:-8000}:${FT_API_PORT:-8000}"
     tty: true

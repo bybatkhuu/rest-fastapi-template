@@ -16,7 +16,7 @@ The script performs the following operations:
 - **Delete system files**: Finds and deletes all `.DS_Store`, `.Thumbs.db`, and `.coverage*` files in the project directory and its subdirectories.
 - **Delete cache directories**: Finds and deletes all `__pycache__`, `.benchmarks`, and `.pytest_cache` directories in the project directory and its subdirectories.
 - **Delete logs**: Removes directories named `logs` unless they are part of a `.git` directory.
-- **Delete project directories**: Removes the project-related directory specified by the `PROJECT_SLUG` environment variable (default: `rest.fastapi-template`).
+- **Delete project directories**: Removes the project-related directory specified by the `PROJECT_SLUG` environment variable (default: `rest-fastapi-template`).
 - **Docker safeguards**:
     - Checks if Docker is installed and running.
     - Stops execution if Docker containers are active.

@@ -69,11 +69,11 @@ jobs:
           secrets: |
             "HASH_PASSWORD=${{ secrets.DOCKER_UID_HASH_PASSWORD }}"
           load: true
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:cache-latest
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:test
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:cache-latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:test
       - name: Test docker image
         run: |
-          docker run --rm -dt -p 8000:8000 ${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:test
+          docker run --rm -dt -p 8000:8000 ${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:test
           sleep 3
           curl -s http://localhost:8000/api/v1/ping | grep "Pong"
       - name: Build and push
@@ -84,11 +84,11 @@ jobs:
             "HASH_PASSWORD=${{ secrets.DOCKER_UID_HASH_PASSWORD }}"
           # platforms: linux/amd64
           platforms: linux/amd64,linux/arm64
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:cache-latest
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:cache-latest,mode=max
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:cache-latest
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:cache-latest,mode=max
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:${{ env._VERSION }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:${{ env._VERSION }}
           push: true
       - name: Trigger release
         env:

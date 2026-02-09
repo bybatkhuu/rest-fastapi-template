@@ -14,7 +14,7 @@ from ._paths import PathsConfig, FrozenPathsConfig
 
 class ApiConfig(BaseConfig):
     name: str = Field(default="FastAPI Template", min_length=2, max_length=128)
-    slug: str = Field(default="rest.fastapi-template", min_length=2, max_length=128)
+    slug: str = Field(default="rest-fastapi-template", min_length=2, max_length=128)
     http_scheme: HTTPSchemeEnum = Field(default=HTTPSchemeEnum.http)
     bind_host: str = Field(default="0.0.0.0", min_length=2, max_length=128)
     port: int = Field(default=8000, ge=80, lt=65536)
