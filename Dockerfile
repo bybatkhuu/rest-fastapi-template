@@ -23,6 +23,8 @@ ARG FT_API_SLUG
 
 ARG PYTHON_VERSION=3.10
 
+ENV	UV_LINK_MODE=copy
+
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 WORKDIR "/usr/src/${FT_API_SLUG}"
