@@ -30,6 +30,8 @@ main()
 		\( \
 			-type d -name ".git" -o \
 			-type d -name ".venv" -o \
+			-type d -name "venv" -o \
+			-type d -name "env" -o \
 			-type d -name "modules" -o \
 			-type d -name "volumes" -o \
 			-type l -name ".env" \
@@ -40,6 +42,8 @@ main()
 		\( \
 			-type d -name ".git" -o \
 			-type d -name ".venv" -o \
+			-type d -name "venv" -o \
+			-type d -name "env" -o \
 			-type d -name "scripts" -o \
 			-type d -name "modules" -o \
 			-type d -name "volumes" \
@@ -50,6 +54,8 @@ main()
 		\( \
 			-type d -name ".git" -o \
 			-type d -name ".venv" -o \
+			-type d -name "venv" -o \
+			-type d -name "env" -o \
 			-type d -name "scripts" -o \
 			-type d -name "modules" -o \
 			-type d -name "volumes" -o \
@@ -62,6 +68,8 @@ main()
 		\( \
 			-type d -name ".git" -o \
 			-type d -name ".venv" -o \
+			-type d -name "venv" -o \
+			-type d -name "env" -o \
 			-type d -name "scripts" -o \
 			-type d -name "modules" -o \
 			-type d -name "volumes" \
