@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 set -euo pipefail
 
 
@@ -6,7 +6,6 @@ echo "[INFO]: Running '${FT_API_SLUG}' docker-entrypoint.sh..."
 
 _run()
 {
-	# exec python -u ./main.py || exit 2
 	exec python -m api || exit 2
 	# exec uvicorn main:app \
 	# 	--host=0.0.0.0 \
@@ -29,30 +28,51 @@ main()
 		"${FT_API_LOGS_DIR}" \
 		"${FT_API_TMP_DIR}" \
 		\( \
+			-type d -name ".git" -o \
+			-type d -name ".venv" -o \
 			-type d -name "modules" -o \
+			-type d -name "volumes" -o \
 			-type l -name ".env" \
 		\) -prune -o -print0 | \
 			sudo xargs -0 chown -c "${USER}:${GROUP}" || exit 2
 
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
-		\( -type d -name "modules" \) -prune -o -type d -exec \
+		\( \
+			-type d -name ".git" -o \
+			-type d -name ".venv" -o \
+			-type d -name "scripts" -o \
+			-type d -name "modules" -o \
+			-type d -name "volumes" \
+		 \) -prune -o -type d -exec \
 			sudo chmod 770 {} + || exit 2
 
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
 		\( \
+			-type d -name ".git" -o \
+			-type d -name ".venv" -o \
+			-type d -name "scripts" -o \
 			-type d -name "modules" -o \
+			-type d -name "volumes" -o \
+			-type l -name ".env" -o \
 			-type f -name "main.py" \
 		\) -prune -o -type f -exec \
 			sudo chmod 660 {} + || exit 2
 
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
-		\( -type d -name "modules" \) -prune -o -type d -exec \
+		\( \
+			-type d -name ".git" -o \
+			-type d -name ".venv" -o \
+			-type d -name "scripts" -o \
+			-type d -name "modules" -o \
+			-type d -name "volumes" \
+		\) -prune -o -type d -exec \
 			sudo chmod ug+s {} + || exit 2
 
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type d -exec chmod 775 {} + || exit 2
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type f -exec chmod 664 {} + || exit 2
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type d -exec chmod +s {} + || exit 2
-	echo "${USER} ALL=(ALL) ALL" | sudo tee -a "/etc/sudoers.d/${USER}" > /dev/null || exit 2
+
+	# echo "${USER} ALL=(ALL) ALL" | sudo tee -a "/etc/sudoers.d/${USER}" > /dev/null || exit 2
 	echo ""
 
 	## Parsing input:
@@ -71,7 +91,7 @@ main()
 			fi
 			exit 0;;
 		*)
-			echo "[ERROR]: Failed to parsing input -> ${*}!"
+			echo "[ERROR]: Failed to parsing input -> ${*}!" >&2
 			echo "[INFO]: USAGE: ${0}  -s, --start, start | -b, --bash, bash, /bin/bash"
 			exit 1;;
 	esac

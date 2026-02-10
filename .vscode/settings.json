@@ -70,6 +70,7 @@
 		"**/env/**": true,
 		"**/venv/**": true,
 		"**/envs/**": true,
+		"**/.venv/**": true,
 		"**/dist/**": true,
 		"**/sdist/**": true,
 		"**/build/**": true,
@@ -88,6 +89,7 @@
 		"**/results/**": true,
 		"**/output/**": true,
 		"**/outputs/**": true,
+		"**/volumes/**": true,
 		"**/*.egg-info/**": true,
 		"**/*.pyc": true,
 		"**/*.log": true,
@@ -144,6 +146,7 @@
 		"**/results": true,
 		"**/output": true,
 		"**/outputs": true,
+		"**/volumes/storage": true,
 		"**/*.egg-info": true,
 		"**/*.pyc": true,
 		"**/*.log": true,
@@ -151,7 +154,8 @@
 		"**/*.bak": true,
 		"**/.coverage*": true,
 		"**/.DS_Store": true,
-		"**/Thumbs.db": true
+		"**/Thumbs.db": true,
+		"**/docs/assets/js/*.js": true
 	},
 	"python.languageServer": "Pylance",
 	"python.analysis.extraPaths": [
