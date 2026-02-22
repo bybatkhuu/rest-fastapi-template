@@ -1,10 +1,8 @@
 from typing import Any
 
 import jwt
-from cryptography.hazmat.primitives.asymmetric.types import (
-    PrivateKeyTypes,
-    PublicKeyTypes,
-)
+from jwt.types import Options
+from jwt.api_jwt import AllowedPrivateKeyTypes, AllowedPublicKeyTypes
 from pydantic import validate_call, SecretStr
 
 from api.core import utils
@@ -12,14 +10,14 @@ from api.core import utils
 
 @validate_call(config={"arbitrary_types_allowed": True})
 def encode(
-    payload: dict[str, Any], key: SecretStr | PrivateKeyTypes, algorithm: str
+    payload: dict[str, Any], key: SecretStr | AllowedPrivateKeyTypes, algorithm: str
 ) -> str:
     """Encodes payload into JWT token.
 
     Args:
-        payload    (Dict[str, Any]                   , required): Payload to encode into token.
-        key        (Union[SecretStr, PrivateKeyTypes], required): Secret key to encode token with.
-        algorithm  (str                              , required): Algorithm to encode token with.
+        payload    (Dict[str, Any]                          , required): Payload to encode into token.
+        key        (Union[SecretStr, AllowedPrivateKeyTypes], required): Secret key to encode token with.
+        algorithm  (str                                     , required): Algorithm to encode token with.
 
     Raises:
         ValueError: If 'sub' is not provided in payload.
@@ -52,17 +50,17 @@ def encode(
 @validate_call(config={"arbitrary_types_allowed": True})
 def decode(
     token: str,
-    key: SecretStr | PublicKeyTypes,
+    key: SecretStr | AllowedPublicKeyTypes,
     algorithm: str,
-    options: dict[str, Any] = {},
+    options: Options = {},
 ) -> dict[str, Any]:
     """Decodes JWT token and returns payload.
 
     Args:
-        token     (str                             , required): JWT token to decode.
-        key       (Union[SecretStr, PublicKeyTypes], required): Secret key to decode token with.
-        algorithm (str                             , required): Algorithm to decode token with.
-        options   (Dict[str, Any]                  , optional): Options to decode token with. Defaults to {}.
+        token     (str                                    , required): JWT token to decode.
+        key       (Union[SecretStr, AllowedPublicKeyTypes], required): Secret key to decode token with.
+        algorithm (str                                    , required): Algorithm to decode token with.
+        options   (Options                                , optional): Options to decode token with. Defaults to {}.
 
     Raises:
         jwt.ExpiredSignatureError: If token is expired.

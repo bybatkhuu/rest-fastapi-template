@@ -1,8 +1,10 @@
 import os
 import errno
 import base64
+from typing import cast
 
 import aiofiles
+import aiofiles.os
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
@@ -28,19 +30,17 @@ def gen_key_pair(
         Tuple[Union[RSAPrivateKey, str], Union[RSAPublicKey, str]]: RSA private and public keys.
     """
 
-    _private_key: RSAPrivateKey = rsa.generate_private_key(
-        public_exponent=65537, key_size=key_size
-    )
-    _public_key: RSAPublicKey = _private_key.public_key()
+    _private_key = rsa.generate_private_key(public_exponent=65537, key_size=key_size)
+    _public_key = _private_key.public_key()
 
     if as_str:
-        _private_key: bytes = _private_key.private_bytes(
+        _private_key = _private_key.private_bytes(
             encoding=serialization.Encoding.PEM,
             format=serialization.PrivateFormat.PKCS8,
             encryption_algorithm=serialization.NoEncryption(),
         ).decode()
 
-        _public_key: bytes = _public_key.public_bytes(
+        _public_key = _public_key.public_bytes(
             encoding=serialization.Encoding.PEM,
             format=serialization.PublicFormat.SubjectPublicKeyInfo,
         ).decode()
@@ -101,12 +101,16 @@ async def async_create_keys(
         if warn_mode == WarnEnum.ERROR:
             raise FileExistsError(f"'{_private_key_path}' private key already exists!")
 
-        _private_key: RSAPrivateKey = await async_get_private_key(
-            private_key_path=_private_key_path
+        _private_key = cast(
+            RSAPrivateKey,
+            await async_get_private_key(private_key_path=_private_key_path),
         )
+
         _public_key: RSAPublicKey = _private_key.public_key()
     else:
-        _key_pair: tuple[RSAPrivateKey, RSAPublicKey] = gen_key_pair(key_size=key_size)
+        _key_pair = cast(
+            tuple[RSAPrivateKey, RSAPublicKey], gen_key_pair(key_size=key_size)
+        )
         _private_key, _public_key = _key_pair
 
     if await aiofiles.os.path.isfile(_public_key_path):
@@ -182,12 +186,19 @@ async def async_get_private_key(
         raise FileNotFoundError(f"Not found '{private_key_path}' private key!")
 
     logger.debug(f"Reading '{private_key_path}' private key...")
-    _private_key: RSAPrivateKey
+    _private_key: RSAPrivateKey | str
     async with aiofiles.open(private_key_path, "rb") as _private_key_file:
         _private_key_bytes: bytes = await _private_key_file.read()
-        _private_key: RSAPrivateKey = serialization.load_pem_private_key(
+        _loaded_private_key = serialization.load_pem_private_key(
             data=_private_key_bytes, password=None
         )
+        if not isinstance(_loaded_private_key, RSAPrivateKey):
+            raise TypeError(
+                f"`private_key_path` argument's file is not a valid private key {type(_loaded_private_key)} type, "
+                "should be <RSAPrivateKey>!"
+            )
+
+        _private_key = _loaded_private_key
 
     if as_str:
         _private_key = _private_key.private_bytes(
@@ -222,12 +233,17 @@ async def async_get_public_key(
         raise FileNotFoundError(f"Not found '{public_key_path}' public key!")
 
     logger.debug(f"Reading '{public_key_path}' public key...")
-    _public_key: RSAPublicKey
+    _public_key: RSAPublicKey | str
     async with aiofiles.open(public_key_path, "rb") as _public_key_file:
         _public_key_bytes: bytes = await _public_key_file.read()
-        _public_key: RSAPublicKey = serialization.load_pem_public_key(
-            data=_public_key_bytes
-        )
+        _loaded_public_key = serialization.load_pem_public_key(data=_public_key_bytes)
+        if not isinstance(_loaded_public_key, RSAPublicKey):
+            raise TypeError(
+                f"`public_key_path` argument's file is not a valid public key {type(_loaded_public_key)} type, "
+                "should be <RSAPublicKey>!"
+            )
+
+        _public_key = _loaded_public_key
 
     if as_str:
         _public_key = _public_key.public_bytes(
@@ -316,12 +332,14 @@ def create_keys(
         if warn_mode == WarnEnum.ERROR:
             raise FileExistsError(f"'{_private_key_path}' private key already exists!")
 
-        _private_key: RSAPrivateKey = get_private_key(
-            private_key_path=_private_key_path
+        _private_key = cast(
+            RSAPrivateKey, get_private_key(private_key_path=_private_key_path)
         )
         _public_key: RSAPublicKey = _private_key.public_key()
     else:
-        _key_pair: tuple[RSAPrivateKey, RSAPublicKey] = gen_key_pair(key_size=key_size)
+        _key_pair = cast(
+            tuple[RSAPrivateKey, RSAPublicKey], gen_key_pair(key_size=key_size)
+        )
         _private_key, _public_key = _key_pair
 
     if os.path.isfile(_public_key_path):
@@ -395,12 +413,18 @@ def get_private_key(private_key_path: str, as_str: bool = False) -> RSAPrivateKe
         raise FileNotFoundError(f"Not found '{private_key_path}' private key!")
 
     logger.debug(f"Reading '{private_key_path}' private key...")
-    _private_key: RSAPrivateKey
+    _private_key: RSAPrivateKey | str
     with open(private_key_path, "rb") as _private_key_file:
         _private_key_bytes: bytes = _private_key_file.read()
-        _private_key: RSAPrivateKey = serialization.load_pem_private_key(
+        _loaded_private_key = serialization.load_pem_private_key(
             data=_private_key_bytes, password=None
         )
+        if not isinstance(_loaded_private_key, RSAPrivateKey):
+            raise TypeError(
+                f"`private_key_path` argument's file is not a valid private key {type(_loaded_private_key)} type, "
+                "should be <RSAPrivateKey>!"
+            )
+        _private_key = _loaded_private_key
 
     if as_str:
         _private_key = _private_key.private_bytes(
@@ -433,12 +457,16 @@ def get_public_key(public_key_path: str, as_str: bool = False) -> RSAPublicKey |
         raise FileNotFoundError(f"Not found '{public_key_path}' public key!")
 
     logger.debug(f"Reading '{public_key_path}' public key...")
-    _public_key: RSAPublicKey
+    _public_key: RSAPublicKey | str
     with open(public_key_path, "rb") as _public_key_file:
         _public_key_bytes: bytes = _public_key_file.read()
-        _public_key: RSAPublicKey = serialization.load_pem_public_key(
-            data=_public_key_bytes
-        )
+        _loaded_public_key = serialization.load_pem_public_key(data=_public_key_bytes)
+        if not isinstance(_loaded_public_key, RSAPublicKey):
+            raise TypeError(
+                f"`public_key_path` argument's file is not a valid public key {type(_loaded_public_key)} type, "
+                "should be <RSAPublicKey>!"
+            )
+        _public_key = _loaded_public_key
 
     if as_str:
         _public_key = _public_key.public_bytes(
@@ -507,7 +535,7 @@ def encrypt_with_public_key(
         elif warn_mode == WarnEnum.DEBUG:
             logger.debug(_message)
 
-        _ciphertext: bytes = public_key.encrypt(
+        _ciphertext = public_key.encrypt(
             plaintext=plaintext,
             padding=padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA256()),
@@ -578,7 +606,7 @@ def decrypt_with_private_key(
         elif warn_mode == WarnEnum.DEBUG:
             logger.debug(_message)
 
-        _plaintext: bytes = private_key.decrypt(
+        _plaintext = private_key.decrypt(
             ciphertext=ciphertext,
             padding=padding.OAEP(
                 mgf=padding.MGF1(algorithm=hashes.SHA256()),

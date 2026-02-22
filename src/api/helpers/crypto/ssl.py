@@ -1,6 +1,7 @@
 import os
 import errno
 from datetime import timedelta
+from typing import Any, cast
 
 import aiofiles
 import aiofiles.os
@@ -36,7 +37,7 @@ async def async_create_ssl_certs(
     cert_fname: str,
     key_fname: str,
     key_size: int,
-    x509_attrs: X509AttrsPM = X509AttrsPM(),
+    x509_attrs: X509AttrsPM | dict[str, Any] = X509AttrsPM(),
     force: bool = False,
     warn_mode: WarnEnum = WarnEnum.DEBUG,
 ) -> None:
@@ -82,11 +83,12 @@ async def async_create_ssl_certs(
         if warn_mode == WarnEnum.ERROR:
             raise FileExistsError(f"'{_key_path}' SSL key file already exists!")
 
-        _private_key: PrivateKeyTypes = await asymmetric_helper.async_get_private_key(
-            private_key_path=_key_path
+        _private_key = cast(
+            RSAPrivateKey,
+            await asymmetric_helper.async_get_private_key(private_key_path=_key_path),
         )
     else:
-        _private_key: RSAPrivateKey = rsa.generate_private_key(
+        _private_key = rsa.generate_private_key(
             public_exponent=65537, key_size=key_size
         )
 
@@ -96,6 +98,7 @@ async def async_create_ssl_certs(
 
         await utils.async_remove_file(file_path=_cert_path, warn_mode=warn_mode)
 
+    x509_attrs = cast(X509AttrsPM, x509_attrs)
     _subject = _issuer = x509.Name(
         [
             x509.NameAttribute(NameOID.COUNTRY_NAME, x509_attrs.C),
@@ -168,7 +171,7 @@ def create_ssl_certs(
     key_fname: str,
     cert_fname: str,
     key_size: int,
-    x509_attrs: X509AttrsPM = X509AttrsPM(),
+    x509_attrs: X509AttrsPM | dict[str, Any] = X509AttrsPM(),
     force: bool = False,
     warn_mode: WarnEnum = WarnEnum.DEBUG,
 ) -> None:
@@ -212,11 +215,11 @@ def create_ssl_certs(
         if warn_mode == WarnEnum.ERROR:
             raise FileExistsError(f"'{_key_path}' SSL key file already exists!")
 
-        _private_key: PrivateKeyTypes = asymmetric_helper.get_private_key(
-            private_key_path=_key_path
+        _private_key = cast(
+            RSAPrivateKey, asymmetric_helper.get_private_key(private_key_path=_key_path)
         )
     else:
-        _private_key: RSAPrivateKey = rsa.generate_private_key(
+        _private_key = rsa.generate_private_key(
             public_exponent=65537, key_size=key_size
         )
 
@@ -226,6 +229,7 @@ def create_ssl_certs(
 
         utils.remove_file(file_path=_cert_path, warn_mode=warn_mode)
 
+    x509_attrs = cast(X509AttrsPM, x509_attrs)
     _subject = _issuer = x509.Name(
         [
             x509.NameAttribute(NameOID.COUNTRY_NAME, x509_attrs.C),
