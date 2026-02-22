@@ -1,11 +1,15 @@
 # Standard libraries
 import os
+from typing import Any
+from collections.abc import Callable
 
 # Third-party libraries
 import uvicorn
 from uvicorn._types import ASGIApplication
 from pydantic import validate_call
 from fastapi import FastAPI
+
+from beans_logging_fastapi import add_logger
 
 # Internal modules
 from api.__version__ import __version__
@@ -35,6 +39,8 @@ def create_app() -> FastAPI:
         **config.api.docs.model_dump(exclude={"enabled"}),
     )
 
+    add_logger(app=app, config=config.api.logger)
+
     add_middlewares(app=app)
     add_routers(app=app)
     add_mounts(app=app)
@@ -44,11 +50,14 @@ def create_app() -> FastAPI:
 
 
 @validate_call(config={"arbitrary_types_allowed": True})
-def run_server(app: ASGIApplication | str = "main:app") -> None:
+def run_server(app: FastAPI | ASGIApplication | Callable[..., Any] | str) -> None:
     """Run uvicorn server.
 
     Args:
-        app (Union[ASGIApplication, str], optional): ASGI application instance or module path.
+        app (FastAPI            |
+             ASGIApplication    |
+             Callable[..., Any] |
+             str                 , required): FastAPI application instance or ASGI application or import string.
     """
 
     _ssl_keyfile: str | None = None

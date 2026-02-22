@@ -7,7 +7,6 @@ from api.logger import log_mode
 
 from .schemas import TaskPM, TaskBasePM
 
-
 # NOTE: This is a mock database for demonstration purposes.
 _TASKS_DB: list[TaskPM] = []
 for _i in range(1, 101):

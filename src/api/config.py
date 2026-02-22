@@ -1,22 +1,23 @@
-import pathlib
+import os
 
-from onion_config import ConfigLoader
-from beans_logging import logger
+from potato_util import io as io_utils
 
 from api.core.configs import MainConfig
+from api.logger import logger
 
+_config_dict = {}
+_configs_dir = os.path.join(os.getcwd(), "configs")
+if os.path.isdir(_configs_dir):
+    _config_dict = io_utils.read_all_configs(configs_dir=_configs_dir)
 
-config: MainConfig
 try:
-    _parent_dir = pathlib.Path(__file__).parent.resolve()
-    _config_loader = ConfigLoader(
-        config_schema=MainConfig, configs_dirs=[str(_parent_dir / "configs")]
-    )
-    # Main config object:
-    config: MainConfig = _config_loader.load()
+    config = MainConfig(**_config_dict)
 except Exception:
     logger.exception("Failed to load config:")
     raise SystemExit(1)
 
 
-__all__ = ["config"]
+__all__ = [
+    "MainConfig",
+    "config",
+]

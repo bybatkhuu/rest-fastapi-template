@@ -3,7 +3,6 @@ from fastapi import APIRouter, Request
 from api.core.schemas import BaseResPM
 from api.core.responses import BaseResponse
 
-
 router = APIRouter(tags=["Utils"])
 
 

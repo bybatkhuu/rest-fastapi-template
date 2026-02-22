@@ -10,7 +10,6 @@ from typing import Any
 # Third-party libraries
 import aiohttp
 
-
 logger = logging.getLogger(__name__)
 
 

@@ -10,7 +10,6 @@ from api.logger import logger
 from .schemas import TaskBasePM, TaskPM, TaskUpPM, ResTaskPM, ResTasksPM
 from . import service
 
-
 router = APIRouter(prefix="/tasks", tags=["Tasks"])
 
 
@@ -173,7 +172,7 @@ def get_task(
         ...,
         min_length=8,
         max_length=64,
-        regex=ALPHANUM_HYPHEN_REGEX,
+        pattern=ALPHANUM_HYPHEN_REGEX,
         title="Task ID",
         description="Task ID to get.",
         examples=["1701388800_a0dc99d68d5e427eafe00525fac47012"],
@@ -222,7 +221,7 @@ def update_task(
         ...,
         min_length=8,
         max_length=64,
-        regex=ALPHANUM_HYPHEN_REGEX,
+        pattern=ALPHANUM_HYPHEN_REGEX,
         title="Task ID",
         description="Task ID to update.",
         examples=["1701388800_cd388fca74de4e8085df41e7c6df762e"],
@@ -272,7 +271,7 @@ def delete_task(
         ...,
         min_length=8,
         max_length=64,
-        regex=ALPHANUM_HYPHEN_REGEX,
+        pattern=ALPHANUM_HYPHEN_REGEX,
         title="Task ID",
         description="Task ID to delete.",
         examples=["1701388800_cd388fca74de4e8085df41e7c6df762e"],

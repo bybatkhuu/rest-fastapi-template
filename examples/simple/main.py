@@ -9,7 +9,6 @@ from typing import Any
 # Third-party libraries
 import requests
 
-
 logger = logging.getLogger(__name__)
 
 

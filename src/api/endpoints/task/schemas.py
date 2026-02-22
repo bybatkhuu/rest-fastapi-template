@@ -6,7 +6,6 @@ from api.core.constants import ALPHANUM_EXTEND_REGEX
 from api.config import config
 from api.core.schemas import IdPM, TimestampPM, BasePM, BaseResPM, LinksResPM
 
-
 _tasks_base_url = f"{config.api.prefix}/tasks"
 
 

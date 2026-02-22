@@ -10,7 +10,6 @@ from beans_logging import logger
 
 from api.core.constants import WarnEnum, HashAlgoEnum
 
-
 _path_max_length = 1024
 
 

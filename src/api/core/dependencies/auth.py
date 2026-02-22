@@ -10,7 +10,6 @@ from api.core.utils import validator
 from api.helpers.crypto import jwt as jwt_helper
 from api.core.exceptions import BaseHTTPException
 
-
 _http_bearer = HTTPBearer(auto_error=False)
 
 

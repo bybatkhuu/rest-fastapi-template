@@ -8,14 +8,13 @@ load_dotenv(override=True)
 from api.bootstrap import create_app, run_server  # noqa: E402
 from api.logger import logger  # noqa: E402
 
-
 app: FastAPI = create_app()
 
 
 def main() -> None:
     """Main function."""
 
-    run_server(app="api.__main__:app")
+    run_server(app=app)
     return
 
 

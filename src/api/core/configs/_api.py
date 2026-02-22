@@ -4,94 +4,74 @@ from typing import Any
 from pydantic import Field, field_validator, ValidationInfo, model_validator
 from pydantic_settings import SettingsConfigDict
 
-from api.core.constants import ENV_PREFIX_API, HTTPSchemeEnum
+from api.core.constants import ENV_PREFIX_API, HTTPSchemeEnum, API_SLUG
 from ._base import BaseConfig
 from ._dev import DevConfig
 from ._security import SecurityConfig
 from ._docs import DocsConfig, FrozenDocsConfig
 from ._paths import PathsConfig, FrozenPathsConfig
+from ._logger import LoggerConfigPM, FrozenLoggerConfigPM
 
 
 class ApiConfig(BaseConfig):
     name: str = Field(default="FastAPI Template", min_length=2, max_length=128)
-    slug: str = Field(default="rest-fastapi-template", min_length=2, max_length=128)
+    slug: str = Field(default=API_SLUG, min_length=2, max_length=128)
     http_scheme: HTTPSchemeEnum = Field(default=HTTPSchemeEnum.http)
     bind_host: str = Field(default="0.0.0.0", min_length=2, max_length=128)
     port: int = Field(default=8000, ge=80, lt=65536)
     version: str = Field(default="1", min_length=1, max_length=16)
     prefix: str = Field(default="/api/v{api_version}", max_length=128)
-    gzip_min_size: int = Field(default=1024, ge=0, le=10_485_760)  # 512 bytes
+    gzip_min_size: int = Field(default=1024, ge=0, le=10_485_760)
     behind_proxy: bool = Field(default=True)
     behind_cf_proxy: bool = Field(default=True)
     dev: DevConfig = Field(default_factory=DevConfig)
     security: SecurityConfig = Field(default_factory=SecurityConfig)
     docs: DocsConfig = Field(default_factory=DocsConfig)
     paths: PathsConfig = Field(default_factory=PathsConfig)
+    logger: LoggerConfigPM = Field(default_factory=LoggerConfigPM)
 
-    @field_validator("slug")
-    @classmethod
-    def _check_slug(cls, val: str, info: ValidationInfo) -> str:
-        if (not val) and ("name" in info.data):
-            val = (
-                info.data["name"]
-                .lower()
-                .strip()
-                .replace(" ", "-")
-                .replace("_", "-")
-                .replace(".", "-")
-            )
-
-        return val
-
-    @field_validator("prefix")
+    @field_validator("prefix", mode="after")
     @classmethod
     def _check_prefix(cls, val: str, info: ValidationInfo) -> str:
-        if val and ("{api_version}" in val) and ("version" in info.data):
+        if val and ("{api_version}" in val):
             val = val.format(api_version=info.data["version"])
 
         return val
 
-    @field_validator("docs")
+    @field_validator("docs", mode="after")
     @classmethod
     def _check_docs(cls, val: DocsConfig, info: ValidationInfo) -> DocsConfig:
-        if val.enabled and ("prefix" in info.data):
-            if val.openapi_url and ("{api_prefix}" in val.openapi_url):
-                val.openapi_url = val.openapi_url.format(api_prefix=info.data["prefix"])
+        _docs_dict = val.model_dump()
+        if val.enabled:
+            for _key, _doc in _docs_dict.items():
+                if (
+                    isinstance(_doc, str)
+                    and _key.endswith("url")
+                    and ("{api_prefix}" in _doc)
+                ):
+                    _docs_dict[_key] = _doc.format(api_prefix=info.data["prefix"])
 
-            if val.docs_url and ("{api_prefix}" in val.docs_url):
-                val.docs_url = val.docs_url.format(api_prefix=info.data["prefix"])
-
-            if val.redoc_url and ("{api_prefix}" in val.redoc_url):
-                val.redoc_url = val.redoc_url.format(api_prefix=info.data["prefix"])
-
-            if val.swagger_ui_oauth2_redirect_url and (
-                "{api_prefix}" in val.swagger_ui_oauth2_redirect_url
-            ):
-                val.swagger_ui_oauth2_redirect_url = (
-                    val.swagger_ui_oauth2_redirect_url.format(
-                        api_prefix=info.data["prefix"]
-                    )
-                )
-
-        val = FrozenDocsConfig(**val.model_dump())
+        val = FrozenDocsConfig(**_docs_dict)
         return val
 
-    @field_validator("paths")
+    @field_validator("paths", mode="after")
     @classmethod
     def _check_paths(cls, val: PathsConfig, info: ValidationInfo) -> FrozenPathsConfig:
-        if "slug" in info.data:
-            if "{api_slug}" in val.tmp_dir:
-                val.tmp_dir = val.tmp_dir.format(api_slug=info.data["slug"])
+        _paths_dict = val.model_dump()
+        for _key, _path in _paths_dict.items():
+            if isinstance(_path, str) and ("{api_slug}" in _path):
+                _paths_dict[_key] = _path.format(api_slug=info.data["slug"])
 
-            if "{api_slug}" in val.uploads_dir:
-                val.uploads_dir = val.uploads_dir.format(api_slug=info.data["slug"])
-            elif "{tmp_dir}" in val.uploads_dir:
-                val.uploads_dir = val.uploads_dir.format(tmp_dir=val.tmp_dir)
+        val = FrozenPathsConfig(**_paths_dict)
+        return val
 
-            if "{api_slug}" in val.data_dir:
-                val.data_dir = val.data_dir.format(api_slug=info.data["slug"])
+    @field_validator("logger", mode="after")
+    @classmethod
+    def _check_logger(cls, val: LoggerConfigPM, info: ValidationInfo) -> LoggerConfigPM:
+        if "{api_slug}" in val.app_name:
+            val.app_name = val.app_name.format(api_slug=info.data["slug"])
 
-        val = FrozenPathsConfig(**val.model_dump())
+        val = FrozenLoggerConfigPM(**val.model_dump())
         return val
 
     @model_validator(mode="before")
@@ -125,8 +105,8 @@ class ApiConfig(BaseConfig):
                 if sys.argv[0].endswith("fastapi") and sys.argv[1] == "run":
                     values["bind_host"] = "0.0.0.0"  # nosec B104
 
-        elif values["security"]["ssl"]["enabled"]:
-            values["http_scheme"] = HTTPSchemeEnum.https
+        # elif values["security"]["ssl"]["enabled"]:
+        #     values["http_scheme"] = HTTPSchemeEnum.https
 
         return values
 
@@ -137,4 +117,7 @@ class FrozenApiConfig(ApiConfig):
     model_config = SettingsConfigDict(frozen=True)
 
 
-__all__ = ["ApiConfig", "FrozenApiConfig"]
+__all__ = [
+    "ApiConfig",
+    "FrozenApiConfig",
+]

@@ -1,6 +1,6 @@
 from typing import Any
 
-from pydantic import Field, constr, model_validator
+from pydantic import Field, model_validator
 from pydantic_settings import SettingsConfigDict
 
 from api.core.constants import ENV_PREFIX_API
@@ -9,12 +9,12 @@ from ._base import BaseConfig
 
 class DevConfig(BaseConfig):
     reload: bool = Field(default=False)
-    reload_includes: (
-        list[constr(strip_whitespace=True, min_length=1, max_length=256)]  # type: ignore
-    ) | None = Field(default=["*.json", "*.yml", "*.yaml", "*.toml", "*.md"])
-    reload_excludes: (
-        list[constr(strip_whitespace=True, min_length=1, max_length=256)] | None  # type: ignore
-    ) = Field(default=[".*", "~*", ".py[cod]", ".sw.*", "__pycache__", "*.log", "logs"])
+    reload_includes: list[str] | None = Field(
+        default=["*.json", "*.yml", "*.yaml", "*.toml", "*.md"]
+    )
+    reload_excludes: list[str] | None = Field(
+        default=[".*", "~*", ".py[cod]", ".sw.*", "__pycache__", "*.log", "logs"]
+    )
 
     model_config = SettingsConfigDict(env_prefix=f"{ENV_PREFIX_API}DEV_")
 
@@ -32,4 +32,7 @@ class FrozenDevConfig(DevConfig):
     model_config = SettingsConfigDict(frozen=True)
 
 
-__all__ = ["DevConfig", "FrozenDevConfig"]
+__all__ = [
+    "DevConfig",
+    "FrozenDevConfig",
+]

@@ -26,21 +26,21 @@ class PathsConfig(BaseConfig):
     #     default="{data_dir}/models/{{model_id}}", min_length=2, max_length=1024
     # )
 
-    @field_validator("data_dir")
+    @field_validator("tmp_dir", mode="after")
     @classmethod
-    def _check_data_dir(cls, val: str) -> str:
-        _data_dir_env = f"{ENV_PREFIX_API}DATA_DIR"
-        if _data_dir_env in os.environ:
-            val = os.getenv(_data_dir_env)
+    def _check_tmp_dir(cls, val: str) -> str:
+        _tmp_dir = os.getenv(f"{ENV_PREFIX_API}TMP_DIR", "")
+        if _tmp_dir:
+            val = _tmp_dir
 
         return val
 
-    @field_validator("tmp_dir")
+    @field_validator("data_dir", mode="after")
     @classmethod
-    def _check_tmp_dir(cls, val: str) -> str:
-        _tmp_dir_env = f"{ENV_PREFIX_API}TMP_DIR"
-        if _tmp_dir_env in os.environ:
-            val = os.getenv(_tmp_dir_env)
+    def _check_data_dir(cls, val: str) -> str:
+        _data_dir = os.getenv(f"{ENV_PREFIX_API}DATA_DIR", "")
+        if _data_dir:
+            val = _data_dir
 
         return val
 
@@ -52,12 +52,19 @@ class FrozenPathsConfig(PathsConfig):
     @classmethod
     def _check_all(cls, values: dict[str, Any]) -> dict[str, Any]:
         for _key, _val in values.items():
-            if isinstance(_val, str) and ("{data_dir}" in _val):
-                values[_key] = _val.format(data_dir=values["data_dir"])
+            if isinstance(_val, str):
+                if "{data_dir}" in _val:
+                    values[_key] = _val.format(data_dir=values["data_dir"])
+
+                if "{tmp_dir}" in _val:
+                    values[_key] = _val.format(tmp_dir=values["tmp_dir"])
 
         return values
 
     model_config = SettingsConfigDict(frozen=True)
 
 
-__all__ = ["PathsConfig", "FrozenPathsConfig"]
+__all__ = [
+    "PathsConfig",
+    "FrozenPathsConfig",
+]
