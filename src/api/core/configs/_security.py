@@ -8,6 +8,7 @@ from api.core.constants import (
     ASYMMETRIC_ALGORITHM_REGEX,
     JWT_ALGORITHM_REGEX,
 )
+
 from ._base import FrozenBaseConfig
 
 _ENV_PREFIX_SECURITY = f"{ENV_PREFIX_API}SECURITY_"

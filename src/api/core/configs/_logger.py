@@ -7,6 +7,7 @@ from beans_logging.config import FileConfigPM as BaseFileConfigPM
 from beans_logging_fastapi import LoggerConfigPM as BaseLoggerConfigPM
 
 from api.core.constants import ENV_PREFIX_API
+
 from ._base import BaseConfig, FrozenBaseConfig
 
 

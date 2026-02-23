@@ -6,6 +6,7 @@ from pydantic_settings import SettingsConfigDict
 from potato_util import is_debug_mode
 
 from api.core.constants import EnvEnum, ENV_PREFIX
+
 from ._base import FrozenBaseConfig
 from ._dev import DevConfig, FrozenDevConfig
 from ._api import ApiConfig, FrozenApiConfig

@@ -8,6 +8,7 @@ from pydantic_settings import SettingsConfigDict
 from potato_util import validator
 
 from api.core.constants import ENV_PREFIX_API
+
 from ._base import BaseConfig
 
 

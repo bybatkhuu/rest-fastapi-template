@@ -23,18 +23,6 @@ class WarnEnum(str, Enum):
     IGNORE = "IGNORE"
 
 
-class LanguageEnum(str, Enum):
-    en = "en"
-    ko = "ko"
-    mn = "mn"
-
-
-class CurrencyEnum(str, Enum):
-    USD = "USD"
-    KRW = "KRW"
-    MNT = "MNT"
-
-
 class HashAlgoEnum(str, Enum):
     md5 = "md5"
     sha1 = "sha1"
@@ -42,6 +30,13 @@ class HashAlgoEnum(str, Enum):
     sha256 = "sha256"
     sha384 = "sha384"
     sha512 = "sha512"
+
+
+class ConfigFileFormatEnum(str, Enum):
+    YAML = "YAML"
+    JSON = "JSON"
+    TOML = "TOML"
+    INI = "INI"
 
 
 class HTTPSchemeEnum(str, Enum):
@@ -55,8 +50,7 @@ __all__ = [
     "API_SLUG",
     "EnvEnum",
     "WarnEnum",
-    "LanguageEnum",
-    "CurrencyEnum",
     "HashAlgoEnum",
+    "ConfigFileFormatEnum",
     "HTTPSchemeEnum",
 ]

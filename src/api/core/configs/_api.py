@@ -5,6 +5,7 @@ from pydantic import Field, field_validator, ValidationInfo, model_validator
 from pydantic_settings import SettingsConfigDict
 
 from api.core.constants import ENV_PREFIX_API, HTTPSchemeEnum, API_SLUG
+
 from ._base import BaseConfig
 from ._dev import DevConfig
 from ._security import SecurityConfig

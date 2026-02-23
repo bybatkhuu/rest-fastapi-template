@@ -1,7 +1,7 @@
 from pydantic_settings import (
     BaseSettings,
     SettingsConfigDict,
-    CliSettingsSource,
+    # CliSettingsSource,
     PydanticBaseSettingsSource,
 )
 
@@ -27,7 +27,7 @@ class BaseConfig(BaseSettings):
             file_secret_settings,
             dotenv_settings,
             env_settings,
-            CliSettingsSource(settings_cls, cli_parse_args=True),
+            # CliSettingsSource(settings_cls, cli_parse_args=True),
             init_settings,
         )
 
