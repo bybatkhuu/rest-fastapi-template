@@ -1,7 +1,7 @@
 from http import HTTPStatus
 from typing import Any
 
-from pydantic import validate_call, conint, constr
+from pydantic import validate_call
 from starlette.background import BackgroundTask
 from fastapi import Request
 from fastapi.encoders import jsonable_encoder
@@ -25,18 +25,16 @@ class BaseResponse(JSONResponse):
     def __init__(
         self,
         content: Any = None,
-        status_code: conint(ge=100, le=599) | None = 200,  # type: ignore
+        status_code: int = 200,
         headers: dict[str, str] | None = None,
-        media_type: constr(strip_whitespace=True) | None = None,  # type: ignore
+        media_type: str | None = None,
         background: BackgroundTask | None = None,
         request: Request | None = None,
-        message: None | (
-            constr(strip_whitespace=True, min_length=1, max_length=256)  # type: ignore
-        ) = None,
+        message: str | None = None,
         links: dict[str, Any] | None = None,
         meta: dict[str, Any] | None = None,
         error: Any = None,
-        response_schema: type[BaseResPM] | None = BaseResPM,
+        response_schema: type[BaseResPM] = BaseResPM,
     ) -> None:
         """Constructor method for BaseResponse class.
         This will prepare the most response data and pass it to `JSONResponse` parent class constructor.
@@ -66,7 +64,7 @@ class BaseResponse(JSONResponse):
             if error and isinstance(error, dict) and ("message" in error):
                 message = str(error["message"])
             else:
-                message: str = _http_status.phrase
+                message = _http_status.phrase
 
         if not links:
             links = {}
@@ -93,7 +91,7 @@ class BaseResponse(JSONResponse):
 
         if error and isinstance(error, dict):
             if ("code" in error) and ("X-Error-Code" not in headers):
-                headers["X-Error-Code"] = error.get("code")
+                headers["X-Error-Code"] = error.get("code", f"{status_code}_00000")
 
             if (not config.debug) and (500 <= status_code) and ("detail" in error):
                 error["detail"] = None
@@ -118,7 +116,7 @@ class BaseResponse(JSONResponse):
                 headers["Retry-After"] = "1800"
 
         _response_pm = response_schema(
-            message=message, data=content, links=links, meta=meta, error=error
+            message=message, data=content, links=links, meta=meta, error=error  # type: ignore
         )
         _content = jsonable_encoder(obj=_response_pm, by_alias=True)
 

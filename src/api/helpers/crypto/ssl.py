@@ -44,18 +44,22 @@ async def async_create_ssl_certs(
     """Async generate and create SSL key and cert files.
 
     Args:
-        ssl_dir    (str            , required): SSL directory path.
-        cert_fname (str            , required): Certificate file name.
-        key_fname  (str            , required): Key file name.
-        key_size   (int            , required): Key size.
-        x509_attrs (X509AttrsPM, optional): X509 named attributes. Defaults to X509AttrsPM().
-        force      (bool           , optional): Force to create SSL key and cert files. Defaults to False.
-        warn_mode  (WarnEnum       , optional): Warning mode. Defaults to WarnEnum.DEBUG.
+        ssl_dir    (str                         , required): SSL directory path.
+        cert_fname (str                         , required): Certificate file name.
+        key_fname  (str                         , required): Key file name.
+        key_size   (int                         , required): Key size.
+        x509_attrs (X509AttrsPM | dict[str, Any], optional): X509 named attributes. Defaults to X509AttrsPM().
+        force      (bool                         , optional): Force to create SSL key and cert files. Defaults to False.
+        warn_mode  (WarnEnum                     , optional): Warning mode. Defaults to WarnEnum.DEBUG.
 
     Raises:
         FileExistsError: When warning mode is set to ERROR and SSL key or cert files already exist.
         OSError        : If failed to create SSL key or cert files.
     """
+
+    assert isinstance(
+        x509_attrs, X509AttrsPM
+    ), f"`x509_attrs` argument type is invalid {type(x509_attrs)}, should be <X509AttrsPM>!"
 
     _key_path = os.path.join(ssl_dir, key_fname)
     _cert_path = os.path.join(ssl_dir, cert_fname)
@@ -98,7 +102,6 @@ async def async_create_ssl_certs(
 
         await utils.async_remove_file(file_path=_cert_path, warn_mode=warn_mode)
 
-    x509_attrs = cast(X509AttrsPM, x509_attrs)
     _subject = _issuer = x509.Name(
         [
             x509.NameAttribute(NameOID.COUNTRY_NAME, x509_attrs.C),
@@ -178,18 +181,22 @@ def create_ssl_certs(
     """Generate and create SSL key and cert files.
 
     Args:
-        ssl_dir    (str            , required): SSL directory path.
-        key_fname  (str            , required): Key file name.
-        cert_fname (str            , required): Certificate file name.
-        key_size   (int            , required): Key size.
-        x509_attrs (X509AttrsPM, optional): X509 named attributes. Defaults to X509AttrsPM().
-        force      (bool           , optional): Force to create SSL key and cert files. Defaults to False.
-        warn_mode  (WarnEnum       , optional): Warning mode. Defaults to WarnEnum.DEBUG.
+        ssl_dir    (str                         , required): SSL directory path.
+        key_fname  (str                         , required): Key file name.
+        cert_fname (str                         , required): Certificate file name.
+        key_size   (int                         , required): Key size.
+        x509_attrs (X509AttrsPM | dict[str, Any], optional): X509 named attributes. Defaults to X509AttrsPM().
+        force      (bool                        , optional): Force to create SSL key and cert files. Defaults to False.
+        warn_mode  (WarnEnum                    , optional): Warning mode. Defaults to WarnEnum.DEBUG.
 
     Raises:
         FileExistsError: When warning mode is set to ERROR and SSL key or cert files already exist.
         OSError        : If failed to create SSL key or cert files.
     """
+
+    assert isinstance(
+        x509_attrs, X509AttrsPM
+    ), f"`x509_attrs` argument type is invalid {type(x509_attrs)}, should be <X509AttrsPM>!"
 
     _key_path = os.path.join(ssl_dir, key_fname)
     _cert_path = os.path.join(ssl_dir, cert_fname)
@@ -229,7 +236,6 @@ def create_ssl_certs(
 
         utils.remove_file(file_path=_cert_path, warn_mode=warn_mode)
 
-    x509_attrs = cast(X509AttrsPM, x509_attrs)
     _subject = _issuer = x509.Name(
         [
             x509.NameAttribute(NameOID.COUNTRY_NAME, x509_attrs.C),

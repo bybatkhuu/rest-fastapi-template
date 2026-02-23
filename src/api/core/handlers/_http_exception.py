@@ -6,7 +6,9 @@ from api.core.responses import BaseResponse
 
 
 # For HTTPException error:
-async def http_exception_handler(request: Request, exc: HTTPException) -> BaseResponse:
+async def http_exception_handler(
+    request: Request, exc: HTTPException | Exception
+) -> BaseResponse:
     """HTTPException handler.
 
     Args:
@@ -16,6 +18,10 @@ async def http_exception_handler(request: Request, exc: HTTPException) -> BaseRe
     Returns:
         BaseResponse: Response object.
     """
+
+    assert isinstance(
+        exc, HTTPException
+    ), f"`exc` argument type is invalid {type(exc)}, expected <HTTPException>!"
 
     _message: str
     _error: dict | str | None = None
@@ -38,12 +44,13 @@ async def http_exception_handler(request: Request, exc: HTTPException) -> BaseRe
         if _error_code_enum:
             _error = _error_code_enum.value.model_dump()
 
+    _headers = dict(exc.headers) if exc.headers else None
     return BaseResponse(
         request=request,
         status_code=exc.status_code,
         message=_message,
         error=_error,
-        headers=exc.headers,
+        headers=_headers,
     )
 
 

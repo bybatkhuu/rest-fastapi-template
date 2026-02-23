@@ -34,7 +34,7 @@ def server_error_handler(request: Request, exc: Exception) -> BaseResponse:
     _status_code = _error_enum.value.status_code
     _error: dict[str, Any] = _error_enum.value.model_dump()
     _error["detail"] = _exc_str
-    _message: str = _error.get("message", "")
+    _message: str = _error.get("message", "Internal Server Error")
 
     logger.exception(f"[{_request_id}] {_error_enum.value.code} - {_exc_str}")
     log_http_error(
