@@ -17,7 +17,9 @@ class ApiConfig(BaseConfig):
     name: str = Field(default="FastAPI Template", min_length=2, max_length=128)
     slug: str = Field(default=API_SLUG, min_length=2, max_length=128)
     http_scheme: HTTPSchemeEnum = Field(default=HTTPSchemeEnum.http)
-    bind_host: str = Field(default="0.0.0.0", min_length=2, max_length=128)
+    bind_host: str = Field(
+        default="0.0.0.0", min_length=2, max_length=128  # nosec B104
+    )
     port: int = Field(default=8000, ge=80, lt=65536)
     version: str = Field(default="1", min_length=1, max_length=16)
     prefix: str = Field(default="/api/v{api_version}", max_length=128)

@@ -1,5 +1,3 @@
-from typing import Any
-
 from pydantic import Field, constr, SecretStr
 from pydantic_settings import SettingsConfigDict
 
