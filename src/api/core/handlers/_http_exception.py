@@ -1,7 +1,8 @@
 from fastapi import HTTPException, Request
 
+from potato_util.http import get_http_status
+
 from api.core.constants import ErrorCodeEnum
-from api.core import utils
 from api.core.responses import BaseResponse
 
 
@@ -26,7 +27,7 @@ async def http_exception_handler(
     _message: str
     _error: dict | str | None = None
 
-    _http_status, _ = utils.get_http_status(status_code=exc.status_code)
+    _http_status, _ = get_http_status(status_code=exc.status_code)
     if isinstance(exc.detail, dict):
         _message = str(exc.detail.get("message", _http_status.phrase))
 

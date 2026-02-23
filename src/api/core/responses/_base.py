@@ -7,9 +7,11 @@ from fastapi import Request
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
+from potato_util.http import get_http_status
+from potato_util.http.fastapi import get_relative_url
+
 from api.__version__ import __version__
 from api.config import config
-from api.core import utils
 from api.core.schemas import BaseResPM
 
 
@@ -58,7 +60,7 @@ class BaseResponse(JSONResponse):
         """
 
         _http_status: HTTPStatus
-        _http_status, _ = utils.get_http_status(status_code=status_code)
+        _http_status, _ = get_http_status(status_code=status_code)
 
         if not message:
             if error and isinstance(error, dict) and ("message" in error):
@@ -78,7 +80,7 @@ class BaseResponse(JSONResponse):
         if request:
             _request_id: str = request.state.request_id
 
-            links["self"] = f"{utils.get_relative_url(request)}"
+            links["self"] = f"{get_relative_url(request)}"
             meta["request_id"] = _request_id
             meta["method"] = request.method
             meta["base_url"] = str(request.base_url)[:-1]

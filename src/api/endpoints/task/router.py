@@ -1,8 +1,9 @@
 from fastapi import APIRouter, Request, Path, Body, Query, HTTPException
 from pydantic import constr
 
+from potato_util.http.fastapi import get_relative_url
+
 from api.core.constants import ALPHANUM_HYPHEN_REGEX, ErrorCodeEnum
-from api.core import utils
 from api.core.exceptions import BaseHTTPException
 from api.core.responses import BaseResponse
 from api.logger import logger
@@ -48,7 +49,7 @@ def get_tasks(
 
     _message = "Not found any task!"
     _task_list: list[TaskPM] = []
-    _links = {
+    _links: dict[str, str | None] = {
         "first": None,
         "prev": None,
         "next": None,
@@ -65,24 +66,24 @@ def get_tasks(
         _url = request.url.remove_query_params(["skip", "limit", "is_desc"])
 
         if 0 < _all_count:
-            _links["first"] = utils.get_relative_url(
+            _links["first"] = get_relative_url(
                 _url.include_query_params(skip=0, limit=limit, is_desc=is_desc)
             )
 
             _last_skip = max((_all_count - 1) // limit * limit, 0)
-            _links["last"] = utils.get_relative_url(
+            _links["last"] = get_relative_url(
                 _url.include_query_params(skip=_last_skip, limit=limit, is_desc=is_desc)
             )
 
         if 0 < skip:
             _prev_skip = max(skip - limit, 0)
-            _links["prev"] = utils.get_relative_url(
+            _links["prev"] = get_relative_url(
                 _url.include_query_params(skip=_prev_skip, limit=limit, is_desc=is_desc)
             )
 
         if limit < len(_task_list):
             _task_list = _task_list[:limit]
-            _links["next"] = utils.get_relative_url(
+            _links["next"] = get_relative_url(
                 _url.include_query_params(
                     skip=(skip + limit), limit=limit, is_desc=is_desc
                 )

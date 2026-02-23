@@ -1,7 +1,8 @@
 from pydantic import validate_call
 
+from potato_util.dt import now_utc_dt
+
 from api.core.constants import ErrorCodeEnum, WarnEnum
-from api.core import utils
 from api.core.exceptions import BaseHTTPException
 from api.logger import log_mode
 
@@ -165,7 +166,7 @@ def update(
         if hasattr(_task, _key):
             setattr(_task, _key, _value)
 
-    _task.updated_at = utils.now_utc_dt()
+    _task.updated_at = now_utc_dt()
 
     log_mode(
         message=f"[{request_id}] - Successfully updated task with '{id}' ID.",

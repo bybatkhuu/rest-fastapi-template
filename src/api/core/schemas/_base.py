@@ -2,11 +2,12 @@ from datetime import datetime
 
 from pydantic import BaseModel, Field, constr, ConfigDict
 
-from api.core import utils
+from potato_util.dt import now_utc_dt
+from potato_util.generator import gen_unique_id
 
 
 class BasePM(BaseModel):
-    # model_config = ConfigDict(json_encoders={datetime: utils.datetime_to_iso})
+    # model_config = ConfigDict(json_encoders={datetime: datetime_to_iso})
     pass
 
 
@@ -18,7 +19,7 @@ class ExtraBasePM(BaseModel):
 
 class IdPM(BasePM):
     id: constr(strip_whitespace=True) = Field(  # type: ignore
-        default_factory=utils.gen_unique_id,
+        default_factory=gen_unique_id,
         min_length=8,
         max_length=64,
         title="ID",
@@ -29,13 +30,13 @@ class IdPM(BasePM):
 
 class TimestampPM(BasePM):
     updated_at: datetime = Field(
-        default_factory=utils.now_utc_dt,
+        default_factory=now_utc_dt,
         title="Updated datetime",
         description="Last updated datetime of the resource.",
         examples=["2024-12-01T00:00:00+00:00"],
     )
     created_at: datetime = Field(
-        default_factory=utils.now_utc_dt,
+        default_factory=now_utc_dt,
         title="Created datetime",
         description="Created datetime of the resource.",
         examples=["2024-12-01T00:00:00+00:00"],

@@ -13,10 +13,12 @@ from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey
 from cryptography.hazmat.primitives.asymmetric.types import PrivateKeyTypes
+
+from potato_util.dt import now_utc_dt
+from potato_util.io import async_remove_file, async_create_dir, remove_file, create_dir
 from beans_logging import logger
 
 from api.core.constants import WarnEnum
-from api.core import utils
 
 from . import asymmetric as asymmetric_helper
 
@@ -65,8 +67,8 @@ async def async_create_ssl_certs(
     _cert_path = os.path.join(ssl_dir, cert_fname)
 
     if force:
-        await utils.async_remove_file(file_path=_key_path, warn_mode=warn_mode)
-        await utils.async_remove_file(file_path=_cert_path, warn_mode=warn_mode)
+        await async_remove_file(file_path=_key_path, warn_mode=warn_mode)
+        await async_remove_file(file_path=_cert_path, warn_mode=warn_mode)
 
     if (await aiofiles.os.path.isfile(_key_path)) and (
         await aiofiles.os.path.isfile(_cert_path)
@@ -100,7 +102,7 @@ async def async_create_ssl_certs(
         if warn_mode == WarnEnum.ERROR:
             raise FileExistsError(f"'{_cert_path}' SSL cert file already exists!")
 
-        await utils.async_remove_file(file_path=_cert_path, warn_mode=warn_mode)
+        await async_remove_file(file_path=_cert_path, warn_mode=warn_mode)
 
     _subject = _issuer = x509.Name(
         [
@@ -118,8 +120,8 @@ async def async_create_ssl_certs(
         .issuer_name(name=_issuer)
         .public_key(key=_private_key.public_key())
         .serial_number(number=x509.random_serial_number())
-        .not_valid_before(time=utils.now_utc_dt())
-        .not_valid_after(time=utils.now_utc_dt() + timedelta(days=365))
+        .not_valid_before(time=now_utc_dt())
+        .not_valid_after(time=now_utc_dt() + timedelta(days=365))
         .add_extension(
             extval=x509.SubjectAlternativeName([x509.DNSName(x509_attrs.DNS)]),
             critical=False,
@@ -127,7 +129,7 @@ async def async_create_ssl_certs(
         .sign(private_key=_private_key, algorithm=hashes.SHA256())
     )
 
-    await utils.async_create_dir(create_dir=ssl_dir, warn_mode=warn_mode)
+    await async_create_dir(create_dir=ssl_dir, warn_mode=warn_mode)
 
     if not await aiofiles.os.path.isfile(_key_path):
         try:
@@ -202,8 +204,8 @@ def create_ssl_certs(
     _cert_path = os.path.join(ssl_dir, cert_fname)
 
     if force:
-        utils.remove_file(file_path=_key_path, warn_mode=warn_mode)
-        utils.remove_file(file_path=_cert_path, warn_mode=warn_mode)
+        remove_file(file_path=_key_path, warn_mode=warn_mode)
+        remove_file(file_path=_cert_path, warn_mode=warn_mode)
 
     if os.path.isfile(_key_path) and os.path.isfile(_cert_path):
         logger.trace(
@@ -234,7 +236,7 @@ def create_ssl_certs(
         if warn_mode == WarnEnum.ERROR:
             raise FileExistsError(f"'{_cert_path}' SSL cert file already exists!")
 
-        utils.remove_file(file_path=_cert_path, warn_mode=warn_mode)
+        remove_file(file_path=_cert_path, warn_mode=warn_mode)
 
     _subject = _issuer = x509.Name(
         [
@@ -252,8 +254,8 @@ def create_ssl_certs(
         .issuer_name(name=_issuer)
         .public_key(key=_private_key.public_key())
         .serial_number(number=x509.random_serial_number())
-        .not_valid_before(time=utils.now_utc_dt())
-        .not_valid_after(time=utils.now_utc_dt() + timedelta(days=365))
+        .not_valid_before(time=now_utc_dt())
+        .not_valid_after(time=now_utc_dt() + timedelta(days=365))
         .add_extension(
             extval=x509.SubjectAlternativeName([x509.DNSName(x509_attrs.DNS)]),
             critical=False,
@@ -261,7 +263,7 @@ def create_ssl_certs(
         .sign(private_key=_private_key, algorithm=hashes.SHA256())
     )
 
-    utils.create_dir(create_dir=ssl_dir, warn_mode=warn_mode)
+    create_dir(create_dir=ssl_dir, warn_mode=warn_mode)
 
     if not os.path.isfile(_key_path):
         try:

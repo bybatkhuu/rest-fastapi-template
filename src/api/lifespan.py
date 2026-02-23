@@ -4,8 +4,9 @@ from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
+from potato_util.io import async_create_dir
+
 from api.__version__ import __version__
-from api.core import utils
 from api.config import config
 from api.helpers.crypto import asymmetric as asymmetric_helper
 from api.helpers.crypto import ssl as ssl_helper
@@ -47,7 +48,7 @@ async def _async_create_dirs() -> None:
     """
 
     try:
-        await utils.async_create_dir(config.api.paths.data_dir)
+        await async_create_dir(config.api.paths.data_dir)
         # Add directories needs to be created here...
     except Exception:
         logger.exception("Failed to create directories:")

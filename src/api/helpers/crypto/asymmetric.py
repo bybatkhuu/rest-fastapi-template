@@ -9,10 +9,11 @@ from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization, hashes
 from cryptography.hazmat.primitives.asymmetric.rsa import RSAPrivateKey, RSAPublicKey
 from pydantic import validate_call
+
+from potato_util.io import async_remove_file, async_create_dir, remove_file, create_dir
 from beans_logging import logger
 
 from api.core.constants import WarnEnum
-from api.core import utils
 
 
 @validate_call
@@ -76,8 +77,8 @@ async def async_create_keys(
     _public_key_path = os.path.join(asymmetric_keys_dir, public_key_fname)
 
     if force:
-        await utils.async_remove_file(file_path=_private_key_path, warn_mode=warn_mode)
-        await utils.async_remove_file(file_path=_public_key_path, warn_mode=warn_mode)
+        await async_remove_file(file_path=_private_key_path, warn_mode=warn_mode)
+        await async_remove_file(file_path=_public_key_path, warn_mode=warn_mode)
 
     if (await aiofiles.os.path.isfile(_private_key_path)) and (
         await aiofiles.os.path.isfile(_public_key_path)
@@ -117,7 +118,7 @@ async def async_create_keys(
         if warn_mode == WarnEnum.ERROR:
             raise FileExistsError(f"'{_public_key_path}' public key already exists!")
 
-        await utils.async_remove_file(file_path=_public_key_path, warn_mode=warn_mode)
+        await async_remove_file(file_path=_public_key_path, warn_mode=warn_mode)
 
     _private_pem: bytes = _private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
@@ -130,7 +131,7 @@ async def async_create_keys(
         format=serialization.PublicFormat.SubjectPublicKeyInfo,
     )
 
-    await utils.async_create_dir(create_dir=asymmetric_keys_dir, warn_mode=warn_mode)
+    await async_create_dir(create_dir=asymmetric_keys_dir, warn_mode=warn_mode)
 
     if not await aiofiles.os.path.isfile(_private_key_path):
         try:
@@ -309,8 +310,8 @@ def create_keys(
     _public_key_path = os.path.join(asymmetric_keys_dir, public_key_fname)
 
     if force:
-        utils.remove_file(file_path=_private_key_path, warn_mode=warn_mode)
-        utils.remove_file(file_path=_public_key_path, warn_mode=warn_mode)
+        remove_file(file_path=_private_key_path, warn_mode=warn_mode)
+        remove_file(file_path=_public_key_path, warn_mode=warn_mode)
 
     if os.path.isfile(_private_key_path) and os.path.isfile(_public_key_path):
         logger.trace(
@@ -346,7 +347,7 @@ def create_keys(
         if warn_mode == WarnEnum.ERROR:
             raise FileExistsError(f"'{_public_key_path}' public key already exists!")
 
-        utils.remove_file(file_path=_public_key_path, warn_mode=warn_mode)
+        remove_file(file_path=_public_key_path, warn_mode=warn_mode)
 
     _private_pem: bytes = _private_key.private_bytes(
         encoding=serialization.Encoding.PEM,
@@ -359,7 +360,7 @@ def create_keys(
         format=serialization.PublicFormat.SubjectPublicKeyInfo,
     )
 
-    utils.create_dir(create_dir=asymmetric_keys_dir, warn_mode=warn_mode)
+    create_dir(create_dir=asymmetric_keys_dir, warn_mode=warn_mode)
 
     if not os.path.isfile(_private_key_path):
         try:

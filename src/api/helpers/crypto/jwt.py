@@ -5,7 +5,7 @@ from jwt.types import Options
 from jwt.api_jwt import AllowedPrivateKeyTypes, AllowedPublicKeyTypes
 from pydantic import validate_call, SecretStr
 
-from api.core import utils
+from potato_util.dt import now_utc_dt
 
 
 @validate_call(config={"arbitrary_types_allowed": True})
@@ -35,7 +35,7 @@ def encode(
         raise ValueError("'exp' is required in payload!")
 
     if "iat" not in payload:
-        payload["iat"] = utils.now_utc_dt()
+        payload["iat"] = now_utc_dt()
 
     if "jti" not in payload:
         raise ValueError("'jti' is required in payload!")

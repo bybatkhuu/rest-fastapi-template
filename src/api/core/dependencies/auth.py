@@ -4,9 +4,10 @@ from jwt import ExpiredSignatureError, InvalidTokenError
 from fastapi import Security, Depends, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
+from potato_util import validator
+
 from api.core.constants import ErrorCodeEnum, ALPHANUM_HOST_REGEX
 from api.config import config
-from api.core.utils import validator
 from api.helpers.crypto import jwt as jwt_helper
 from api.core.exceptions import BaseHTTPException
 
@@ -48,7 +49,7 @@ def auth_jwt(
             headers={"WWW-Authenticate": 'Bearer error="invalid_token"'},
         )
 
-    _payload: dict[str, Any] = None
+    _payload: dict[str, Any]
     try:
         _payload: dict[str, Any] = jwt_helper.decode(
             token=_access_token,
@@ -82,7 +83,7 @@ def get_user_id(payload: dict[str, Any] = Depends(auth_jwt)) -> str:
         str: The user ID.
     """
 
-    _user_id: str = payload.get("sub")
+    _user_id: str = payload.get("sub", "")
     return _user_id
 
 
@@ -124,12 +125,12 @@ class AuthScopeDep:
         """
 
         if self.allow_owner:
-            _auth_user_id: str = payload.get("sub")
+            _auth_user_id: str = payload.get("sub", "")
             _path_params: list[str] = list(request.path_params.values())
             if _path_params and (_path_params[0] == _auth_user_id):
                 return payload
 
-        _token_all_scope: str = payload.get("scope")
+        _token_all_scope: str = payload.get("scope", "")
         _token_scope_list: list[str] = _token_all_scope.split(" ")
         if self.allow_scope not in _token_scope_list:
             raise BaseHTTPException(
