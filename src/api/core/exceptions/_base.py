@@ -1,6 +1,6 @@
-from typing import Any
+from typing import Any, cast
 
-from pydantic import conint, constr, validate_call
+from pydantic import validate_call
 from fastapi import HTTPException
 
 from api.core.constants import ErrorCodeEnum
@@ -17,11 +17,9 @@ class BaseHTTPException(HTTPException):
     def __init__(
         self,
         error_enum: ErrorCodeEnum,
-        status_code: conint(ge=100, le=599) | None = None,  # type: ignore
-        message: None | (
-            constr(strip_whitespace=True, min_length=1, max_length=256)  # type: ignore
-        ) = None,
-        description: constr(strip_whitespace=True, max_length=1024) | None = None,  # type: ignore
+        status_code: int | None = None,
+        message: str | None = None,
+        description: str | None = None,
         detail: Any = None,
         headers: dict[str, str] | None = None,
     ):
@@ -40,10 +38,10 @@ class BaseHTTPException(HTTPException):
         _error = error_enum.value.model_dump()
 
         if not status_code:
-            status_code: int = _error.get("status_code")
+            status_code = cast(int, _error.get("status_code", 500))
 
         if not message:
-            message: str = _error.get("message")
+            message = _error.get("message", "An error occurred")
 
         if description:
             _error["description"] = description

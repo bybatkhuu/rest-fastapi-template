@@ -3,7 +3,7 @@ import os
 from pydantic import Field, field_validator, ValidationInfo
 from pydantic_settings import SettingsConfigDict
 
-import potato_util as utils
+from potato_util import is_debug_mode
 
 from api.core.constants import EnvEnum, ENV_PREFIX
 from ._base import FrozenBaseConfig
@@ -29,7 +29,7 @@ class MainConfig(FrozenBaseConfig):
     @field_validator("debug", mode="after")
     @classmethod
     def _check_debug(cls, val: bool) -> bool:
-        if utils.is_debug_mode():
+        if is_debug_mode():
             val = True
 
         return val
