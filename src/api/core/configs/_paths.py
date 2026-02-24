@@ -4,15 +4,15 @@ from typing import Any
 from pydantic import Field, model_validator, field_validator
 from pydantic_settings import SettingsConfigDict
 
-from api.core.constants import ENV_PREFIX_API
+from api.core.constants import ENV_PREFIX_API, API_SLUG
 
 from ._base import BaseConfig
 
 
 class PathsConfig(BaseConfig):
-    tmp_dir: str = Field(default="../tmp", min_length=2, max_length=1024)
+    tmp_dir: str = Field(default=f"/tmp/{API_SLUG}", min_length=2, max_length=1024)
     uploads_dir: str = Field(default="{tmp_dir}/uploads", min_length=2, max_length=1024)
-    data_dir: str = Field(default="../data", min_length=2, max_length=1024)
+    data_dir: str = Field(default=f"/var/lib/{API_SLUG}", min_length=2, max_length=1024)
     security_dir: str = Field(
         default="{data_dir}/security", min_length=2, max_length=1024
     )
