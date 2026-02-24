@@ -14,7 +14,7 @@ app: FastAPI = create_app()
 def main() -> None:
     """Main function."""
 
-    run_server(app=app)
+    run_server(app="api.__main__:app")
     return
 
 
