@@ -54,16 +54,16 @@ cd ~/workspaces/projects
 **OPTION A.** Clone the repository:
 
 ```sh
-git clone https://github.com/bybatkhuu/rest.fastapi-template.git && \
-    cd rest.fastapi-template && \
+git clone https://github.com/[OWNER]/rest-fastapi-template.git && \
+    cd rest-fastapi-template && \
     git checkout cookiecutter
 ```
 
 **OPTION B.** Clone the repository (for **DEVELOPMENT**: git + ssh key):
 
 ```sh
-git clone git@github.com:bybatkhuu/rest.fastapi-template.git && \
-    cd rest.fastapi-template && \
+git clone git@github.com:[OWNER]/rest-fastapi-template.git && \
+    cd rest-fastapi-template && \
     git checkout cookiecutter
 ```
 
@@ -92,7 +92,7 @@ cookiecutter -f .
 ```sh
 cd [PROJECT_NAME]
 # For example:
-cd rest.fastapi-template
+cd rest-fastapi-template
 
 # Start:
 ./compose.sh start -l

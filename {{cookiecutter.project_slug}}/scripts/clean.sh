@@ -21,7 +21,7 @@ fi
 
 
 ## --- Variables --- ##
-# Load from envrionment variables:
+# Load from environment variables:
 PROJECT_SLUG="${PROJECT_SLUG:-{{cookiecutter.project_slug}}}"
 
 # Flags:

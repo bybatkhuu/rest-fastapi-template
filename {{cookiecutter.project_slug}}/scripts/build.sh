@@ -23,7 +23,7 @@ fi
 
 
 ## --- Variables --- ##
-# Load from envrionment variables:
+# Load from environment variables:
 # BASE_IMAGE
 IMG_REGISTRY=${IMG_REGISTRY:-{{cookiecutter.docker_registry}}}
 IMG_REPO=${PROJECT_SLUG:-{{cookiecutter.docker_repo_name}}}

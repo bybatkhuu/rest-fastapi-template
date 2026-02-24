@@ -506,7 +506,7 @@ results/
 output/
 outputs/
 .benchmarks/
-rest.fastapi-template/
+rest-fastapi-template/
 
 # Files:
 log
@@ -522,7 +522,7 @@ results
 output
 outputs
 .benchmarks
-rest.fastapi-template
+rest-fastapi-template
 env
 *.bak
 pm2-process.json
