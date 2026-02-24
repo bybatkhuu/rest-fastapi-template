@@ -539,3 +539,4 @@ volumes/**
 !volumes/configs/**/
 !volumes/configs/**/*
 volumes/configs/**/*.bak
+volumes/configs/**/*.DS_Store
