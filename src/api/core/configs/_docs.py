@@ -1,8 +1,6 @@
-import os
-import pathlib
 from typing import Any
 
-from pydantic import Field, model_validator, field_validator
+from pydantic import Field, model_validator
 from pydantic_settings import SettingsConfigDict
 
 from potato_util import validator
@@ -51,19 +49,6 @@ class DocsConfig(BaseConfig):
 
 
 class FrozenDocsConfig(DocsConfig):
-    @field_validator("description", mode="after")
-    @classmethod
-    def _check_description(cls, val: str) -> str:
-        _src_dir = pathlib.Path(__file__).parent.parent.parent.parent.resolve()
-        _description_path = str(
-            _src_dir / "./api/configs/docs/description.md"
-        )  # TODO: make it more flexible or remove it
-        if (not val) and os.path.isfile(_description_path):
-            with open(_description_path) as _file:
-                val = _file.read()
-
-        return val
-
     @model_validator(mode="before")
     @classmethod
     def _check_all(cls, values: dict[str, Any]) -> dict[str, Any]:
