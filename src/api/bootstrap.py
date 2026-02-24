@@ -39,7 +39,12 @@ def create_app() -> FastAPI:
         **config.api.docs.model_dump(exclude={"enabled"}),
     )
 
-    add_logger(app=app, config=config.api.logger)
+    add_logger(
+        app=app,
+        config=config.api.logger,
+        has_proxy_headers=config.api.behind_proxy,
+        has_cf_headers=config.api.behind_cf_proxy,
+    )
 
     add_middlewares(app=app)
     add_routers(app=app)

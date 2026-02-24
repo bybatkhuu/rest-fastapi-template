@@ -6,7 +6,6 @@ from api.core.constants import ENV_PREFIX_API, API_SLUG
 from api.core.configs import MainConfig
 from api.logger import logger
 
-
 _configs_dir = os.path.join("/etc", API_SLUG)
 _configs_dir_env = os.getenv(f"{ENV_PREFIX_API}CONFIGS_DIR", "")
 if _configs_dir_env:
