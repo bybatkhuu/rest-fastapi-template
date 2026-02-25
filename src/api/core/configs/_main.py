@@ -8,7 +8,7 @@ from potato_util import is_debug_mode
 from api.core.constants import EnvEnum, ENV_PREFIX
 
 from ._base import BaseMainConfig
-from ._uvicorn import UvicornConfig, FrozenUvicornConfig
+from ._server import ServerConfig, FrozenServerConfig
 from ._api import ApiConfig, FrozenApiConfig
 
 
@@ -38,23 +38,23 @@ class MainConfig(BaseMainConfig):
     @field_validator("api", mode="after")
     @classmethod
     def _check_api(cls, val: ApiConfig, info: ValidationInfo) -> FrozenApiConfig:
-        _uvicorn: UvicornConfig = val.uvicorn
+        _server: ServerConfig = val.server
         if info.data["env"] == EnvEnum.DEVELOPMENT:
-            _uvicorn.reload = True
+            _server.reload = True
 
         if val.security.ssl.enabled:
-            if not _uvicorn.ssl_keyfile:
-                _uvicorn.ssl_keyfile = os.path.join(
+            if not _server.ssl_keyfile:
+                _server.ssl_keyfile = os.path.join(
                     val.paths.ssl_dir, val.security.ssl.key_fname
                 )
 
-            if not _uvicorn.ssl_certfile:
-                _uvicorn.ssl_certfile = os.path.join(
+            if not _server.ssl_certfile:
+                _server.ssl_certfile = os.path.join(
                     val.paths.ssl_dir, val.security.ssl.cert_fname
                 )
 
-        _uvicorn = FrozenUvicornConfig(**_uvicorn.model_dump())
-        val = FrozenApiConfig(uvicorn=_uvicorn, **val.model_dump(exclude={"uvicorn"}))
+        _server = FrozenServerConfig(**_server.model_dump())
+        val = FrozenApiConfig(server=_server, **val.model_dump(exclude={"server"}))
         return val
 
     model_config = SettingsConfigDict(env_prefix=ENV_PREFIX, env_nested_delimiter="__")

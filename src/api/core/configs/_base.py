@@ -1,5 +1,3 @@
-import sys
-
 from pydantic_settings import (
     BaseSettings,
     SettingsConfigDict,
@@ -7,13 +5,7 @@ from pydantic_settings import (
     PydanticBaseSettingsSource,
 )
 
-is_running_server_cli = False
-if (
-    sys.argv[0].endswith("uvicorn")
-    or sys.argv[0].endswith("fastapi")
-    or sys.argv[0].endswith("gunicorn")
-):
-    is_running_server_cli = True
+from api.core import utils
 
 
 class BaseConfig(BaseSettings):
@@ -42,7 +34,7 @@ class BaseMainConfig(FrozenBaseConfig):
     ) -> tuple[PydanticBaseSettingsSource, ...]:
 
         _sources = [file_secret_settings]
-        if not is_running_server_cli:
+        if not utils.is_running_cli():
             _sources.append(CliSettingsSource(settings_cls, cli_parse_args=True))
         _sources.extend([dotenv_settings, env_settings, init_settings])
         _sources = tuple(_sources)

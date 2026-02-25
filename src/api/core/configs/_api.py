@@ -5,23 +5,15 @@ from pydantic import Field, field_validator, ValidationInfo, model_validator
 from pydantic_settings import SettingsConfigDict
 
 from api.core.constants import ENV_PREFIX_API, API_SLUG, HTTPSchemeEnum
+from api.core import utils
 
 from ._base import BaseConfig
 from ._gzip import GZipConfig
-from ._uvicorn import UvicornConfig
+from ._server import ServerConfig
 from ._security import SecurityConfig
 from ._docs import DocsConfig, FrozenDocsConfig
 from ._paths import PathsConfig, FrozenPathsConfig
 from ._logger import LoggerConfigPM, FrozenLoggerConfigPM
-
-
-is_running_server_cli = False
-if (
-    sys.argv[0].endswith("uvicorn")
-    or sys.argv[0].endswith("fastapi")
-    or sys.argv[0].endswith("gunicorn")
-):
-    is_running_server_cli = True
 
 
 class ApiConfig(BaseConfig):
@@ -35,7 +27,7 @@ class ApiConfig(BaseConfig):
     version: str = Field(default="1", min_length=1, max_length=16)
     prefix: str = Field(default="/api/v{api_version}", max_length=128)
     gzip: GZipConfig = Field(default_factory=GZipConfig)
-    uvicorn: UvicornConfig = Field(default_factory=UvicornConfig)
+    server: ServerConfig = Field(default_factory=ServerConfig)
     security: SecurityConfig = Field(default_factory=SecurityConfig)
     docs: DocsConfig = Field(default_factory=DocsConfig)
     paths: PathsConfig = Field(default_factory=PathsConfig)
@@ -55,7 +47,7 @@ class ApiConfig(BaseConfig):
         cls, val: SecurityConfig, info: ValidationInfo
     ) -> SecurityConfig:
 
-        if (not is_running_server_cli) and val.ssl.enabled:
+        if (not utils.is_running_cli()) and val.ssl.enabled:
             info.data["http_scheme"] = HTTPSchemeEnum.https
 
         return val
@@ -104,7 +96,7 @@ class FrozenApiConfig(ApiConfig):
     @model_validator(mode="before")
     @classmethod
     def _check_args(cls, values: dict[str, Any]) -> dict[str, Any]:
-        if is_running_server_cli:
+        if utils.is_running_cli():
             _has_host_arg = False
             for _i, _arg in enumerate(sys.argv):
                 if (
