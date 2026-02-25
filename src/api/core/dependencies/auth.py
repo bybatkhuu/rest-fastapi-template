@@ -4,9 +4,10 @@ from jwt import ExpiredSignatureError, InvalidTokenError
 from fastapi import Security, Depends, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
+from potato_util.constants import ALPHANUM_HOST_REGEX
 from potato_util import validator
 
-from api.core.constants import ErrorCodeEnum, ALPHANUM_HOST_REGEX
+from api.core.constants import ErrorCodeEnum
 from api.config import config
 from api.helpers.crypto import jwt as jwt_helper
 from api.core.exceptions import BaseHTTPException

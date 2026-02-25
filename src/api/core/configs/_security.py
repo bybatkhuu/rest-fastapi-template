@@ -1,13 +1,13 @@
 from pydantic import Field, constr, SecretStr
 from pydantic_settings import SettingsConfigDict
 
-from api.core.constants import (
-    ENV_PREFIX,
-    ENV_PREFIX_API,
+from potato_util.constants import (
     HTTP_METHOD_REGEX,
     ASYMMETRIC_ALGORITHM_REGEX,
     JWT_ALGORITHM_REGEX,
 )
+
+from api.core.constants import ENV_PREFIX, ENV_PREFIX_API
 
 from ._base import FrozenBaseConfig
 

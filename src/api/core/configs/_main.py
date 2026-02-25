@@ -3,9 +3,10 @@ import os
 from pydantic import Field, field_validator, ValidationInfo
 from pydantic_settings import SettingsConfigDict
 
+from potato_util.constants import EnvEnum
 from potato_util import is_debug_mode
 
-from api.core.constants import EnvEnum, ENV_PREFIX
+from api.core.constants import ENV_PREFIX
 
 from ._base import BaseMainConfig
 from ._uvicorn import UvicornConfig, FrozenUvicornConfig

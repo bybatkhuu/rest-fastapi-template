@@ -3,9 +3,9 @@ import base64
 from cryptography.hazmat.primitives import ciphers
 from cryptography.hazmat.primitives.ciphers import algorithms, modes
 from pydantic import validate_call
-from beans_logging import logger
 
-from api.core.constants import WarnEnum
+from potato_util.constants import WarnEnum
+from beans_logging import logger
 
 
 @validate_call(config={"arbitrary_types_allowed": True})

@@ -7,7 +7,8 @@ else:
 
 from pydantic import Field, model_validator, ConfigDict
 
-from api.core.constants import ALPHANUM_EXTEND_REGEX
+from potato_util.constants import ALPHANUM_EXTEND_REGEX
+
 from api.config import config
 from api.core.schemas import IdPM, TimestampPM, BasePM, BaseResPM, LinksResPM
 

@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Request, Path, Body, Query, HTTPException
 from pydantic import constr
 
+from potato_util.constants import ALPHANUM_HYPHEN_REGEX
 from potato_util.http.fastapi import get_relative_url
 
-from api.core.constants import ALPHANUM_HYPHEN_REGEX, ErrorCodeEnum
+from api.core.constants import ErrorCodeEnum
 from api.core.exceptions import BaseHTTPException
 from api.core.responses import BaseResponse
 from api.logger import logger

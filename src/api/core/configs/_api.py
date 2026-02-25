@@ -4,6 +4,8 @@ from typing import Any
 from pydantic import Field, field_validator, ValidationInfo, model_validator
 from pydantic_settings import SettingsConfigDict
 
+# from potato_util.constants import HTTPSchemeEnum
+
 from api.core.constants import ENV_PREFIX_API, API_SLUG, HTTPSchemeEnum
 from api.core import utils
 

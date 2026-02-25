@@ -1,9 +1,8 @@
 from pydantic import validate_call
 from fastapi.concurrency import run_in_threadpool
 
+from potato_util.constants import WarnEnum
 from beans_logging_fastapi import logger
-
-from api.core.constants import WarnEnum
 
 
 @validate_call

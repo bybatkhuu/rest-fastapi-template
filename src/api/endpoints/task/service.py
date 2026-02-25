@@ -1,8 +1,9 @@
 from pydantic import validate_call
 
+from potato_util.constants import WarnEnum
 from potato_util.dt import now_utc_dt
 
-from api.core.constants import ErrorCodeEnum, WarnEnum
+from api.core.constants import ErrorCodeEnum
 from api.core.exceptions import BaseHTTPException
 from api.logger import log_mode
 
