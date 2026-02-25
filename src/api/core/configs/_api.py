@@ -4,9 +4,10 @@ from typing import Any
 from pydantic import Field, field_validator, ValidationInfo, model_validator
 from pydantic_settings import SettingsConfigDict
 
-from api.core.constants import ENV_PREFIX_API, HTTPSchemeEnum, API_SLUG
+from api.core.constants import ENV_PREFIX_API, API_SLUG, HTTPSchemeEnum
 
-from ._base import BaseConfig, FrozenBaseConfig
+from ._base import BaseConfig
+from ._gzip import GZipConfig
 from ._uvicorn import UvicornConfig
 from ._security import SecurityConfig
 from ._docs import DocsConfig, FrozenDocsConfig
@@ -21,13 +22,6 @@ if (
     or sys.argv[0].endswith("gunicorn")
 ):
     is_running_server_cli = True
-
-
-class GZipConfig(FrozenBaseConfig):
-    min_size: int = Field(default=1024, ge=0, le=10_485_760)
-    compresslevel: int = Field(default=9, ge=1, le=9)
-
-    model_config = SettingsConfigDict(env_prefix=f"{ENV_PREFIX_API}GZIP_")
 
 
 class ApiConfig(BaseConfig):

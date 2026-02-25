@@ -7,13 +7,13 @@ from potato_util import is_debug_mode
 
 from api.core.constants import EnvEnum, ENV_PREFIX
 
-from ._base import FrozenBaseConfig
+from ._base import BaseMainConfig
 from ._uvicorn import UvicornConfig, FrozenUvicornConfig
 from ._api import ApiConfig, FrozenApiConfig
 
 
 # Main config schema:
-class MainConfig(FrozenBaseConfig):
+class MainConfig(BaseMainConfig):
     env: EnvEnum = Field(default=EnvEnum.LOCAL)
     debug: bool = Field(default=False)
     api: ApiConfig = Field(default_factory=ApiConfig)

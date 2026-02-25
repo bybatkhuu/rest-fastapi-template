@@ -1,9 +1,19 @@
+import sys
+
 from pydantic_settings import (
     BaseSettings,
     SettingsConfigDict,
-    # CliSettingsSource,
+    CliSettingsSource,
     PydanticBaseSettingsSource,
 )
+
+is_running_server_cli = False
+if (
+    sys.argv[0].endswith("uvicorn")
+    or sys.argv[0].endswith("fastapi")
+    or sys.argv[0].endswith("gunicorn")
+):
+    is_running_server_cli = True
 
 
 class BaseConfig(BaseSettings):
@@ -14,6 +24,13 @@ class BaseConfig(BaseSettings):
         arbitrary_types_allowed=True,
     )
 
+
+class FrozenBaseConfig(BaseConfig):
+    model_config = SettingsConfigDict(frozen=True)
+
+
+class BaseMainConfig(FrozenBaseConfig):
+
     @classmethod
     def settings_customise_sources(
         cls,
@@ -23,20 +40,17 @@ class BaseConfig(BaseSettings):
         dotenv_settings: PydanticBaseSettingsSource,
         file_secret_settings: PydanticBaseSettingsSource,
     ) -> tuple[PydanticBaseSettingsSource, ...]:
-        return (
-            file_secret_settings,
-            dotenv_settings,
-            env_settings,
-            # CliSettingsSource(settings_cls, cli_parse_args=True),
-            init_settings,
-        )
 
-
-class FrozenBaseConfig(BaseConfig):
-    model_config = SettingsConfigDict(frozen=True)
+        _sources = [file_secret_settings]
+        if not is_running_server_cli:
+            _sources.append(CliSettingsSource(settings_cls, cli_parse_args=True))
+        _sources.extend([dotenv_settings, env_settings, init_settings])
+        _sources = tuple(_sources)
+        return _sources
 
 
 __all__ = [
     "BaseConfig",
     "FrozenBaseConfig",
+    "BaseMainConfig",
 ]
