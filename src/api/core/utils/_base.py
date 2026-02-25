@@ -1,7 +1,6 @@
 import sys
 from functools import lru_cache
 
-
 CLI_KEYWORDS = [
     "uvicorn",
     "gunicorn",
