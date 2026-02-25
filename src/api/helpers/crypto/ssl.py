@@ -50,8 +50,8 @@ async def async_create_ssl_certs(
         key_fname  (str                         , required): Key file name.
         key_size   (int                         , required): Key size.
         x509_attrs (X509AttrsPM | dict[str, Any], optional): X509 named attributes. Defaults to X509AttrsPM().
-        force      (bool                         , optional): Force to create SSL key and cert files. Defaults to False.
-        warn_mode  (WarnEnum                     , optional): Warning mode. Defaults to WarnEnum.DEBUG.
+        force      (bool                        , optional): Force to create SSL key and cert files. Defaults to False.
+        warn_mode  (WarnEnum                    , optional): Warning mode. Defaults to WarnEnum.DEBUG.
 
     Raises:
         FileExistsError: When warning mode is set to ERROR and SSL key or cert files already exist.

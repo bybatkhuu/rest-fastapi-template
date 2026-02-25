@@ -25,7 +25,7 @@ def decrypt_aes_cbc(
         iv            (bytes      , required): The initialization vector to use for decryption.
         base64_decode (bool       , optional): Whether to decode the ciphertext from base64. Defaults to False.
         as_str        (bool       , optional): Whether to return the plaintext as a string or bytes.
-                                                        Defaults to False.
+                                                    Defaults to False.
         warn_mode     (WarnEnum   , optional): The warning mode to use. Defaults to WarnEnum.DEBUG.
 
     Raises:
