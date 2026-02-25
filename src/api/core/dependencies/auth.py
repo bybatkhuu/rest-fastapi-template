@@ -6,10 +6,10 @@ from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
 from potato_util.constants import ALPHANUM_HOST_REGEX
 from potato_util import validator
+from potato_util.crypto import jwt as jwt_utils
 
 from api.core.constants import ErrorCodeEnum
 from api.config import config
-from api.helpers.crypto import jwt as jwt_helper
 from api.core.exceptions import BaseHTTPException
 
 _http_bearer = HTTPBearer(auto_error=False)
@@ -52,7 +52,7 @@ def auth_jwt(
 
     _payload: dict[str, Any]
     try:
-        _payload: dict[str, Any] = jwt_helper.decode(
+        _payload: dict[str, Any] = jwt_utils.decode(
             token=_access_token,
             key=config.api.security.jwt.secret,
             algorithm=config.api.security.jwt.algorithm,

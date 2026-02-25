@@ -5,11 +5,11 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 
 from potato_util.io import async_create_dir
+from potato_util.crypto import asymmetric as asymmetric_utils
+from potato_util.crypto import ssl as ssl_utils
 
 from api.__version__ import __version__
 from api.config import config
-from api.helpers.crypto import asymmetric as asymmetric_helper
-from api.helpers.crypto import ssl as ssl_helper
 from api.logger import logger
 
 
@@ -17,7 +17,7 @@ def _create_ssl_certs() -> None:
     """Create SSL certificates if enabled and not exist."""
 
     if config.api.security.ssl.generate:
-        ssl_helper.create_ssl_certs(
+        ssl_utils.create_ssl_certs(
             ssl_dir=config.api.paths.ssl_dir,
             key_fname=config.api.security.ssl.key_fname,
             cert_fname=config.api.security.ssl.cert_fname,
@@ -87,7 +87,7 @@ async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
     logger.info("Preparing to startup...")
     # await _async_create_dirs()
     if config.api.security.asymmetric.generate:
-        await asymmetric_helper.async_create_keys(
+        await asymmetric_utils.async_create_keys(
             asymmetric_keys_dir=config.api.paths.asymmetric_keys_dir,
             key_size=config.api.security.asymmetric.key_size,
             private_key_fname=config.api.security.asymmetric.private_key_fname,
