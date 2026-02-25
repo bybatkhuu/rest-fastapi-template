@@ -13,17 +13,15 @@ CLI_KEYWORDS = [
 
 @lru_cache
 def is_running_cli() -> bool:
-    _is_running_cli = False
     for _keyword in CLI_KEYWORDS:
         if (
             sys.argv[0].endswith(_keyword)
             or sys.argv[0].endswith(f"{_keyword}.exe")
             or sys.argv[0].endswith(f"{_keyword}/__main__.py")
         ):
-            _is_running_cli = True
-            break
+            return True
 
-    return _is_running_cli
+    return False
 
 
 __all__ = [

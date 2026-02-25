@@ -8,7 +8,7 @@ from api.core.constants import ENV_PREFIX_API
 from ._base import BaseConfig
 
 
-class ServerConfig(BaseConfig):
+class UvicornConfig(BaseConfig):
     access_log: bool = Field(default=False)
     server_header: bool = Field(default=False)
     proxy_headers: bool = Field(default=True)
@@ -26,7 +26,7 @@ class ServerConfig(BaseConfig):
     model_config = SettingsConfigDict(env_prefix=f"{ENV_PREFIX_API}UVICORN_")
 
 
-class FrozenServerConfig(ServerConfig):
+class FrozenUvicornConfig(UvicornConfig):
     @model_validator(mode="before")
     @classmethod
     def _check_all(cls, values: dict[str, Any]) -> dict[str, Any]:
@@ -40,6 +40,6 @@ class FrozenServerConfig(ServerConfig):
 
 
 __all__ = [
-    "ServerConfig",
-    "FrozenServerConfig",
+    "UvicornConfig",
+    "FrozenUvicornConfig",
 ]

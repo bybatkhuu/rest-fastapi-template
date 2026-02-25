@@ -41,7 +41,7 @@ def create_app() -> FastAPI:
     add_logger(
         app=app,
         config=config.api.logger,
-        has_proxy_headers=config.api.server.proxy_headers,
+        has_proxy_headers=config.api.uvicorn.proxy_headers,
     )
 
     add_middlewares(app=app)
@@ -67,7 +67,7 @@ def run_server(app: FastAPI | ASGIApplication | Callable[..., Any] | str) -> Non
         app=app,
         host=config.api.bind_host,
         port=config.api.port,
-        **config.api.server.model_dump(),
+        **config.api.uvicorn.model_dump(),
     )
 
     return

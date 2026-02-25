@@ -9,7 +9,7 @@ from api.core import utils
 
 from ._base import BaseConfig
 from ._gzip import GZipConfig
-from ._server import ServerConfig
+from ._uvicorn import UvicornConfig
 from ._security import SecurityConfig
 from ._docs import DocsConfig, FrozenDocsConfig
 from ._paths import PathsConfig, FrozenPathsConfig
@@ -27,7 +27,7 @@ class ApiConfig(BaseConfig):
     version: str = Field(default="1", min_length=1, max_length=16)
     prefix: str = Field(default="/api/v{api_version}", max_length=128)
     gzip: GZipConfig = Field(default_factory=GZipConfig)
-    server: ServerConfig = Field(default_factory=ServerConfig)
+    uvicorn: UvicornConfig = Field(default_factory=UvicornConfig)
     security: SecurityConfig = Field(default_factory=SecurityConfig)
     docs: DocsConfig = Field(default_factory=DocsConfig)
     paths: PathsConfig = Field(default_factory=PathsConfig)
