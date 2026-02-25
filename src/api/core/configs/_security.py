@@ -33,6 +33,7 @@ class CorsConfig(FrozenBaseConfig):
         )
     )
     allow_credentials: bool = Field(default=False)
+    allow_private_network: bool = Field(default=False)
     expose_headers: list[str] = Field(default=[])
     max_age: int = Field(default=600, ge=0, le=86_400)  # Seconds (10 minutes)
 

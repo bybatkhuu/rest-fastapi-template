@@ -53,6 +53,7 @@ def pre_init() -> None:
 
     _create_ssl_certs()
     _check_ssl_certs()
+    # Add more pre-initialization tasks here...
 
     return
 
