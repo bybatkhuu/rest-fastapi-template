@@ -103,7 +103,6 @@ class PasswordConfig(FrozenBaseConfig):
 
 class SecurityConfig(FrozenBaseConfig):
     allowed_hosts: list[str] = Field(default=["*"])
-    forwarded_allow_ips: list[str] = Field(default=["*"])
     cors: CorsConfig = Field(default_factory=CorsConfig)
     ssl: SSLConfig = Field(default_factory=SSLConfig)
     asymmetric: AsymmetricConfig = Field(default_factory=AsymmetricConfig)

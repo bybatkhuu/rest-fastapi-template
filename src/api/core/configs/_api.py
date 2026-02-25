@@ -7,7 +7,7 @@ from pydantic_settings import SettingsConfigDict
 from api.core.constants import ENV_PREFIX_API, HTTPSchemeEnum, API_SLUG
 
 from ._base import BaseConfig
-from ._dev import DevConfig
+from ._uvicorn import UvicornConfig
 from ._security import SecurityConfig
 from ._docs import DocsConfig, FrozenDocsConfig
 from ._paths import PathsConfig, FrozenPathsConfig
@@ -15,7 +15,7 @@ from ._logger import LoggerConfigPM, FrozenLoggerConfigPM
 
 
 class ApiConfig(BaseConfig):
-    name: str = Field(default="FastAPI Template", min_length=2, max_length=128)
+    title: str = Field(default="FastAPI Template", min_length=2, max_length=128)
     slug: str = Field(default=API_SLUG, min_length=2, max_length=128)
     http_scheme: HTTPSchemeEnum = Field(default=HTTPSchemeEnum.http)
     bind_host: str = Field(
@@ -25,9 +25,7 @@ class ApiConfig(BaseConfig):
     version: str = Field(default="1", min_length=1, max_length=16)
     prefix: str = Field(default="/api/v{api_version}", max_length=128)
     gzip_min_size: int = Field(default=1024, ge=0, le=10_485_760)
-    behind_proxy: bool = Field(default=True)
-    behind_cf_proxy: bool = Field(default=True)
-    dev: DevConfig = Field(default_factory=DevConfig)
+    uvicorn: UvicornConfig = Field(default_factory=UvicornConfig)
     security: SecurityConfig = Field(default_factory=SecurityConfig)
     docs: DocsConfig = Field(default_factory=DocsConfig)
     paths: PathsConfig = Field(default_factory=PathsConfig)

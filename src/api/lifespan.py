@@ -13,8 +13,8 @@ from api.helpers.crypto import ssl as ssl_helper
 from api.logger import logger
 
 
-def pre_init() -> None:
-    """Pre-initialization tasks before creating FastAPI application."""
+def _create_ssl_certs() -> None:
+    """Create SSL certificates if enabled and not exist."""
 
     if config.api.security.ssl.generate:
         ssl_helper.create_ssl_certs(
@@ -25,17 +25,34 @@ def pre_init() -> None:
             x509_attrs=config.api.security.ssl.x509_attrs.model_dump(),
         )
 
+    return
+
+
+def _check_ssl_certs() -> None:
+    """Check SSL certificates if enabled."""
+
     if config.api.security.ssl.enabled:
-        _ssl_keyfile = os.path.join(
+        _ssl_keyfile_path = os.path.join(
             config.api.paths.ssl_dir, config.api.security.ssl.key_fname
         )
-        _ssl_certfile = os.path.join(
+        _ssl_certfile_path = os.path.join(
             config.api.paths.ssl_dir, config.api.security.ssl.cert_fname
         )
 
-        if (not os.path.isfile(_ssl_keyfile)) or (not os.path.isfile(_ssl_certfile)):
+        if (not os.path.isfile(_ssl_keyfile_path)) or (
+            not os.path.isfile(_ssl_certfile_path)
+        ):
             logger.error("SSL key or certificate file not found!")
             raise SystemExit(1)
+
+    return
+
+
+def pre_init() -> None:
+    """Pre-initialization tasks before creating FastAPI application."""
+
+    _create_ssl_certs()
+    _check_ssl_certs()
 
     return
 
