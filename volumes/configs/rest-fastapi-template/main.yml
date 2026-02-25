@@ -1,5 +1,0 @@
-api:
-  security:
-    ssl:
-      enabled: true
-      generate: true
