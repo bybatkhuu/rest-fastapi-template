@@ -26,13 +26,13 @@ class BaseHTTPException(HTTPException):
         """Constructor method for BaseHTTPException class.
 
         Args:
-            error_enum  (ErrorCodeEnum           , required): Main error code enum.
-            status_code (Optional[int]           , optional): HTTP status code: [ge=100, le=599]. Defaults to None.
-            message     (Optional[str]           , optional): Error message: [min_length=1, max_length=255].
+            error_enum  (ErrorCodeEnum        , required): Main error code enum.
+            status_code (int | None           , optional): HTTP status code: [ge=100, le=599]. Defaults to None.
+            message     (str | None           , optional): Error message: [min_length=1, max_length=255].
                                                                 Defaults to None.
-            description (Optional[str]           , optional): Error description: [max_length=511]. Defaults to None.
-            detail      (Any                     , optional): Error detail. Defaults to None.
-            headers     (Optional[Dict[str, str]], optional): Headers. Defaults to None.
+            description (str | None           , optional): Error description: [max_length=511]. Defaults to None.
+            detail      (Any                  , optional): Error detail. Defaults to None.
+            headers     (dict[str, str] | None, optional): Headers. Defaults to None.
         """
 
         _error = error_enum.value.model_dump()

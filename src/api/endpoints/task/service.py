@@ -34,7 +34,7 @@ def get_list(
         warn_mode     (WarnEnum    , optional): Warning mode. Defaults to `WarnEnum.IGNORE`.
 
     Returns:
-        Tuple[List[TaskPM], int]: List of tasks and total count as tuple.
+        tuple[list[TaskPM], int]: List of tasks and total count as tuple.
     """
 
     log_mode(message=f"[{request_id}] - Getting task list...", warn_mode=warn_mode)
@@ -95,7 +95,7 @@ def get(
         warn_mode     (WarnEnum    , optional): Warning mode. Defaults to `WarnEnum.IGNORE`.
 
     Returns:
-        Union[TaskPM, None]: TaskPM object or None.
+        TaskPM | None: TaskPM object or None.
     """
 
     log_mode(

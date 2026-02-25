@@ -20,19 +20,19 @@ def decrypt_aes_cbc(
     """Decrypts a ciphertext using AES-CBC key and iv.
 
     Args:
-        ciphertext    (Union[str, bytes], required): The ciphertext to decrypt.
-        key           (bytes            , required): The key to use for decryption.
-        iv            (bytes            , required): The initialization vector to use for decryption.
-        base64_decode (bool             , optional): Whether to decode the ciphertext from base64. Defaults to False.
-        as_str        (bool             , optional): Whether to return the plaintext as a string or bytes.
+        ciphertext    (str | bytes, required): The ciphertext to decrypt.
+        key           (bytes      , required): The key to use for decryption.
+        iv            (bytes      , required): The initialization vector to use for decryption.
+        base64_decode (bool       , optional): Whether to decode the ciphertext from base64. Defaults to False.
+        as_str        (bool       , optional): Whether to return the plaintext as a string or bytes.
                                                         Defaults to False.
-        warn_mode     (WarnEnum         , optional): The warning mode to use. Defaults to WarnEnum.DEBUG.
+        warn_mode     (WarnEnum   , optional): The warning mode to use. Defaults to WarnEnum.DEBUG.
 
     Raises:
         Exception: If failed to decrypt ciphertext using AES-CBC key and iv for any reason.
 
     Returns:
-        Union[str, bytes]: The decrypted plaintext as a string or bytes.
+        str | bytes: The decrypted plaintext as a string or bytes.
     """
 
     if isinstance(ciphertext, str):

@@ -15,9 +15,9 @@ def encode(
     """Encodes payload into JWT token.
 
     Args:
-        payload    (Dict[str, Any]                          , required): Payload to encode into token.
-        key        (Union[SecretStr, AllowedPrivateKeyTypes], required): Secret key to encode token with.
-        algorithm  (str                                     , required): Algorithm to encode token with.
+        payload    (dict[str, Any]                    , required): Payload to encode into token.
+        key        (SecretStr | AllowedPrivateKeyTypes, required): Secret key to encode token with.
+        algorithm  (str                               , required): Algorithm to encode token with.
 
     Raises:
         ValueError: If 'sub' is not provided in payload.
@@ -57,17 +57,17 @@ def decode(
     """Decodes JWT token and returns payload.
 
     Args:
-        token     (str                                    , required): JWT token to decode.
-        key       (Union[SecretStr, AllowedPublicKeyTypes], required): Secret key to decode token with.
-        algorithm (str                                    , required): Algorithm to decode token with.
-        options   (Options                                , optional): Options to decode token with. Defaults to {}.
+        token     (str                              , required): JWT token to decode.
+        key       (SecretStr | AllowedPublicKeyTypes, required): Secret key to decode token with.
+        algorithm (str                              , required): Algorithm to decode token with.
+        options   (Options                          , optional): Options to decode token with. Defaults to {}.
 
     Raises:
         jwt.ExpiredSignatureError: If token is expired.
         jwt.InvalidTokenError    : If token is invalid.
 
     Returns:
-        Dict[str, Any]: Decoded payload from JWT token.
+        dict[str, Any]: Decoded payload from JWT token.
     """
 
     if "require" not in options:

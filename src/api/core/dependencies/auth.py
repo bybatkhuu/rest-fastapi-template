@@ -32,7 +32,7 @@ def auth_jwt(
         BaseHTTPException: If the access token is invalid.
 
     Returns:
-        Dict[str, Any]: The decoded access token payload.
+        dict[str, Any]: The decoded access token payload.
     """
 
     if not authorization:
@@ -78,7 +78,7 @@ def get_user_id(payload: dict[str, Any] = Depends(auth_jwt)) -> str:
     """Dependency function to get the user ID from the token payload.
 
     Args:
-        payload (Dict[str, Any], required): The decoded access token payload.
+        payload (dict[str, Any], required): The decoded access token payload.
 
     Returns:
         str: The user ID.
@@ -116,13 +116,13 @@ class AuthScopeDep:
 
         Args:
             request (Request       , required): The FastAPI request object.
-            payload (Dict[str, Any], required): The decoded access token (JWT) payload.
+            payload (dict[str, Any], required): The decoded access token (JWT) payload.
 
         Raises:
             BaseHTTPException: If the user has insufficient scope permissions.
 
         Returns:
-            Dict[str, Any]: The decoded access token payload.
+            dict[str, Any]: The decoded access token payload.
         """
 
         if self.allow_owner:

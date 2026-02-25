@@ -42,21 +42,21 @@ class BaseResponse(JSONResponse):
         This will prepare the most response data and pass it to `JSONResponse` parent class constructor.
 
         Args:
-            content         (Any                      , optional): Main data content for response.
+            content         (Any                   , optional): Main data content for response.
                                                                         Defaults to None.
-            status_code     (Optional[int]            , optional): HTTP status code: [100 <= status_code <= 599].
+            status_code     (int | None            , optional): HTTP status code: [100 <= status_code <= 599].
                                                                         Defaults to 200.
-            headers         (Optional[Dict[str, str]] , optional): HTTP headers. Defaults to None.
-            media_type      (Optional[str]            , optional): Media type for 'Content-Type' header.
+            headers         (dict[str, str] | None , optional): HTTP headers. Defaults to None.
+            media_type      (str | None            , optional): Media type for 'Content-Type' header.
                                                                         Defaults to None.
-            background      (Optional[BackgroundTask] , optional): Background task. Defaults to None.
-            request         (Optional[Request]        , optional): Request object from FastAPI. Defaults to None.
-            message         (Optional[str]            , optional): Message for response: [1 <= len(message) <= 256].
+            background      (BackgroundTask | None , optional): Background task. Defaults to None.
+            request         (Request | None        , optional): Request object from FastAPI. Defaults to None.
+            message         (str | None            , optional): Message for response: [1 <= len(message) <= 256].
                                                                         Defaults to None.
-            links           (Optional[Dict[str, Any]] , optional): Links for response. Defaults to None.
-            meta            (Optional[Dict[str, Any]] , optional): Meta data for response. Defaults to None.
-            error           (Any                      , optional): Error data for response. Defaults to None.
-            response_schema (Optional[Type[BaseResPM]], optional): Response schema type. Defaults to `Type[BaseResPM]`.
+            links           (dict[str, Any] | None , optional): Links for response. Defaults to None.
+            meta            (dict[str, Any] | None , optional): Meta data for response. Defaults to None.
+            error           (Any                   , optional): Error data for response. Defaults to None.
+            response_schema (type[BaseResPM] | None, optional): Response schema type. Defaults to `Type[BaseResPM]`.
         """
 
         _http_status: HTTPStatus

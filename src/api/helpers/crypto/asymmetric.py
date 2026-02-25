@@ -27,7 +27,7 @@ def gen_key_pair(
         as_str   (bool, optional): Return keys as strings. Defaults to False.
 
     Returns:
-        Tuple[Union[RSAPrivateKey, str], Union[RSAPublicKey, str]]: RSA private and public keys.
+        tuple[RSAPrivateKey | str, RSAPublicKey | str]: RSA private and public keys.
     """
 
     _private_key = rsa.generate_private_key(public_exponent=65537, key_size=key_size)
@@ -179,7 +179,7 @@ async def async_get_private_key(
         FileNotFoundError: If Asymmetric private key file not found.
 
     Returns:
-        Union[RSAPrivateKey, str]: Asymmetric private key.
+        RSAPrivateKey | str: Asymmetric private key.
     """
 
     if not await aiofiles.os.path.isfile(private_key_path):
@@ -226,7 +226,7 @@ async def async_get_public_key(
         FileNotFoundError: If asymmetric public key file not found.
 
     Returns:
-        Union[RSAPublicKey, str]: Asymmetric public key.
+        RSAPublicKey | str: Asymmetric public key.
     """
 
     if not await aiofiles.os.path.isfile(public_key_path):
@@ -268,7 +268,7 @@ async def async_get_keys(
         as_str           (bool, optional): Return keys as strings. Defaults to False.
 
     Returns:
-        Tuple[Union[RSAPrivateKey, str], Union[RSAPublicKey, str]]: Private and public keys.
+        tuple[RSAPrivateKey | str, RSAPublicKey | str]: Private and public keys.
     """
 
     _private_key = await async_get_private_key(
@@ -406,7 +406,7 @@ def get_private_key(private_key_path: str, as_str: bool = False) -> RSAPrivateKe
         FileNotFoundError: If asymmetric private key file not found.
 
     Returns:
-        Union[RSAPrivateKey, str]: Asymmetric private key as RSAPrivateKey or str.
+        RSAPrivateKey | str: Asymmetric private key as RSAPrivateKey or str.
     """
 
     if not os.path.isfile(private_key_path):
@@ -450,7 +450,7 @@ def get_public_key(public_key_path: str, as_str: bool = False) -> RSAPublicKey |
         FileNotFoundError: If asymmetric public key file not found.
 
     Returns:
-        Union[RSAPublicKey, str]: Asymmetric public key as RSAPublicKey or str.
+        RSAPublicKey | str: Asymmetric public key as RSAPublicKey or str.
     """
 
     if not os.path.isfile(public_key_path):
@@ -491,7 +491,7 @@ def get_keys(
         as_str           (bool, optional): Return keys as strings. Defaults to False.
 
     Returns:
-        Tuple[Union[RSAPrivateKey, str], Union[RSAPublicKey, str]]: Private and public keys.
+        tuple[RSAPrivateKey | str, RSAPublicKey | str]: Private and public keys.
     """
 
     _private_key = get_private_key(private_key_path=private_key_path, as_str=as_str)
@@ -511,17 +511,17 @@ def encrypt_with_public_key(
     """Encrypt plaintext with public key.
 
     Args:
-        plaintext      (Union[str, bytes], required): Plaintext to encrypt.
-        public_key     (RSAPublicKey     , required): Public key.
-        base64_encode  (bool             , optional): Encode ciphertext with base64. Defaults to False.
-        as_str         (bool             , optional): Return ciphertext as string or bytes. Defaults to False.
-        warn_mode      (WarnEnum         , optional): Warning mode. Defaults to WarnEnum.DEBUG.
+        plaintext      (str | bytes , required): Plaintext to encrypt.
+        public_key     (RSAPublicKey, required): Public key.
+        base64_encode  (bool        , optional): Encode ciphertext with base64. Defaults to False.
+        as_str         (bool        , optional): Return ciphertext as string or bytes. Defaults to False.
+        warn_mode      (WarnEnum    , optional): Warning mode. Defaults to WarnEnum.DEBUG.
 
     Raises:
         Exception: If failed to encrypt plaintext with asymmetric public key.
 
     Returns:
-        Union[str, bytes]: Encrypted ciphertext as string or bytes.
+        str | bytes: Encrypted ciphertext as string or bytes.
     """
 
     if isinstance(plaintext, str):
@@ -579,17 +579,17 @@ def decrypt_with_private_key(
     """Decrypt ciphertext with private key.
 
     Args:
-        ciphertext    (Union[str, bytes], required): Ciphertext to decrypt.
-        private_key   (RSAPrivateKey    , required): Private key.
-        base64_decode (bool             , optional): Decode ciphertext with base64. Defaults to False.
-        as_str        (bool             , optional): Return plaintext as string or bytes. Defaults to False.
-        warn_mode     (WarnEnum         , optional): Warning mode. Defaults to WarnEnum.DEBUG.
+        ciphertext    (str | bytes  , required): Ciphertext to decrypt.
+        private_key   (RSAPrivateKey, required): Private key.
+        base64_decode (bool         , optional): Decode ciphertext with base64. Defaults to False.
+        as_str        (bool         , optional): Return plaintext as string or bytes. Defaults to False.
+        warn_mode     (WarnEnum     , optional): Warning mode. Defaults to WarnEnum.DEBUG.
 
     Raises:
         Exception: If failed to decrypt ciphertext with asymmetric private key for any reason.
 
     Returns:
-        Union[str, bytes]: Decrypted plaintext as string or bytes.
+        str | bytes: Decrypted plaintext as string or bytes.
     """
 
     if isinstance(ciphertext, str):
