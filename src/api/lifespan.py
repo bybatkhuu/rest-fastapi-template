@@ -13,8 +13,12 @@ from api.config import config
 from api.logger import logger
 
 
-def _create_ssl_certs() -> None:
-    """Create SSL certificates if enabled and not exist."""
+def _check_ssl_certs() -> None:
+    """Check if SSL certificates exist when SSL is enabled or set to be generated.
+
+    Raises:
+        SystemExit: If SSL certificates are missing or cannot be created.
+    """
 
     if config.api.security.ssl.generate:
         ssl_utils.create_ssl_certs(
@@ -24,12 +28,6 @@ def _create_ssl_certs() -> None:
             key_size=config.api.security.ssl.key_size,
             x509_attrs=config.api.security.ssl.x509_attrs.model_dump(),
         )
-
-    return
-
-
-def _check_ssl_certs() -> None:
-    """Check SSL certificates if enabled."""
 
     if config.api.security.ssl.enabled:
         _ssl_keyfile_path = os.path.join(
@@ -51,7 +49,6 @@ def _check_ssl_certs() -> None:
 def pre_init() -> None:
     """Pre-initialization tasks before creating FastAPI application."""
 
-    _create_ssl_certs()
     _check_ssl_certs()
     # Add more pre-initialization tasks here...
 
