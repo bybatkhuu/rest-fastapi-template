@@ -42,17 +42,15 @@ class BaseResponse(JSONResponse):
         This will prepare the most response data and pass it to `JSONResponse` parent class constructor.
 
         Args:
-            content         (Any                   , optional): Main data content for response.
-                                                                        Defaults to None.
+            content         (Any                   , optional): Main data content for response. Defaults to None.
             status_code     (int | None            , optional): HTTP status code: [100 <= status_code <= 599].
-                                                                        Defaults to 200.
+                                                                    Defaults to 200.
             headers         (dict[str, str] | None , optional): HTTP headers. Defaults to None.
-            media_type      (str | None            , optional): Media type for 'Content-Type' header.
-                                                                        Defaults to None.
+            media_type      (str | None            , optional): Media type for 'Content-Type' header. Defaults to None.
             background      (BackgroundTask | None , optional): Background task. Defaults to None.
             request         (Request | None        , optional): Request object from FastAPI. Defaults to None.
             message         (str | None            , optional): Message for response: [1 <= len(message) <= 256].
-                                                                        Defaults to None.
+                                                                    Defaults to None.
             links           (dict[str, Any] | None , optional): Links for response. Defaults to None.
             meta            (dict[str, Any] | None , optional): Meta data for response. Defaults to None.
             error           (Any                   , optional): Error data for response. Defaults to None.

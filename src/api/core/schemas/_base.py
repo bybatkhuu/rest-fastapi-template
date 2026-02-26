@@ -7,7 +7,7 @@ from potato_util.generator import gen_unique_id
 
 
 class BasePM(BaseModel):
-    # model_config = ConfigDict(json_encoders={datetime: datetime_to_iso})
+    # model_config = ConfigDict(json_encoders={datetime: dt_to_iso})
     pass
 
 
