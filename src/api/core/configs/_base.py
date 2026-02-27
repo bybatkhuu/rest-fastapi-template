@@ -22,7 +22,6 @@ class FrozenBaseConfig(BaseConfig):
 
 
 class BaseMainConfig(FrozenBaseConfig):
-
     @classmethod
     def settings_customise_sources(
         cls,
@@ -32,7 +31,6 @@ class BaseMainConfig(FrozenBaseConfig):
         dotenv_settings: PydanticBaseSettingsSource,
         file_secret_settings: PydanticBaseSettingsSource,
     ) -> tuple[PydanticBaseSettingsSource, ...]:
-
         _sources = []
         if not utils.is_running_cli():
             _sources.append(CliSettingsSource(settings_cls, cli_parse_args=True))

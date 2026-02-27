@@ -4,7 +4,6 @@ from pydantic import Field, constr
 
 from potato_util.constants import HTTPMethodEnum
 
-from api.__version__ import __version__
 from api.config import config
 
 from ._base import ExtraBasePM, BasePM
