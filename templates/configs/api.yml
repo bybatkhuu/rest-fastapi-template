@@ -16,4 +16,9 @@ api:
     server_header: false
     proxy_headers: true
     forwarded_allow_ips: ["*"]
+    ssl_keyfile: null
+    ssl_certfile: null
     reload: false
+    reload_includes: ["*.json", "*.yml", "*.yaml", "*.toml", "*.md"]
+    reload_excludes:
+      [".*", "~*", ".py[cod]", ".sw.*", "__pycache__", "*.log", "logs"]

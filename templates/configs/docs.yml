@@ -1,6 +1,10 @@
 api:
   docs:
     enabled: false
+    openapi_url: "{api_prefix}/openapi.json"
+    docs_url: "{api_prefix}/docs"
+    redoc_url: "{api_prefix}/redoc"
+    swagger_ui_oauth2_redirect_url: "{api_prefix}/docs/oauth2-redirect"
     summary: "This is a REST API service."
     description: ""
     terms_of_service: https://example.com/terms
