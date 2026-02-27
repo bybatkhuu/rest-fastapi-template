@@ -6,13 +6,13 @@ from pydantic_settings import SettingsConfigDict
 from beans_logging.config import FileConfigPM as BaseFileConfigPM
 from beans_logging_fastapi import LoggerConfigPM as BaseLoggerConfigPM
 
-from api.core.constants import ENV_PREFIX_API, API_SLUG
+from api.core.constants import ENV_PREFIX_API
 
-from ._base import BaseConfig, FrozenBaseConfig
+from ._base import BaseConfig
 
 
-class FileConfigPM(BaseFileConfigPM, FrozenBaseConfig):
-    logs_dir: str = Field(default=f"/var/log/{API_SLUG}", min_length=2, max_length=1024)
+class FileConfigPM(BaseFileConfigPM, BaseConfig):
+    logs_dir: str = Field(default="/var/log/{api_slug}", min_length=2, max_length=1024)
 
     @field_validator("logs_dir", mode="after")
     @classmethod

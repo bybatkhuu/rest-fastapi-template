@@ -9,13 +9,19 @@ from potato_util.constants import HTTPSchemeEnum
 from api.core.constants import ENV_PREFIX_API, API_SLUG
 from api.core import utils
 
-from ._base import BaseConfig
-from ._gzip import GZipConfig
+from ._base import BaseConfig, FrozenBaseConfig
 from ._uvicorn import UvicornConfig
 from ._security import SecurityConfig
 from ._docs import DocsConfig, FrozenDocsConfig
 from ._paths import PathsConfig, FrozenPathsConfig
 from ._logger import LoggerConfigPM, FrozenLoggerConfigPM
+
+
+class GZipConfig(FrozenBaseConfig):
+    min_size: int = Field(default=1024, ge=0, le=10_485_760)
+    compresslevel: int = Field(default=9, ge=1, le=9)
+
+    model_config = SettingsConfigDict(env_prefix=f"{ENV_PREFIX_API}GZIP_")
 
 
 class ApiConfig(BaseConfig):
@@ -86,6 +92,9 @@ class ApiConfig(BaseConfig):
     def _check_logger(cls, val: LoggerConfigPM, info: ValidationInfo) -> LoggerConfigPM:
         if "{api_slug}" in val.app_name:
             val.app_name = val.app_name.format(api_slug=info.data["slug"])
+
+        if "{api_slug}" in val.file.logs_dir:
+            val.file.logs_dir = val.file.logs_dir.format(api_slug=info.data["slug"])
 
         val = FrozenLoggerConfigPM(**val.model_dump())
         return val

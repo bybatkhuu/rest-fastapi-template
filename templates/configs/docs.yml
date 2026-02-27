@@ -1,0 +1,23 @@
+api:
+  docs:
+    enabled: false
+    summary: "This is a REST API service."
+    description: ""
+    terms_of_service: https://example.com/terms
+    contact:
+      name: "Support Team"
+      email: support@example.com
+      url: https://example.com/contact
+    license_info:
+      name: "MIT License"
+      url: https://opensource.org/licenses/MIT
+    openapi_tags:
+      - name: Utils
+        description: "Useful utility endpoints."
+      - name: Tasks
+        description: "Endpoints to manage tasks."
+      - name: Default
+        description: "Redirection of default endpoints."
+    swagger_ui_parameters:
+      syntaxHighlight:
+        theme: nord

@@ -1,0 +1,8 @@
+api:
+  paths:
+    tmp_dir: "/tmp/rest-fastapi-template"
+    uploads_dir: "{tmp_dir}/uploads"
+    data_dir: "/var/lib/rest-fastapi-template"
+    security_dir: "{data_dir}/security"
+    ssl_dir: "{data_dir}/security/ssl"
+    asymmetric_keys_dir: "{data_dir}/security/asymmetric_keys"

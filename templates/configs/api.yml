@@ -1,0 +1,19 @@
+env: LOCAL
+debug: false
+api:
+  title: "FastAPI Template"
+  slug: rest-fastapi-template
+  http_scheme: http
+  bind_host: "0.0.0.0"
+  port: 8000
+  version: "1"
+  prefix: "/api/v{api_version}"
+  gzip:
+    min_size: 1024
+    compresslevel: 9
+  uvicorn:
+    access_log: false
+    server_header: false
+    proxy_headers: true
+    forwarded_allow_ips: ["*"]
+    reload: false
