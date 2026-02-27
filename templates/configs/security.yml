@@ -28,12 +28,12 @@ api:
       generate: false
       algorithm: RS256
       key_size: 2048
-      private_key_fname: "private_key.pem"
+      private_key_fname: "private_key.pem" # pragma: allowlist secret
       public_key_fname: "public_key.pem"
     jwt:
-      secret: "**********"
+      secret: "**********" # pragma: allowlist secret
       algorithm: HS256
     password:
-      pepper: "**********"
+      pepper: "**********" # pragma: allowlist secret
       min_length: 8
       max_length: 128
