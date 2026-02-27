@@ -16,6 +16,17 @@ class BaseConfig(BaseSettings):
         arbitrary_types_allowed=True,
     )
 
+    @classmethod
+    def settings_customise_sources(
+        cls,
+        settings_cls: type[BaseSettings],
+        init_settings: PydanticBaseSettingsSource,
+        env_settings: PydanticBaseSettingsSource,
+        dotenv_settings: PydanticBaseSettingsSource,
+        file_secret_settings: PydanticBaseSettingsSource,
+    ) -> tuple[PydanticBaseSettingsSource, ...]:
+        return file_secret_settings, dotenv_settings, env_settings, init_settings
+
 
 class FrozenBaseConfig(BaseConfig):
     model_config = SettingsConfigDict(frozen=True)
@@ -37,8 +48,7 @@ class BaseMainConfig(FrozenBaseConfig):
         _sources.extend(
             [file_secret_settings, dotenv_settings, env_settings, init_settings]
         )
-        _sources = tuple(_sources)
-        return _sources
+        return tuple(_sources)
 
 
 __all__ = [

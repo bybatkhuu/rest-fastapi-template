@@ -53,16 +53,17 @@ class PathsConfig(BaseConfig):
 class FrozenPathsConfig(PathsConfig):
     @model_validator(mode="before")
     @classmethod
-    def _check_all(cls, values: dict[str, Any]) -> dict[str, Any]:
-        for _key, _val in values.items():
-            if isinstance(_val, str):
-                if "{data_dir}" in _val:
-                    values[_key] = _val.format(data_dir=values["data_dir"])
+    def _check_all(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            for _key, _val in data.items():
+                if isinstance(_val, str):
+                    if ("data_dir" in data) and ("{data_dir}" in _val):
+                        data[_key] = _val.format(data_dir=data["data_dir"])
 
-                if "{tmp_dir}" in _val:
-                    values[_key] = _val.format(tmp_dir=values["tmp_dir"])
+                    if ("tmp_dir" in data) and ("{tmp_dir}" in _val):
+                        data[_key] = _val.format(tmp_dir=data["tmp_dir"])
 
-        return values
+        return data
 
     model_config = SettingsConfigDict(frozen=True)
 

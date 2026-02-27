@@ -4,7 +4,6 @@ from pydantic import Field, field_validator, ValidationInfo
 from pydantic_settings import SettingsConfigDict
 
 from potato_util.constants import EnvEnum
-from potato_util import is_debug_mode
 
 from api.core.constants import ENV_PREFIX
 
@@ -15,32 +14,15 @@ from ._api import ApiConfig, FrozenApiConfig
 
 # Main config schema:
 class MainConfig(BaseMainConfig):
-    env: EnvEnum = Field(default=EnvEnum.LOCAL)
-    debug: bool = Field(default=False)
+    env: EnvEnum = Field(default=EnvEnum.LOCAL, alias="env")
+    debug: bool = Field(default=False, alias="debug")
     api: ApiConfig = Field(default_factory=ApiConfig)
-
-    @field_validator("env", mode="after")
-    @classmethod
-    def _check_env(cls, val: EnvEnum) -> EnvEnum:
-        _env = os.getenv("ENV", "").upper()
-        if _env:
-            val = EnvEnum(_env)
-
-        return val
-
-    @field_validator("debug", mode="after")
-    @classmethod
-    def _check_debug(cls, val: bool) -> bool:
-        if is_debug_mode():
-            val = True
-
-        return val
 
     @field_validator("api", mode="after")
     @classmethod
     def _check_api(cls, val: ApiConfig, info: ValidationInfo) -> FrozenApiConfig:
         _uvicorn: UvicornConfig = val.uvicorn
-        if info.data["env"] == EnvEnum.DEVELOPMENT:
+        if ("env" in info.data) and (info.data["env"] == EnvEnum.DEVELOPMENT):
             _uvicorn.reload = True
 
         if val.security.ssl.enabled:

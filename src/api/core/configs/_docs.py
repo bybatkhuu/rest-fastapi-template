@@ -51,27 +51,32 @@ class DocsConfig(BaseConfig):
 class FrozenDocsConfig(DocsConfig):
     @model_validator(mode="before")
     @classmethod
-    def _check_all(cls, values: dict[str, Any]) -> dict[str, Any]:
+    def _check_all(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if ("openapi_url" in data) and (data["openapi_url"] == ""):
+                data["openapi_url"] = None
 
-        if values["openapi_url"] == "":
-            values["openapi_url"] = None
+            if ("docs_url" in data) and (data["docs_url"] == ""):
+                data["docs_url"] = None
 
-        if values["docs_url"] == "":
-            values["docs_url"] = None
+            if ("redoc_url" in data) and (data["redoc_url"] == ""):
+                data["redoc_url"] = None
 
-        if values["redoc_url"] == "":
-            values["redoc_url"] = None
+            if ("swagger_ui_oauth2_redirect_url" in data) and (
+                data["swagger_ui_oauth2_redirect_url"] == ""
+            ):
+                data["swagger_ui_oauth2_redirect_url"] = None
 
-        if values["swagger_ui_oauth2_redirect_url"] == "":
-            values["swagger_ui_oauth2_redirect_url"] = None
+            try:
+                if ("enabled" in data) and validator.is_falsy(data["enabled"]):
+                    data["openapi_url"] = None
+                    data["docs_url"] = None
+                    data["redoc_url"] = None
+                    data["swagger_ui_oauth2_redirect_url"] = None
+            except ValueError:
+                pass
 
-        if validator.is_falsy(values["enabled"]):
-            values["openapi_url"] = None
-            values["docs_url"] = None
-            values["redoc_url"] = None
-            values["swagger_ui_oauth2_redirect_url"] = None
-
-        return values
+        return data
 
     model_config = SettingsConfigDict(frozen=True)
 

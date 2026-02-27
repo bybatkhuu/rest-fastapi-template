@@ -44,7 +44,7 @@ class ApiConfig(BaseConfig):
     @field_validator("prefix", mode="after")
     @classmethod
     def _check_prefix(cls, val: str, info: ValidationInfo) -> str:
-        if val and ("{api_version}" in val):
+        if ("version" in info.data) and val and ("{api_version}" in val):
             val = val.format(api_version=info.data["version"])
 
         return val
@@ -54,7 +54,6 @@ class ApiConfig(BaseConfig):
     def _check_security(
         cls, val: SecurityConfig, info: ValidationInfo
     ) -> SecurityConfig:
-
         if (not utils.is_running_cli()) and val.ssl.enabled:
             info.data["http_scheme"] = HTTPSchemeEnum.https
 
@@ -64,7 +63,7 @@ class ApiConfig(BaseConfig):
     @classmethod
     def _check_docs(cls, val: DocsConfig, info: ValidationInfo) -> DocsConfig:
         _docs_dict = val.model_dump()
-        if val.enabled:
+        if ("prefix" in info.data) and val.enabled:
             for _key, _doc in _docs_dict.items():
                 if (
                     isinstance(_doc, str)
@@ -80,9 +79,10 @@ class ApiConfig(BaseConfig):
     @classmethod
     def _check_paths(cls, val: PathsConfig, info: ValidationInfo) -> FrozenPathsConfig:
         _paths_dict = val.model_dump()
-        for _key, _path in _paths_dict.items():
-            if isinstance(_path, str) and ("{api_slug}" in _path):
-                _paths_dict[_key] = _path.format(api_slug=info.data["slug"])
+        if "slug" in info.data:
+            for _key, _path in _paths_dict.items():
+                if isinstance(_path, str) and ("{api_slug}" in _path):
+                    _paths_dict[_key] = _path.format(api_slug=info.data["slug"])
 
         val = FrozenPathsConfig(**_paths_dict)
         return val
@@ -90,11 +90,12 @@ class ApiConfig(BaseConfig):
     @field_validator("logger", mode="after")
     @classmethod
     def _check_logger(cls, val: LoggerConfigPM, info: ValidationInfo) -> LoggerConfigPM:
-        if "{api_slug}" in val.app_name:
-            val.app_name = val.app_name.format(api_slug=info.data["slug"])
+        if "slug" in info.data:
+            if "{api_slug}" in val.app_name:
+                val.app_name = val.app_name.format(api_slug=info.data["slug"])
 
-        if "{api_slug}" in val.file.logs_dir:
-            val.file.logs_dir = val.file.logs_dir.format(api_slug=info.data["slug"])
+            if "{api_slug}" in val.file.logs_dir:
+                val.file.logs_dir = val.file.logs_dir.format(api_slug=info.data["slug"])
 
         val = FrozenLoggerConfigPM(**val.model_dump())
         return val
@@ -103,11 +104,10 @@ class ApiConfig(BaseConfig):
 
 
 class FrozenApiConfig(ApiConfig):
-
     @model_validator(mode="before")
     @classmethod
-    def _check_args(cls, values: dict[str, Any]) -> dict[str, Any]:
-        if utils.is_running_cli():
+    def _check_args(cls, data: Any) -> Any:
+        if isinstance(data, dict) and utils.is_running_cli():
             _has_host_arg = False
             for _i, _arg in enumerate(sys.argv):
                 if (
@@ -115,27 +115,27 @@ class FrozenApiConfig(ApiConfig):
                     or _arg.startswith("--keyfile")
                     or _arg.startswith("--certfile")
                 ):
-                    values["http_scheme"] = HTTPSchemeEnum.https
+                    data["http_scheme"] = HTTPSchemeEnum.https
 
                 if _arg.startswith("--host="):
                     _has_host_arg = True
-                    values["bind_host"] = _arg.split("=")[1]
+                    data["bind_host"] = _arg.split("=")[1]
                 elif (_arg == "--host") and (_i + 1 < len(sys.argv)):
                     _has_host_arg = True
-                    values["bind_host"] = sys.argv[_i + 1]
+                    data["bind_host"] = sys.argv[_i + 1]
 
                 if _arg.startswith("--port="):
-                    values["port"] = int(_arg.split("=")[1])
+                    data["port"] = int(_arg.split("=")[1])
                 elif (_arg == "--port") and (_i + 1 < len(sys.argv)):
-                    values["port"] = int(sys.argv[_i + 1])
+                    data["port"] = int(sys.argv[_i + 1])
 
             if not _has_host_arg:
-                values["bind_host"] = "127.0.0.1"
+                data["bind_host"] = "127.0.0.1"
 
                 if sys.argv[0].endswith("fastapi") and sys.argv[1] == "run":
-                    values["bind_host"] = "0.0.0.0"  # nosec B104
+                    data["bind_host"] = "0.0.0.0"  # nosec B104
 
-        return values
+        return data
 
     model_config = SettingsConfigDict(frozen=True)
 

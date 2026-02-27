@@ -17,7 +17,6 @@ class FileConfigPM(BaseFileConfigPM, BaseConfig):
     @field_validator("logs_dir", mode="after")
     @classmethod
     def _check_logger(cls, val: str) -> str:
-
         _logs_dir = os.getenv(f"{ENV_PREFIX_API}LOGS_DIR", "")
         if _logs_dir:
             val = _logs_dir
