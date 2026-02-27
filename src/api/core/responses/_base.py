@@ -79,15 +79,14 @@ class BaseResponse(JSONResponse):
             _request_id: str = request.state.request_id
 
             links["self"] = f"{get_relative_url(request)}"
-            meta["request_id"] = _request_id
             meta["method"] = request.method
             meta["base_url"] = str(request.base_url)[:-1]
 
             if "X-Request-Id" not in headers:
                 headers["X-Request-Id"] = _request_id
 
-        meta["api_version"] = config.api.version
-        meta["version"] = __version__
+        headers["X-API-Version"] = config.api.version
+        headers["X-System-Version"] = __version__
 
         if error and isinstance(error, dict):
             if ("code" in error) and ("X-Error-Code" not in headers):

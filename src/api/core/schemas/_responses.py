@@ -1,24 +1,13 @@
-from enum import Enum
 from typing import Any
 
 from pydantic import Field, constr
+
+from potato_util.constants import HTTPMethodEnum
 
 from api.__version__ import __version__
 from api.config import config
 
 from ._base import ExtraBasePM, BasePM
-
-
-class MethodEnum(str, Enum):
-    GET = "GET"
-    POST = "POST"
-    PUT = "PUT"
-    PATCH = "PATCH"
-    DELETE = "DELETE"
-    HEAD = "HEAD"
-    OPTIONS = "OPTIONS"
-    CONNECT = "CONNECT"
-    TRACE = "TRACE"
 
 
 class LinksResPM(ExtraBasePM):
@@ -63,14 +52,6 @@ class PageLinksResPM(LinksResPM):
 
 
 class MetaResPM(ExtraBasePM):
-    request_id: None | (
-        constr(strip_whitespace=True, min_length=8, max_length=64)  # type: ignore
-    ) = Field(
-        default=None,
-        title="Request ID",
-        description="Current request ID.",
-        examples=["211203afa2844d55b1c9d38b9f8a7063"],  # pragma: allowlist secret
-    )
     base_url: None | (
         constr(strip_whitespace=True, min_length=2, max_length=256)  # type: ignore
     ) = Field(
@@ -79,27 +60,11 @@ class MetaResPM(ExtraBasePM):
         description="Current request base URL.",
         examples=["https://api.example.com"],
     )
-    method: MethodEnum | None = Field(
+    method: HTTPMethodEnum | None = Field(
         default=None,
         title="Method",
         description="Current request method.",
         examples=["GET"],
-    )
-    api_version: constr(strip_whitespace=True) = Field(  # type: ignore
-        default=config.api.version,
-        min_length=1,
-        max_length=16,
-        title="API version",
-        description="Current API version.",
-        examples=[config.api.version],
-    )
-    version: constr(strip_whitespace=True) = Field(  # type: ignore
-        default=__version__,
-        min_length=5,
-        max_length=32,
-        title="Version",
-        description="Current system version.",
-        examples=[__version__],
     )
 
 
