@@ -18,7 +18,7 @@ from ._logger import LoggerConfigPM, FrozenLoggerConfigPM
 
 
 class GZipConfig(FrozenBaseConfig):
-    min_size: int = Field(default=1024, ge=0, le=10_485_760)
+    minimum_size: int = Field(default=1024, ge=0, le=10_485_760)
     compresslevel: int = Field(default=9, ge=1, le=9)
 
     model_config = SettingsConfigDict(env_prefix=f"{ENV_PREFIX_API}GZIP_")
