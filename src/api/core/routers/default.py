@@ -17,7 +17,6 @@ async def get_root():
 
 
 if config.api.docs.enabled:
-
     if config.api.docs.openapi_url:
 
         @router.get(
