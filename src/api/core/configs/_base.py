@@ -33,10 +33,12 @@ class BaseMainConfig(FrozenBaseConfig):
         file_secret_settings: PydanticBaseSettingsSource,
     ) -> tuple[PydanticBaseSettingsSource, ...]:
 
-        _sources = [file_secret_settings]
+        _sources = []
         if not utils.is_running_cli():
             _sources.append(CliSettingsSource(settings_cls, cli_parse_args=True))
-        _sources.extend([dotenv_settings, env_settings, init_settings])
+        _sources.extend(
+            [file_secret_settings, dotenv_settings, env_settings, init_settings]
+        )
         _sources = tuple(_sources)
         return _sources
 
