@@ -6,7 +6,7 @@ api:
       err: WARNING
     format_str: "[{time:YYYY-MM-DD HH:mm:ss.SSS Z} | {extra[level_short]:<5} | {name}:{line}]: {message}"
     file:
-      logs_dir: "/var/log/rest-fastapi-template"
+      logs_dir: "/var/log/{api_slug}"
       rotate_size: 10000000
       rotate_time: "00:00:00"
       retention: 90
