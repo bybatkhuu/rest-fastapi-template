@@ -29,12 +29,13 @@ class UvicornConfig(BaseConfig):
 class FrozenUvicornConfig(UvicornConfig):
     @model_validator(mode="before")
     @classmethod
-    def _check_all(cls, values: dict[str, Any]) -> dict[str, Any]:
-        if not values["reload"]:
-            values["reload_includes"] = None
-            values["reload_excludes"] = None
+    def _check_all(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if ("reload" in data) and (not data["reload"]):
+                data["reload_includes"] = None
+                data["reload_excludes"] = None
 
-        return values
+        return data
 
     model_config = SettingsConfigDict(frozen=True)
 
