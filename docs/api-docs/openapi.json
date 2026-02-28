@@ -9,6 +9,10 @@
 			"url": "https://example.com/contact",
 			"email": "support@example.com"
 		},
+		"license": {
+			"name": "MIT License",
+			"url": "https://opensource.org/licenses/MIT"
+		},
 		"version": "7.3.0-250215"
 	},
 	"paths": {
@@ -424,6 +428,7 @@
 						"anyOf": [
 							{},
 							{
+								"additionalProperties": true,
 								"type": "object"
 							},
 							{
@@ -499,6 +504,7 @@
 						"anyOf": [
 							{},
 							{
+								"additionalProperties": true,
 								"type": "object"
 							},
 							{
@@ -529,6 +535,21 @@
 				],
 				"title": "ErrorResPM"
 			},
+			"HTTPMethodEnum": {
+				"type": "string",
+				"enum": [
+					"GET",
+					"POST",
+					"PUT",
+					"PATCH",
+					"DELETE",
+					"HEAD",
+					"OPTIONS",
+					"CONNECT",
+					"TRACE"
+				],
+				"title": "HTTPMethodEnum"
+			},
 			"LinksResPM": {
 				"properties": {
 					"self": {
@@ -554,23 +575,6 @@
 			},
 			"MetaResPM": {
 				"properties": {
-					"request_id": {
-						"anyOf": [
-							{
-								"type": "string",
-								"maxLength": 64,
-								"minLength": 8
-							},
-							{
-								"type": "null"
-							}
-						],
-						"title": "Request ID",
-						"description": "Current request ID.",
-						"examples": [
-							"211203afa2844d55b1c9d38b9f8a7063"
-						]
-					},
 					"base_url": {
 						"anyOf": [
 							{
@@ -591,7 +595,7 @@
 					"method": {
 						"anyOf": [
 							{
-								"$ref": "#/components/schemas/MethodEnum"
+								"$ref": "#/components/schemas/HTTPMethodEnum"
 							},
 							{
 								"type": "null"
@@ -602,48 +606,11 @@
 						"examples": [
 							"GET"
 						]
-					},
-					"api_version": {
-						"type": "string",
-						"maxLength": 16,
-						"minLength": 1,
-						"title": "API version",
-						"description": "Current API version.",
-						"default": "1",
-						"examples": [
-							"1"
-						]
-					},
-					"version": {
-						"type": "string",
-						"maxLength": 32,
-						"minLength": 5,
-						"title": "Version",
-						"description": "Current system version.",
-						"default": "7.3.0-250215",
-						"examples": [
-							"7.3.0-250215"
-						]
 					}
 				},
 				"additionalProperties": false,
 				"type": "object",
 				"title": "MetaResPM"
-			},
-			"MethodEnum": {
-				"type": "string",
-				"enum": [
-					"GET",
-					"POST",
-					"PUT",
-					"PATCH",
-					"DELETE",
-					"HEAD",
-					"OPTIONS",
-					"CONNECT",
-					"TRACE"
-				],
-				"title": "MethodEnum"
 			},
 			"ResTaskPM": {
 				"properties": {
