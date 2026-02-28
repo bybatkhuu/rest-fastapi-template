@@ -45,7 +45,7 @@ class MainConfig(BaseMainConfig):
         env_prefix=ENV_PREFIX,
         env_nested_delimiter="__",
         cli_prefix="",
-        secrets_dir="/var/run/secrets",
+        secrets_dir="/run/secrets",
         secrets_prefix="",
         secrets_nested_delimiter="_",
         secrets_dir_missing="ok",  # pragma: allowlist secret

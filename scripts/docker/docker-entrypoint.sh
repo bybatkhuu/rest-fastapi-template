@@ -4,10 +4,11 @@ set -euo pipefail
 
 echo "[INFO]: Running '${FT_API_SLUG}' docker-entrypoint.sh..."
 
+
 _run()
 {
-	exec python -m api || exit 2
-	# exec uvicorn api.main:app \
+	exec gosu "${USER}:${GROUP}" python -m api || exit 2
+	# exec gosu "${USER}:${GROUP}" uvicorn api.main:app \
 	# 	--host=0.0.0.0 \
 	# 	--port=${FT_API_PORT:-8000} \
 	# 	--no-access-log \
@@ -36,7 +37,7 @@ main()
 			-type d -name "volumes" -o \
 			-type l -name ".env" \
 		\) -prune -o -print0 | \
-			sudo xargs -0 chown -c "${USER}:${GROUP}" || exit 2
+			xargs -0 chown -c "${USER}:${GROUP}" || exit 2
 
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
 		\( \
@@ -48,7 +49,7 @@ main()
 			-type d -name "modules" -o \
 			-type d -name "volumes" \
 		 \) -prune -o -type d -exec \
-			sudo chmod 770 {} + || exit 2
+			chmod 770 {} + || exit 2
 
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
 		\( \
@@ -62,7 +63,7 @@ main()
 			-type l -name ".env" -o \
 			-type f -name "main.py" \
 		\) -prune -o -type f -exec \
-			sudo chmod 660 {} + || exit 2
+			chmod 660 {} + || exit 2
 
 	find "${FT_API_DIR}" "${FT_API_CONFIGS_DIR}" "${FT_API_DATA_DIR}" \
 		\( \
@@ -74,13 +75,13 @@ main()
 			-type d -name "modules" -o \
 			-type d -name "volumes" \
 		\) -prune -o -type d -exec \
-			sudo chmod ug+s {} + || exit 2
+			chmod ug+s {} + || exit 2
 
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type d -exec chmod 775 {} + || exit 2
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type f -exec chmod 664 {} + || exit 2
 	find "${FT_API_LOGS_DIR}" "${FT_API_TMP_DIR}" -type d -exec chmod +s {} + || exit 2
 
-	# echo "${USER} ALL=(ALL) ALL" | sudo tee -a "/etc/sudoers.d/${USER}" > /dev/null || exit 2
+	# echo "${USER} ALL=(ALL) ALL" | tee -a "/etc/sudoers.d/${USER}" > /dev/null || exit 2
 	echo ""
 
 	## Parsing input:
@@ -92,10 +93,10 @@ main()
 			shift
 			if [ -z "${*:-}" ]; then
 				echo "[INFO]: Starting bash..."
-				/bin/bash
+				exec gosu "${USER}:${GROUP}" /bin/bash
 			else
 				echo "[INFO]: Executing command -> ${*}"
-				exec /bin/bash -c "${@}" || exit 2
+				exec gosu "${USER}:${GROUP}" /bin/bash -c "${@}" || exit 2
 			fi
 			exit 0;;
 		*)

@@ -127,6 +127,7 @@ RUN --mount=type=secret,id=HASH_PASSWORD \
 	apt-get update --fix-missing -o Acquire::CompressionTypes::Order::=gz && \
 	apt-get install -y --no-install-recommends \
 		sudo \
+		gosu \
 		locales \
 		tzdata \
 		procps \
@@ -146,8 +147,8 @@ RUN --mount=type=secret,id=HASH_PASSWORD \
 	# useradd -lmN -d "/home/${USER}" -s /bin/bash -g ${GROUP} -G sudo -u ${UID} ${USER} && \
 	groupadd --gid ${GID} ${GROUP} && \
 	usermod -l ${USER} -m -d /home/${USER} -s /bin/bash -g ${GROUP} -aG sudo ubuntu && \
-	echo "${USER} ALL=(ALL) NOPASSWD: ALL" > "/etc/sudoers.d/${USER}" && \
-	chmod 0440 "/etc/sudoers.d/${USER}" && \
+	# echo "${USER} ALL=(ALL) NOPASSWD: ALL" > "/etc/sudoers.d/${USER}" && \
+	# chmod 0440 "/etc/sudoers.d/${USER}" && \
 	if [ -f "/run/secrets/HASH_PASSWORD" ]; then \
 		echo -e "${USER}:$(cat /run/secrets/HASH_PASSWORD)" | chpasswd -e; \
 	else \
@@ -190,9 +191,9 @@ COPY --chown=${UID}:${GID} --chmod=770 ./scripts/docker/*.sh /usr/local/bin/
 # VOLUME ["${FT_API_DATA_DIR}"]
 # EXPOSE ${FT_API_PORT}
 
-USER ${UID}:${GID}
+# USER ${UID}:${GID}
 # HEALTHCHECK --start-period=30s --start-interval=1s --interval=5m --timeout=5s --retries=3 \
 # 	CMD curl -f http://localhost:${FT_API_PORT}/api/v${FT_API_VERSION:-1}/ping || exit 1
 
 ENTRYPOINT ["docker-entrypoint.sh"]
-# CMD ["-b", "uvicorn main:app --host=0.0.0.0 --port=${FT_API_PORT:-8000} --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips='*'"]
+# CMD ["-b", "uvicorn api.main:app --host=0.0.0.0 --port=${FT_API_PORT:-8000} --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips='*'"]
