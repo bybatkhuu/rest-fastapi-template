@@ -13,7 +13,7 @@ pip install -r ./requirements/requirements.docs.txt
 # Serve documentation locally (for development):
 ./scripts/docs.sh
 # Or:
-mkdocs serve
+mkdocs serve -a 0.0.0.0:8000 --livereload
 
 # Or build documentation:
 ./scripts/docs.sh -b

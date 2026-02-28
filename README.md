@@ -237,39 +237,39 @@ python -u -m api
 **OPTION D.** Run with **uvicorn** cli:
 
 ```sh
-uvicorn src.api.__main__:app --host=[BIND_HOST] --port=[PORT] --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
+uvicorn src.api.main:app --host=[BIND_HOST] --port=[PORT] --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
 # For example:
-uvicorn src.api.__main__:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
+uvicorn src.api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
 
 # For DEVELOPMENT:
-uvicorn src.api.__main__:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload --reload-dir=./src
+uvicorn src.api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload --reload-dir=./src
 
 
 # Or:
 cd src
-uvicorn api.__main__:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
+uvicorn api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
 
 # For DEVELOPMENT:
-uvicorn src.api.__main__:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload
+uvicorn api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload
 ```
 
 **OPTION E.** Run with **fastapi** cli:
 
 ```sh
-fastapi run src/api/__main__.py --host=[BIND_HOST] --port=[PORT] --forwarded-allow-ips="*"
+fastapi run src/api/main.py --host=[BIND_HOST] --port=[PORT] --forwarded-allow-ips="*"
 # For example:
-fastapi run src/api/__main__.py --port=8000 --forwarded-allow-ips="*"
+fastapi run src/api/main.py --port=8000 --forwarded-allow-ips="*"
 
 # For DEVELOPMENT:
-fastapi dev src/api/__main__.py --host="0.0.0.0" --port=8000 --forwarded-allow-ips="*"
+fastapi dev src/api/main.py --host="0.0.0.0" --port=8000 --forwarded-allow-ips="*"
 
 
 # Or:
 cd src
-fastapi run api/__main__.py --port=8000 --forwarded-allow-ips="*"
+fastapi run api/main.py --port=8000 --forwarded-allow-ips="*"
 
 # For DEVELOPMENT:
-fastapi dev api/__main__.py --host="0.0.0.0" --port=8000 --forwarded-allow-ips="*"
+fastapi dev api/main.py --host="0.0.0.0" --port=8000 --forwarded-allow-ips="*"
 ```
 
 ### 6. ✅ Check server is running
@@ -327,8 +327,10 @@ DEBUG=false
 
 ## -- API configs -- ##
 FT_API_PORT=8000
+# FT_API_CONFIGS_DIR="/etc/rest-fastapi-template"
 # FT_API_LOGS_DIR="/var/log/rest-fastapi-template"
 # FT_API_DATA_DIR="/var/lib/rest-fastapi-template"
+# FT_API_TMP_DIR="/tmp/rest-fastapi-template"
 # FT_API_VERSION="1"
 # FT_API_PREFIX="/api/v{api_version}"
 # FT_API_DOCS_ENABLED=true

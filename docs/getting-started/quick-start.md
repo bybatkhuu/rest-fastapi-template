@@ -86,14 +86,7 @@ pm2 start ./pm2-process.json && \
 
 ### Standalone runtime (Python)
 
-**OPTION C.** Run server as **python script**:
-
-```sh
-cd src
-python -u ./main.py
-```
-
-**OPTION D.** Run server as **python module**:
+**OPTION C.** Run server as **python module**:
 
 ```sh
 python -u -m src.api
@@ -103,39 +96,42 @@ cd src
 python -u -m api
 ```
 
-**OPTION E.** Run with **uvicorn** cli:
+**OPTION D.** Run with **uvicorn** cli:
 
 ```sh
-uvicorn src.main:app --host=[BIND_HOST] --port=[PORT] --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
+uvicorn src.api.main:app --host=[BIND_HOST] --port=[PORT] --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
 # For example:
-uvicorn src.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
+uvicorn src.api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
+
+# For DEVELOPMENT:
+uvicorn src.api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload --reload-dir=./src
 
 
 # Or:
 cd src
-uvicorn main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
+uvicorn api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
 
 # For DEVELOPMENT:
-uvicorn main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload --reload-include="*.yml" --reload-include=".env"
+uvicorn api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload
 ```
 
-**OPTION F.** Run with **fastapi** cli:
+**OPTION E.** Run with **fastapi** cli:
 
 ```sh
-fastpi run src/main.py --host=[BIND_HOST] --port=[PORT]
+fastapi run src/api/main.py --host=[BIND_HOST] --port=[PORT] --forwarded-allow-ips="*"
 # For example:
-fastapi run src/main.py --port=8000
+fastapi run src/api/main.py --port=8000 --forwarded-allow-ips="*"
 
 # For DEVELOPMENT:
-fastapi dev src/main.py --host="0.0.0.0" --port=8000
+fastapi dev src/api/main.py --host="0.0.0.0" --port=8000 --forwarded-allow-ips="*"
 
 
 # Or:
 cd src
-fastapi run --port=8000
+fastapi run api/main.py --port=8000 --forwarded-allow-ips="*"
 
 # For DEVELOPMENT:
-fastapi dev --host="0.0.0.0" --port=8000
+fastapi dev api/main.py --host="0.0.0.0" --port=8000 --forwarded-allow-ips="*"
 ```
 
 ## 3. ✅ Check server is running
@@ -169,7 +165,7 @@ Standalone runtime (Only for **PM2**):
 
 ```sh
 pm2 stop ./pm2-process.json && \
-    pm2 flush && \
+    pm2 flush ft && \
     pm2 delete ./pm2-process.json
 ```
 

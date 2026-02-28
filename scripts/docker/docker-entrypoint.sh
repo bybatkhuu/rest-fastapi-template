@@ -7,7 +7,7 @@ echo "[INFO]: Running '${FT_API_SLUG}' docker-entrypoint.sh..."
 _run()
 {
 	exec python -m api || exit 2
-	# exec uvicorn main:app \
+	# exec uvicorn api.main:app \
 	# 	--host=0.0.0.0 \
 	# 	--port=${FT_API_PORT:-8000} \
 	# 	--no-access-log \
