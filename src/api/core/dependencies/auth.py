@@ -1,30 +1,30 @@
-# -*- coding: utf-8 -*-
-
-from typing import Any, Dict, Optional, List
+from typing import Any
 
 from jwt import ExpiredSignatureError, InvalidTokenError
 from fastapi import Security, Depends, Request
 from fastapi.security import HTTPAuthorizationCredentials, HTTPBearer
 
-from api.core.constants import ErrorCodeEnum, ALPHANUM_HOST_REGEX
-from api.config import config
-from api.core.utils import validator
-from api.helpers.crypto import jwt as jwt_helper
-from api.core.exceptions import BaseHTTPException
+from potato_util.constants import ALPHANUM_HOST_REGEX
+from potato_util import validator
+from potato_util.crypto import jwt as jwt_utils
 
+from api.core.constants import ErrorCodeEnum
+from api.config import config
+from api.core.exceptions import BaseHTTPException
 
 _http_bearer = HTTPBearer(auto_error=False)
 
 
 def auth_jwt(
     request: Request,
-    authorization: Optional[HTTPAuthorizationCredentials] = Security(_http_bearer),
-) -> Dict[str, Any]:
+    authorization: HTTPAuthorizationCredentials | None = Security(_http_bearer),
+) -> dict[str, Any]:
     """Dependency function to authenticate the access token (JWT) and get the payload.
 
     Args:
         request       (Request                     , required): The FastAPI request object.
-        authorization (HTTPAuthorizationCredentials, required): 'Authorization: Bearer <access_token>' header credentials.
+        authorization (HTTPAuthorizationCredentials, required): 'Authorization: Bearer <access_token>'
+                                                                    header credentials.
 
     Raises:
         BaseHTTPException: If the access token is missing.
@@ -32,7 +32,7 @@ def auth_jwt(
         BaseHTTPException: If the access token is invalid.
 
     Returns:
-        Dict[str, Any]: The decoded access token payload.
+        dict[str, Any]: The decoded access token payload.
     """
 
     if not authorization:
@@ -50,9 +50,9 @@ def auth_jwt(
             headers={"WWW-Authenticate": 'Bearer error="invalid_token"'},
         )
 
-    _payload: Dict[str, Any] = None
+    _payload: dict[str, Any]
     try:
-        _payload: Dict[str, Any] = jwt_helper.decode(
+        _payload: dict[str, Any] = jwt_utils.decode(
             token=_access_token,
             key=config.api.security.jwt.secret,
             algorithm=config.api.security.jwt.algorithm,
@@ -74,17 +74,17 @@ def auth_jwt(
     return _payload
 
 
-def get_user_id(payload: Dict[str, Any] = Depends(auth_jwt)) -> str:
+def get_user_id(payload: dict[str, Any] = Depends(auth_jwt)) -> str:
     """Dependency function to get the user ID from the token payload.
 
     Args:
-        payload (Dict[str, Any], required): The decoded access token payload.
+        payload (dict[str, Any], required): The decoded access token payload.
 
     Returns:
         str: The user ID.
     """
 
-    _user_id: str = payload.get("sub")
+    _user_id: str = payload.get("sub", "")
     return _user_id
 
 
@@ -110,36 +110,39 @@ class AuthScopeDep:
         self.allow_owner = allow_owner
 
     def __call__(
-        self, request: Request, payload: Dict[str, Any] = Depends(auth_jwt)
-    ) -> Dict[str, Any]:
+        self, request: Request, payload: dict[str, Any] = Depends(auth_jwt)
+    ) -> dict[str, Any]:
         """Dependency function to check the scope permissions of the user.
 
         Args:
             request (Request       , required): The FastAPI request object.
-            payload (Dict[str, Any], required): The decoded access token (JWT) payload.
+            payload (dict[str, Any], required): The decoded access token (JWT) payload.
 
         Raises:
             BaseHTTPException: If the user has insufficient scope permissions.
 
         Returns:
-            Dict[str, Any]: The decoded access token payload.
+            dict[str, Any]: The decoded access token payload.
         """
 
         if self.allow_owner:
-            _auth_user_id: str = payload.get("sub")
-            _path_params: List[str] = list(request.path_params.values())
+            _auth_user_id: str = payload.get("sub", "")
+            _path_params: list[str] = list(request.path_params.values())
             if _path_params and (_path_params[0] == _auth_user_id):
                 return payload
 
-        _token_all_scope: str = payload.get("scope")
-        _token_scope_list: List[str] = _token_all_scope.split(" ")
+        _token_all_scope: str = payload.get("scope", "")
+        _token_scope_list: list[str] = _token_all_scope.split(" ")
         if self.allow_scope not in _token_scope_list:
             raise BaseHTTPException(
                 error_enum=ErrorCodeEnum.FORBIDDEN,
                 message="You do not have enough scope permissions!",
                 description="The request requires more scope permissions.",
                 headers={
-                    "WWW-Authenticate": 'Bearer error="insufficient_scope", error_description="The request requires more scope permissions."'
+                    "WWW-Authenticate": (
+                        'Bearer error="insufficient_scope", '
+                        'error_description="The request requires more scope permissions."'
+                    )
                 },
             )
 

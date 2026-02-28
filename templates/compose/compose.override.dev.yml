@@ -1,19 +1,19 @@
 services:
   api:
     volumes:
-      - "./volumes/storage/rest.fastapi-template/logs:${FT_API_LOGS_DIR:-/var/log/rest.fastapi-template}"
-      - "./volumes/storage/rest.fastapi-template/data:${FT_API_DATA_DIR:-/var/lib/rest.fastapi-template}"
       - "./scripts/docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh"
-      - "./src:/app/rest.fastapi-template"
+      - "./src:/app/rest-fastapi-template"
       - "./volumes/.vscode-server:/home/ft-user/.vscode-server"
     # deploy:
-    #   replicas: 0
+    #   replicas: 3
     #   resources:
     #     limits:
     #       cpus: "0.5"
     #       memory: 512M
+    # ports: !override
+    #   - "8000-8002:${FT_API_PORT:-8000}"
     # command: ["/bin/bash"]
-    # command: ["-b", "uvicorn main:app --host=0.0.0.0 --port=${FT_API_PORT:-8000} --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips='*' --reload --reload-include='*.yml' --reload-include='.env'"]
+    # command: ["-b", "uvicorn api.main:app --host=0.0.0.0 --port=${FT_API_PORT:-8000} --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips='*' --reload"]
     # healthcheck:
     #   test: ["CMD-SHELL", "curl -f http://localhost:${FT_API_PORT:-8000}/api/v${FT_API_VERSION:-1}/ping"]
     #   start_period: 30s

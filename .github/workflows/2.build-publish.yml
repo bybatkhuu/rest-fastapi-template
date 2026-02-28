@@ -1,29 +1,52 @@
 name: 2. Build and Publish
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["1. Bump Version"]
     types:
       - completed
-    branches:
-      - main
   push:
     tags:
       - "v*.*.*-*"
 
 env:
-  _VERSION: 7.3.0-250215
+  _VERSION: 0.0.0-260101
 
 jobs:
+  test:
+    name: 2.1. Test
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.10"
+      - name: Install dependencies
+        run: |
+          python -m pip install -U pip
+          python -m pip install -r ./requirements/requirements.test.txt
+      - name: Test with pytest
+        run: ./scripts/test.sh -l
+
   build_publish:
-    name: Build and Publish
-    runs-on: ubuntu-22.04
+    needs: test
+    name: 2.2. Build and Publish
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       actions: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+      - name: Get latest version
+        run: |
+          git pull origin main
+          echo "Current version: v$(./scripts/get-version.sh)"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
@@ -43,29 +66,29 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          build-args: |
+          secrets: |
             "HASH_PASSWORD=${{ secrets.DOCKER_UID_HASH_PASSWORD }}"
           load: true
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:cache-latest
-          tags: ${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:test
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:cache-latest
+          tags: ${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:test
       - name: Test docker image
         run: |
-          docker run --rm -dt -p 8000:8000 ${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:test
+          docker run --rm -dt -p 8000:8000 ${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:test
           sleep 3
           curl -s http://localhost:8000/api/v1/ping | grep "Pong"
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
           context: .
-          build-args: |
+          secrets: |
             "HASH_PASSWORD=${{ secrets.DOCKER_UID_HASH_PASSWORD }}"
           # platforms: linux/amd64
           platforms: linux/amd64,linux/arm64
-          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:cache-latest
-          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:cache-latest,mode=max
+          cache-from: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:cache-latest
+          cache-to: type=registry,ref=${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:cache-latest,mode=max
           tags: |
-            ${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:latest
-            ${{ secrets.DOCKERHUB_USERNAME }}/rest.fastapi-template:${{ env._VERSION }}
+            ${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:latest
+            ${{ secrets.DOCKERHUB_USERNAME }}/rest-fastapi-template:${{ env._VERSION }}
           push: true
       - name: Trigger release
         env:

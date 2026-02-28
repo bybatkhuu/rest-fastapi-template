@@ -1,81 +1,82 @@
-# -*- coding: utf-8 -*-
+from typing import Any
 
-import os
-import pathlib
-from typing import Any, Dict, List, Optional
-
-from pydantic import Field, constr, model_validator, field_validator
+from pydantic import Field, model_validator
 from pydantic_settings import SettingsConfigDict
 
+from potato_util import validator
+
 from api.core.constants import ENV_PREFIX_API
-from api.core.utils import validator
+
 from ._base import BaseConfig
 
 
 class DocsConfig(BaseConfig):
-    enabled: bool = Field(...)
-    openapi_url: Optional[
-        constr(strip_whitespace=True, max_length=128)  # type: ignore
-    ] = Field(default=None)
-    docs_url: Optional[
-        constr(strip_whitespace=True, max_length=128)  # type: ignore
-    ] = Field(default=None)
-    redoc_url: Optional[
-        constr(strip_whitespace=True, max_length=128)  # type: ignore
-    ] = Field(default=None)
-    swagger_ui_oauth2_redirect_url: Optional[
-        constr(strip_whitespace=True, max_length=128)  # type: ignore
-    ] = Field(default=None)
-    summary: Optional[
-        constr(strip_whitespace=True, min_length=2, max_length=128)  # type: ignore
-    ] = Field(default=None)
+    enabled: bool = Field(default=True)
+    openapi_url: str | None = Field(default="{api_prefix}/openapi.json")
+    docs_url: str | None = Field(default="{api_prefix}/docs")
+    redoc_url: str | None = Field(default="{api_prefix}/redoc")
+    swagger_ui_oauth2_redirect_url: str | None = Field(
+        default="{api_prefix}/docs/oauth2-redirect"
+    )
+    summary: str | None = Field(default="This is a REST API service.")
     description: str = Field(default="", max_length=8192)
-    terms_of_service: Optional[
-        constr(strip_whitespace=True, min_length=1, max_length=256)  # type: ignore
-    ] = Field(default=None)
-    contact: Optional[Dict[str, Any]] = Field(default=None)
-    license_info: Optional[Dict[str, Any]] = Field(default=None)
-    openapi_tags: Optional[List[Dict[str, Any]]] = Field(default=None)
-    swagger_ui_parameters: Optional[Dict[str, Any]] = Field(default=None)
+    terms_of_service: str | None = Field(default="https://example.com/terms")
+    contact: dict[str, Any] | None = Field(
+        default={
+            "name": "Support Team",
+            "email": "support@example.com",
+            "url": "https://example.com/contact",
+        }
+    )
+    license_info: dict[str, Any] | None = Field(
+        default={
+            "name": "MIT License",
+            "url": "https://opensource.org/licenses/MIT",
+        }
+    )
+    openapi_tags: list[dict[str, Any]] | None = Field(
+        default=[
+            {"name": "Utils", "description": "Useful utility endpoints."},
+            {"name": "Tasks", "description": "Endpoints to manage tasks."},
+            {"name": "Default", "description": "Redirection of default endpoints."},
+        ]
+    )
+    swagger_ui_parameters: dict[str, Any] | None = Field(
+        default={"syntaxHighlight": {"theme": "nord"}}
+    )
 
     model_config = SettingsConfigDict(env_prefix=f"{ENV_PREFIX_API}DOCS_")
 
 
 class FrozenDocsConfig(DocsConfig):
-    @field_validator("description")
-    @classmethod
-    def _check_description(cls, val: str) -> str:
-        _src_dir = pathlib.Path(__file__).parent.parent.parent.parent.resolve()
-        _description_path = str(_src_dir / "./api/configs/docs/description.md")
-        if (not val) and os.path.isfile(_description_path):
-            with open(_description_path, "r") as _file:
-                val = _file.read()
-
-        return val
-
     @model_validator(mode="before")
     @classmethod
-    def _check_all(cls, values: Dict[str, Any]) -> Dict[str, Any]:
+    def _check_all(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            if ("openapi_url" in data) and (data["openapi_url"] == ""):
+                data["openapi_url"] = None
 
-        if values["openapi_url"] == "":
-            values["openapi_url"] = None
+            if ("docs_url" in data) and (data["docs_url"] == ""):
+                data["docs_url"] = None
 
-        if values["docs_url"] == "":
-            values["docs_url"] = None
+            if ("redoc_url" in data) and (data["redoc_url"] == ""):
+                data["redoc_url"] = None
 
-        if values["redoc_url"] == "":
-            values["redoc_url"] = None
+            if ("swagger_ui_oauth2_redirect_url" in data) and (
+                data["swagger_ui_oauth2_redirect_url"] == ""
+            ):
+                data["swagger_ui_oauth2_redirect_url"] = None
 
-        if values["swagger_ui_oauth2_redirect_url"] == "":
-            values["swagger_ui_oauth2_redirect_url"] = None
+            try:
+                if ("enabled" in data) and validator.is_falsy(data["enabled"]):
+                    data["openapi_url"] = None
+                    data["docs_url"] = None
+                    data["redoc_url"] = None
+                    data["swagger_ui_oauth2_redirect_url"] = None
+            except ValueError:
+                pass
 
-        if validator.is_falsy(values["enabled"]):
-            values["openapi_url"] = None
-            values["docs_url"] = None
-            values["redoc_url"] = None
-            values["swagger_ui_oauth2_redirect_url"] = None
-
-        return values
+        return data
 
     model_config = SettingsConfigDict(frozen=True)
 

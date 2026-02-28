@@ -1,99 +1,57 @@
-# -*- coding: utf-8 -*-
-
 import os
-from typing_extensions import Self
 
-from pydantic import Field, constr, field_validator, ValidationInfo, model_validator
+from pydantic import Field, field_validator, ValidationInfo
 from pydantic_settings import SettingsConfigDict
 
-from beans_logging import LoggerConfigPM
+from potato_util.constants import EnvEnum
 
-from api.__version__ import __version__
-from api.core.constants import EnvEnum, ENV_PREFIX, ENV_PREFIX_API
-from api.core.utils import validator
-from ._base import FrozenBaseConfig
-from ._dev import DevConfig, FrozenDevConfig
+from api.core.constants import ENV_PREFIX
+
+from ._base import BaseMainConfig
+from ._uvicorn import UvicornConfig, FrozenUvicornConfig
 from ._api import ApiConfig, FrozenApiConfig
 
 
 # Main config schema:
-class MainConfig(FrozenBaseConfig):
-    env: EnvEnum = Field(...)
-    debug: bool = Field(...)
-    version: constr(strip_whitespace=True) = Field(  # type: ignore
-        default=__version__, min_length=3, max_length=32
-    )
-    api: ApiConfig = Field(...)
-    logger: LoggerConfigPM = Field(default_factory=LoggerConfigPM)
+class MainConfig(BaseMainConfig):
+    env: EnvEnum = Field(default=EnvEnum.LOCAL, alias="env")
+    debug: bool = Field(default=False, alias="debug")
+    api: ApiConfig = Field(default_factory=ApiConfig)
 
-    @field_validator("env")
-    @classmethod
-    def _check_env(cls, val: EnvEnum) -> EnvEnum:
-        _env = "ENV"
-        if _env in os.environ:
-            _env = os.getenv(_env).upper()
-            val = EnvEnum(_env)
-
-        return val
-
-    @field_validator("debug")
-    @classmethod
-    def _check_debug(cls, val: str) -> str:
-        _debug_env = "DEBUG"
-        if _debug_env in os.environ:
-            val = os.getenv(_debug_env)
-            val = validator.is_truthy(val)
-
-        return val
-
-    @field_validator("version")
-    @classmethod
-    def _check_version(cls, val: str) -> str:
-        val = __version__
-        return val
-
-    @field_validator("api")
+    @field_validator("api", mode="after")
     @classmethod
     def _check_api(cls, val: ApiConfig, info: ValidationInfo) -> FrozenApiConfig:
-        _dev: DevConfig = val.dev
+        _uvicorn: UvicornConfig = val.uvicorn
         if ("env" in info.data) and (info.data["env"] == EnvEnum.DEVELOPMENT):
-            _dev.reload = True
+            _uvicorn.reload = True
 
-        _dev = FrozenDevConfig(**_dev.model_dump())
-        val = FrozenApiConfig(dev=_dev, **val.model_dump(exclude={"dev"}))
+        if val.security.ssl.enabled:
+            if not _uvicorn.ssl_keyfile:
+                _uvicorn.ssl_keyfile = os.path.join(
+                    val.paths.ssl_dir, val.security.ssl.key_fname
+                )
+
+            if not _uvicorn.ssl_certfile:
+                _uvicorn.ssl_certfile = os.path.join(
+                    val.paths.ssl_dir, val.security.ssl.cert_fname
+                )
+
+        _uvicorn = FrozenUvicornConfig(**_uvicorn.model_dump())
+        val = FrozenApiConfig(uvicorn=_uvicorn, **val.model_dump(exclude={"uvicorn"}))
         return val
 
-    @field_validator("logger")
-    @classmethod
-    def _check_logger(cls, val: LoggerConfigPM, info: ValidationInfo) -> LoggerConfigPM:
-        if "api" in info.data:
-            if not val.app_name:
-                val.app_name = info.data["api"].slug
-            elif "{api_slug}" in val.app_name:
-                val.app_name = val.app_name.format(api_slug=info.data["api"].slug)
-
-        _logs_dir_env = f"{ENV_PREFIX_API}LOGS_DIR"
-        if _logs_dir_env in os.environ:
-            val.file.logs_dir = os.getenv(_logs_dir_env)
-
-        return val
-
-    @model_validator(mode="after")
-    def _check_required_envs(self) -> Self:
-        _required_envs = [
-            # f"{ENV_PREFIX_API}SECURITY_JWT_SECRET",
-        ]
-
-        if (self.env == EnvEnum.STAGING) or (self.env == EnvEnum.PRODUCTION):
-            for _required_env in _required_envs:
-                if _required_env not in os.environ:
-                    raise ValueError(
-                        f"Missing required '{_required_env}' environment variable for STAGING/PRODUCTION environment!"
-                    )
-
-        return self
-
-    model_config = SettingsConfigDict(env_prefix=ENV_PREFIX, env_nested_delimiter="__")
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_prefix=ENV_PREFIX,
+        env_nested_delimiter="__",
+        cli_prefix="",
+        secrets_dir="/var/run/secrets",
+        secrets_prefix="",
+        secrets_nested_delimiter="_",
+        secrets_dir_missing="ok",  # pragma: allowlist secret
+    )  # type: ignore
 
 
-__all__ = ["MainConfig"]
+__all__ = [
+    "MainConfig",
+]

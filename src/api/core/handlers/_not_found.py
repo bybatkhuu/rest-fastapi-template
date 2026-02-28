@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
-
 from fastapi import HTTPException, Request
 
 from api.core.constants import ErrorCodeEnum
 from api.core.responses import BaseResponse
 
 
-## For 404 status code:
-async def not_found_handler(request: Request, exc: HTTPException) -> BaseResponse:
+# For 404 status code:
+async def not_found_handler(
+    request: Request, exc: HTTPException | Exception
+) -> BaseResponse:
     """404 status code handler.
 
     Args:
@@ -18,8 +18,11 @@ async def not_found_handler(request: Request, exc: HTTPException) -> BaseRespons
         BaseResponse: Response object.
     """
 
+    if not isinstance(exc, HTTPException):
+        exc = HTTPException(status_code=404)
+
     _error = ErrorCodeEnum.NOT_FOUND.value.model_dump()
-    _message: str = _error.get("message")
+    _message: str = _error.get("message", "Not Found")
 
     if hasattr(exc, "detail") and isinstance(exc.detail, dict):
         _message = exc.detail.get("message", _message)

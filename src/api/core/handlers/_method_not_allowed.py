@@ -1,14 +1,12 @@
-# -*- coding: utf-8 -*-
-
 from fastapi import HTTPException, Request
 
 from api.core.constants import ErrorCodeEnum
 from api.core.responses import BaseResponse
 
 
-## For 405 status code:
+# For 405 status code:
 async def method_not_allowed_handler(
-    request: Request, exc: HTTPException
+    request: Request, exc: HTTPException | Exception
 ) -> BaseResponse:
     """405 status code handler.
 
@@ -21,7 +19,7 @@ async def method_not_allowed_handler(
     """
 
     _error = ErrorCodeEnum.METHOD_NOT_ALLOWED.value.model_dump()
-    _message: str = _error.get("message")
+    _message: str = _error.get("message", "Method Not Allowed")
 
     return BaseResponse(
         request=request, status_code=405, message=_message, error=_error

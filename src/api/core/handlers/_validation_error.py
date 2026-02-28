@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from fastapi import Request
 from fastapi.exceptions import RequestValidationError
 
@@ -7,9 +5,9 @@ from api.core.constants import ErrorCodeEnum
 from api.core.responses import BaseResponse
 
 
-## For RequestValidationError error:
+# For RequestValidationError error:
 async def validation_error_handler(
-    request: Request, exc: RequestValidationError
+    request: Request, exc: RequestValidationError | Exception
 ) -> BaseResponse:
     """RequestValidationError handler for validation error.
 
@@ -20,6 +18,10 @@ async def validation_error_handler(
     Returns:
         BaseResponse: Response object.
     """
+
+    assert isinstance(
+        exc, RequestValidationError
+    ), f"`exc` argument type is invalid {type(exc)}, expected <RequestValidationError>!"
 
     _message = "Validation error!"
     _error = ErrorCodeEnum.UNPROCESSABLE_ENTITY.value.model_dump()
