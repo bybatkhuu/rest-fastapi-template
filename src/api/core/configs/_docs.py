@@ -11,7 +11,7 @@ from ._base import BaseConfig
 
 
 class DocsConfig(BaseConfig):
-    enabled: bool = Field(default=False)
+    enabled: bool = Field(default=True)
     openapi_url: str | None = Field(default="{api_prefix}/openapi.json")
     docs_url: str | None = Field(default="{api_prefix}/docs")
     redoc_url: str | None = Field(default="{api_prefix}/redoc")

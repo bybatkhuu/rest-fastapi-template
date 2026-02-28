@@ -10,11 +10,9 @@ from ._base import BaseConfig
 
 
 class PathsConfig(BaseConfig):
-    tmp_dir: str = Field(
-        default="/tmp/{api_slug}", min_length=2, max_length=1024  # nosec B108
-    )
+    tmp_dir: str = Field(default="../tmp", min_length=2, max_length=1024)  # nosec B108
     uploads_dir: str = Field(default="{tmp_dir}/uploads", min_length=2, max_length=1024)
-    data_dir: str = Field(default="/var/lib/{api_slug}", min_length=2, max_length=1024)
+    data_dir: str = Field(default="../data", min_length=2, max_length=1024)
     security_dir: str = Field(
         default="{data_dir}/security", min_length=2, max_length=1024
     )

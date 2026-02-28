@@ -12,7 +12,7 @@ from ._base import BaseConfig
 
 
 class FileConfigPM(BaseFileConfigPM, BaseConfig):
-    logs_dir: str = Field(default="/var/log/{api_slug}", min_length=2, max_length=1024)
+    logs_dir: str = Field(default="../logs", min_length=2, max_length=1024)
 
     @field_validator("logs_dir", mode="after")
     @classmethod
