@@ -39,7 +39,7 @@ async def main() -> None:
             _result_dict = await _response.json()
     logger.info("Done!\n")
 
-    logging.info(f"\n{pprint.pformat(_result_dict)}")
+    logger.info(f"\n{pprint.pformat(_result_dict)}")
     return
 
 
