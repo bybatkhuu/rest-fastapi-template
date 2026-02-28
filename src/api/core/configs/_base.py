@@ -1,8 +1,9 @@
 from pydantic_settings import (
     BaseSettings,
     SettingsConfigDict,
-    CliSettingsSource,
     PydanticBaseSettingsSource,
+    CliSettingsSource,
+    NestedSecretsSettingsSource,
 )
 
 from api.core import utils
@@ -29,7 +30,12 @@ class FrozenBaseConfig(BaseConfig):
         dotenv_settings: PydanticBaseSettingsSource,
         file_secret_settings: PydanticBaseSettingsSource,
     ) -> tuple[PydanticBaseSettingsSource, ...]:
-        return file_secret_settings, dotenv_settings, env_settings, init_settings
+        return (
+            NestedSecretsSettingsSource(file_secret_settings),
+            dotenv_settings,
+            env_settings,
+            init_settings,
+        )
 
 
 class BaseMainConfig(FrozenBaseConfig):
@@ -46,7 +52,12 @@ class BaseMainConfig(FrozenBaseConfig):
         if not utils.is_running_cli():
             _sources.append(CliSettingsSource(settings_cls, cli_parse_args=True))
         _sources.extend(
-            [file_secret_settings, dotenv_settings, env_settings, init_settings]
+            [
+                NestedSecretsSettingsSource(file_secret_settings),
+                dotenv_settings,
+                env_settings,
+                init_settings,
+            ]
         )
         return tuple(_sources)
 

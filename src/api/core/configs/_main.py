@@ -40,7 +40,16 @@ class MainConfig(BaseMainConfig):
         val = FrozenApiConfig(uvicorn=_uvicorn, **val.model_dump(exclude={"uvicorn"}))
         return val
 
-    model_config = SettingsConfigDict(env_prefix=ENV_PREFIX, env_nested_delimiter="__")
+    model_config = SettingsConfigDict(
+        env_file=".env",
+        env_prefix=ENV_PREFIX,
+        env_nested_delimiter="__",
+        cli_prefix="",
+        secrets_dir="/var/run/secrets",
+        secrets_prefix="",
+        secrets_nested_delimiter="_",
+        secrets_dir_missing="ok",  # pragma: allowlist secret
+    )  # type: ignore
 
 
 __all__ = [
