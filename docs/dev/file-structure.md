@@ -8,37 +8,37 @@ title: "File Structure"
 project/
 ├── .github/                 # GitHub specific files
 │   ├── workflows/               # GitHub Actions workflows
+│   ├── CODEOWNERS               # GitHub code owners file for automatic review assignment
+│   ├── dependabot.yml           # Dependabot configuration
 │   └── release.yml              # Categories and labels for release notes
 ├── .vscode/                 # VSCode specific files
 │   ├── extensions.json          # Recommended extensions for the workspace
 │   └── settings.json            # Common VSCode settings for the workspace
 ├── docs/                    # Documentation of this project
 │   ├── assets/                  # Assets for documentation (images, videos, styles, etc.)
-│   ├── diagrams/                # Diagrams related to the project
-│   ├── pages/                   # Markdown pages for documentation
-│   ├── references/              # References related to the project
-│   ├── reports/                 # Reports generated from results
-│   └── README.md                # Documentation README
+│   ├── .../                     # Other documentation files and directories
+│   ├── README.md                # README documentation
+│   └── release-notes.md         # Release notes documentation
 ├── examples/                # Example source codes
 ├── requirements/            # Dependency requirements for different environments
 ├── scripts/                 # Helpful scripts
 ├── src/                     # Main codebase directory
-│   ├── api/                        # Main API directory
-│   │   ├── __init__.py             # Initialize the api module
-│   │   ├── __main__.py             # Main entry point for the api
-│   │   ├── __version__.py          # Version of the api
+│   ├── api/                     # Main API directory
+│   │   ├── .../                    # Submodules and subpackages for the API (e.g. routers, services, etc...)
+│   │   ├── __init__.py             # Initialize the API module
+│   │   ├── __main__.py             # Main entry point for the API as a module
+│   │   ├── __version__.py          # Version of the API
+│   │   ├── bootstrap.py            # Bootstrap for FastAPI application
 │   │   ├── config.py               # Main configuration
 │   │   ├── exception.py            # All exception handlers will be registered here
 │   │   ├── lifespan.py             # Lifespan events (startup, shutdown)
-│   │   ├── logger.py               # Initialize the logger
+│   │   ├── logger.py               # Logging and logger related file
+│   │   ├── main.py                 # Main function to run the FastAPI application
 │   │   ├── middleware.py           # All middlewares will be registered here
-│   │   ├── router.py               # All routers will be registered here
-│   │   └── server.py               # Main FastAPI application
-│   ├── assets/                  # Assets for the codebase
-│   ├── configs/                 # Configuration files
-│   ├── locale/                  # Localization files
-│   ├── __init__.py              # Initialize the codebase
-│   └── main.py                  # Main entry point
+│   │   ├── mount.py                # All mount points will be registered here
+│   │   └── router.py               # All routers will be registered here
+│   ├── modules/                 # Third-party modules and libraries
+│   └── __init__.py              # Initialize and add src to the module path
 ├── templates/               # Template files
 ├── tests/                   # Tests for the project
 │   ├── __init__.py          # Initialize the test module
@@ -51,13 +51,13 @@ project/
 ├── .env.example             # Example environment variables file
 ├── .gitignore               # Git ignore file
 ├── .markdownlint.json       # Markdown linting rules
-├── CHANGELOG.md             # Project change log
+├── .python-version          # Python version for project
+├── CHANGELOG.md             # Project changelog
 ├── compose.sh               # Docker compose script
 ├── compose.yml              # Docker compose configuration
 ├── Dockerfile               # Docker image definition
-├── environment.yml          # Conda environment file
 ├── LICENSE.txt              # Project license
-├── Makefile                 # Automation commands
+├── Makefile                 # Make commands for common tasks
 ├── mkdocs.yml               # MkDocs configuration
 ├── pm2-process.json.example # PM2 process file example
 ├── pytest.ini               # Pytest configuration
