@@ -4,15 +4,16 @@
 	"project_description": "This is a short description of the project.",
 	"project_abbr": "ft",
 	"env_prefix": "{{cookiecutter.project_abbr.upper().replace('-', '_')}}_",
+	"domain": "example.com",
+	"docs_domain": "docs.{{cookiecutter.domain}}",
 	"author_username": "username",
+	"author_fullname": "Full Name",
+	"author_email": "user@{{cookiecutter.domain}}",
 	"repo_owner": "{{cookiecutter.author_username}}",
 	"repo_name": "{{cookiecutter.project_slug}}",
 	"docker_registry": "{{cookiecutter.repo_owner}}",
 	"docker_repo_name": "{{cookiecutter.repo_name}}",
-	"domain": "example.com",
-	"author_email": "user@{{cookiecutter.domain}}",
-	"author_fullname": "Full Name",
-	"python_version": "3.9",
+	"python_version": "3.10",
 	"version": "0.0.0-260101",
 	"timezone": "UTC",
 	"language": "en",
@@ -25,5 +26,8 @@
 		"ISC License",
 		"Proprietary License",
 		"No License"
+	],
+	"_copy_without_render": [
+		"docs/assets/js/*.js"
 	]
 }

@@ -35,7 +35,7 @@ This is a cookiecutter template for FastAPI web service projects.
 For **DEVELOPMENT** environment:
 
 - Install [**git**](https://git-scm.com/downloads)
-- Setup an [**SSH key**](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) ([video tutorial](https://www.youtube.com/watch?v=snCP3c7wXw0))
+- Setup an [**SSH key**](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
 
 ### 2. 📥 Download or clone the repository
 

@@ -7,6 +7,9 @@
 	"diffEditor.ignoreTrimWhitespace": false,
 	"editor.fontWeight": "500",
 	"editor.renderWhitespace": "all",
+	"editor.rulers": [
+		120
+	],
 	"editor.smoothScrolling": true,
 	"editor.detectIndentation": false,
 	"editor.insertSpaces": false,
@@ -29,9 +32,10 @@
 		"editor.formatOnSave": true
 	},
 	"[toml]": {
-		"editor.formatOnSave": false
+		"editor.formatOnSave": true
 	},
 	"files.eol": "\n",
+	"files.insertFinalNewline": true,
 	"files.trimTrailingWhitespace": true,
 	"files.associations": {
 		"*.env": "dotenv",
@@ -66,6 +70,7 @@
 		"**/env/**": true,
 		"**/venv/**": true,
 		"**/envs/**": true,
+		"**/.venv/**": true,
 		"**/dist/**": true,
 		"**/sdist/**": true,
 		"**/build/**": true,
@@ -84,6 +89,7 @@
 		"**/results/**": true,
 		"**/output/**": true,
 		"**/outputs/**": true,
+		"**/volumes/**": true,
 		"**/*.egg-info/**": true,
 		"**/*.pyc": true,
 		"**/*.log": true,
@@ -140,6 +146,7 @@
 		"**/results": true,
 		"**/output": true,
 		"**/outputs": true,
+		"**/volumes/storage": true,
 		"**/*.egg-info": true,
 		"**/*.pyc": true,
 		"**/*.log": true,
@@ -147,11 +154,11 @@
 		"**/*.bak": true,
 		"**/.coverage*": true,
 		"**/.DS_Store": true,
-		"**/Thumbs.db": true
+		"**/Thumbs.db": true,
+		"**/docs/assets/js/*.js": true
 	},
 	"python.languageServer": "Pylance",
 	"python.analysis.extraPaths": [
-		"${workspaceFolder}/rest.fastapi-template/src"
-		// "${workspaceFolder}/rest.fastapi-template/src/modules"
+		"${workspaceFolder}/rest-fastapi-template/src"
 	]
 }
