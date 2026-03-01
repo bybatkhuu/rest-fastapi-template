@@ -36,7 +36,7 @@ title: Build
 ./scripts/build.sh -x
 
 # Or:
-./scripts/build.sh -p=arm64 -b=ubuntu:24.04 -n=bybatkhuu -r=rest-fastapi-template -v=1.0.0 -s=-arm64 -d=./Dockerfile -t=. -u -c
+./scripts/build.sh -p=arm64 -b=ubuntu:24.04 -g=bybatkhuu -r=rest-fastapi-template -v=1.0.0 -s=-arm64 -d=./Dockerfile -t=. -u -c
 ```
 
 **B.** Docker build command:

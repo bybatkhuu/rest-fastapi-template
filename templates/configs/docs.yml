@@ -14,7 +14,7 @@ api:
       url: https://example.com/contact
     license_info:
       name: "MIT License"
-      url: https://opensource.org/licenses/MIT
+      url: https://opensource.org/licenses/mit
     openapi_tags:
       - name: Utils
         description: "Useful utility endpoints."

@@ -72,8 +72,8 @@ OPTIONS:
     -c, --clean-images           Remove built images after completion. Default: false
     -x, --cross-compile          Enable cross compilation. Default: false
     -b, --base-image [IMAGE]     Base image to use.
-    -g, --registry [REGISTRY]    Container registry.
-    -r, --repo [REPO]            Image repository.
+    -g, --registry [REGISTRY]    Container registry. Default: bybatkhuu
+    -r, --repo [REPO]            Image repository. Default: rest-fastapi-template
     -v, --version [VERSION]      Image version tag.
     -s, --subtag [SUBTAG]        Additional image subtag.
     -d, --dockerfile [PATH]      Path to Dockerfile. Default: ./Dockerfile

@@ -11,9 +11,9 @@
 		},
 		"license": {
 			"name": "MIT License",
-			"url": "https://opensource.org/licenses/MIT"
+			"url": "https://opensource.org/licenses/mit"
 		},
-		"version": "7.3.0-250215"
+		"version": "8.0.1-260228"
 	},
 	"paths": {
 		"/api/v1/tasks/": {

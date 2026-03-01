@@ -32,9 +32,12 @@ WORKDIR "/usr/src/${FT_API_SLUG}"
 RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=private \
 	--mount=type=cache,target=/root/.cache,sharing=locked \
 	_BUILD_TARGET_ARCH=$(uname -m) && \
-    echo "BUILDING TARGET ARCHITECTURE: $_BUILD_TARGET_ARCH" && \
+    echo "BUILDING TARGET ARCHITECTURE: ${_BUILD_TARGET_ARCH}" && \
 	rm -rfv /var/lib/apt/lists/* /var/cache/apt/archives/* /tmp/* && \
 	apt-get clean -y && \
+	# echo "Acquire::http::Pipeline-Depth 0;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
+	# echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
+	# echo "Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
 	apt-get update --fix-missing -o Acquire::CompressionTypes::Order::=gz && \
 	apt-get install -y --no-install-recommends \
 		ca-certificates \
@@ -124,6 +127,9 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN --mount=type=secret,id=HASH_PASSWORD \
 	rm -vrf /var/lib/apt/lists/* /var/cache/apt/archives/* /tmp/* /root/.cache/* && \
 	apt-get clean -y && \
+	# echo "Acquire::http::Pipeline-Depth 0;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
+	# echo "Acquire::http::No-Cache true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
+	# echo "Acquire::BrokenProxy true;" >> /etc/apt/apt.conf.d/99fixbadproxy && \
 	apt-get update --fix-missing -o Acquire::CompressionTypes::Order::=gz && \
 	apt-get install -y --no-install-recommends \
 		sudo \

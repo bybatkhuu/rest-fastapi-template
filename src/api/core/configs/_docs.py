@@ -31,7 +31,7 @@ class DocsConfig(BaseConfig):
     license_info: dict[str, Any] | None = Field(
         default={
             "name": "MIT License",
-            "url": "https://opensource.org/licenses/MIT",
+            "url": "https://opensource.org/licenses/mit",
         }
     )
     openapi_tags: list[dict[str, Any]] | None = Field(
