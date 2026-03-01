@@ -30,7 +30,7 @@ jobs:
         run: ./scripts/test.sh -l
 
   bump_version:
-    # needs: test
+    needs: test
     name: 1.2. Bump Version
     runs-on: ubuntu-24.04
     permissions:

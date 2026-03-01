@@ -1,6 +1,6 @@
 site_name: {{cookiecutter.project_name}}
 site_description: "{{cookiecutter.project_description}}"
-site_url: https://{{cookiecutter.repo_owner}}.github.io/{{cookiecutter.repo_name}}
+site_url: https://{{cookiecutter.docs_domain}}
 repo_name: {{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}
 repo_url: https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}
 theme:

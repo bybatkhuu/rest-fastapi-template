@@ -298,7 +298,7 @@ pm2 stop ./pm2-process.json && \
 
 ### 🌎 Environment Variables
 
-[**`.env.example`**](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/.env.example):
+[**`.env.example`**](./.env.example):
 
 ```sh
 ## --- Environment variable --- ##
@@ -320,7 +320,6 @@ DEBUG=false
 # {{cookiecutter.env_prefix}}API_DOCS_OPENAPI_URL="{api_prefix}/openapi.json"
 # {{cookiecutter.env_prefix}}API_DOCS_DOCS_URL="{api_prefix}/docs"
 # {{cookiecutter.env_prefix}}API_DOCS_REDOC_URL="{api_prefix}/redoc"
-
 ```
 
 ---
