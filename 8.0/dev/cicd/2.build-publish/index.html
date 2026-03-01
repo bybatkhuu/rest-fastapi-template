@@ -2497,7 +2497,7 @@
 </ul>
 <h3 id="environment-variables"><strong>Environment Variables</strong></h3>
 <ul>
-<li><strong><code>_VERSION</code></strong>: Initially set to <code>3.0.0-250216</code>, but dynamically updated during the workflow execution.</li>
+<li><strong><code>_VERSION</code></strong>: Dynamically updated during the workflow execution.</li>
 </ul>
 <h3 id="jobs"><strong>Jobs</strong></h3>
 <h4 id="1-build-and-publish"><strong>1. Build and Publish</strong></h4>
@@ -2547,11 +2547,7 @@
 </ul>
 <h2 id="notes">Notes</h2>
 <ul>
-<li>The <strong>Build and Push</strong> step builds an image and pushes it to Docker Hub with tags:<ul>
-<li><code>latest</code></li>
-<li>The extracted version (e.g., <code>3.0.0-250216</code>)</li>
-</ul>
-</li>
+<li>The <strong>Build and Push</strong> step builds an image and pushes it to Docker Hub with tags.</li>
 <li>The <code>platforms</code> field is configured for <code>linux/amd64</code> and <code>linux/arm64</code> architectures.</li>
 <li>Caching is enabled to speed up builds.</li>
 <li>The workflow <strong>triggers the next step</strong>, <code>3.create-release.yml</code>, using <code>gh workflow run</code>.</li>
