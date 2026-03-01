@@ -24,7 +24,7 @@ class PathsConfig(BaseConfig):
     )
     # models_dir: str = Field(default="{data_dir}/models", min_length=2, max_length=1024)
     # model_dir: str = Field(
-    #     default="{data_dir}/models/{{model_id}}", min_length=2, max_length=1024
+    #     default="{data_dir}/models/{% raw %}{{{% endraw %}model_id}}", min_length=2, max_length=1024
     # )
 
     @field_validator("tmp_dir", mode="after")
