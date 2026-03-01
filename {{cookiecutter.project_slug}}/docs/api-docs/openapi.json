@@ -11,7 +11,7 @@
 		},
 		"license": {
 			"name": "{{cookiecutter.license}}",
-			"url": "https://opensource.org/licenses/MIT"
+			"url": "https://opensource.org/licenses/{{cookiecutter.license.split(' ')[0].lower()}}"
 		},
 		"version": "{{cookiecutter.version}}"
 	},

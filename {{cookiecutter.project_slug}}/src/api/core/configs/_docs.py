@@ -18,20 +18,22 @@ class DocsConfig(BaseConfig):
     swagger_ui_oauth2_redirect_url: str | None = Field(
         default="{api_prefix}/docs/oauth2-redirect"
     )
-    summary: str | None = Field(default="This is a REST API service.")
+    summary: str | None = Field(default="{{cookiecutter.project_description}}")
     description: str = Field(default="", max_length=8192)
-    terms_of_service: str | None = Field(default="https://example.com/terms")
+    terms_of_service: str | None = Field(
+        default="https://{{cookiecutter.domain}}/terms"
+    )
     contact: dict[str, Any] | None = Field(
         default={
             "name": "Support Team",
-            "email": "support@example.com",
-            "url": "https://example.com/contact",
+            "email": "support@{{cookiecutter.domain}}",
+            "url": "https://{{cookiecutter.domain}}/contact",
         }
     )
     license_info: dict[str, Any] | None = Field(
         default={
-            "name": "MIT License",
-            "url": "https://opensource.org/licenses/MIT",
+            "name": "{{cookiecutter.license}}",
+            "url": "https://opensource.org/licenses/{{cookiecutter.license.split(' ')[0].lower()}}",
         }
     )
     openapi_tags: list[dict[str, Any]] | None = Field(
