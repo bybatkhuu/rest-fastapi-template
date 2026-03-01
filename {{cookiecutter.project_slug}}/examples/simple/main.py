@@ -1,15 +1,13 @@
 #!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-## Standard libraries
+# Standard libraries
 import sys
 import logging
 import pprint
-from typing import Dict, Any
+from typing import Any
 
-## Third-party libraries
+# Third-party libraries
 import requests
-
 
 logger = logging.getLogger(__name__)
 
@@ -32,14 +30,14 @@ def main() -> None:
     _headers = {"Accept": "application/json"}
 
     logger.info("Sending request...")
-    _result_dict: Dict[str, Any] = {}
+    _result_dict: dict[str, Any] = {}
     response = requests.request(
         method=_method, url=_url, headers=_headers, data=_payload
     )
     _result_dict = response.json()
     logger.info("Done!\n")
 
-    logging.info(f"\n{pprint.pformat(_result_dict)}")
+    logger.info(f"\n{pprint.pformat(_result_dict)}")
     return
 
 

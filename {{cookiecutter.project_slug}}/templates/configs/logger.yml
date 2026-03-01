@@ -1,0 +1,86 @@
+api:
+  logger:
+    app_name: "{api_slug}"
+    level:
+      base: INFO
+      err: WARNING
+    format_str: "[{time:YYYY-MM-DD HH:mm:ss.SSS Z} | {extra[level_short]:<5} | {name}:{line}]: {message}"
+    file:
+      logs_dir: "/var/log/{api_slug}"
+      rotate_size: 10000000
+      rotate_time: "00:00:00"
+      retention: 90
+      encoding: utf8
+    use_custom_serialize: false
+    http:
+      std:
+        msg_format_str: '<n><w>[{request_id}]</w></n> {client_host} {user_id} "<u>{method} {url_path}</u> HTTP/{http_version}" {status_code} {content_length}B {response_time}ms'
+        err_msg_format_str: '<n><w>[{request_id}]</w></n> {client_host} {user_id} "<u>{method} {url_path}</u> HTTP/{http_version}" <n>{status_code}</n>'
+        debug_msg_format_str: '<n>[{request_id}]</n> {client_host} {user_id} "<u>{method} {url_path}</u> HTTP/{http_version}"'
+      file:
+        format_str: '{client_host} {request_id} {user_id} [{datetime}] "{method} {url_path} HTTP/{http_version}" {status_code} {content_length} "{h_referer}" "{h_user_agent}" {response_time}'
+        tz: localtime
+      has_proxy_headers: true
+      has_cf_headers: true
+    intercept:
+      enabled: true
+      only_base: false
+      ignore_modules: []
+      include_modules: []
+      mute_modules: ["uvicorn.access"]
+    handlers:
+      all_std_handler:
+        enabled: true
+        format: "[<c>{time:YYYY-MM-DD HH:mm:ss.SSS Z}</c> | <level>{extra[level_short]:<5}</level> | <w>{name}:{line}</w>]: <level>{message}</level>"
+        colorize: true
+        h_type: STD
+        error: false
+      all_file_handler:
+        enabled: true
+        sink: "{app_name}.all.log"
+        h_type: FILE
+        error: false
+      err_file_handler:
+        enabled: true
+        sink: "{app_name}.err.log"
+        h_type: FILE
+        error: true
+      all_json_handler:
+        enabled: true
+        sink: "json/{app_name}.all.json.log"
+        serialize: true
+        h_type: FILE
+        error: false
+      err_json_handler:
+        enabled: true
+        sink: "json/{app_name}.err.json.log"
+        serialize: true
+        h_type: FILE
+        error: true
+      http_access_std_handler:
+        enabled: true
+        format: "[<c>{time:YYYY-MM-DD HH:mm:ss.SSS Z}</c> | <level>{extra[level_short]:<5}</level> ]: <level>{message}</level>"
+        colorize: true
+        h_type: STD
+        error: false
+      http_access_file_handler:
+        enabled: true
+        sink: "http/{app_name}.http-access.log"
+        h_type: FILE
+        error: false
+      http_err_file_handler:
+        enabled: true
+        sink: "http/{app_name}.http-err.log"
+        h_type: FILE
+        error: true
+      http_access_json_handler:
+        enabled: true
+        sink: "http.json/{app_name}.http-access.json.log"
+        h_type: FILE
+        error: false
+      http_err_json_handler:
+        enabled: true
+        sink: "http.json/{app_name}.http-err.json.log"
+        h_type: FILE
+        error: true
+    extra: {}

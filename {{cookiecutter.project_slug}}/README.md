@@ -54,7 +54,7 @@ For **standalone** runtime:
 [OPTIONAL] For **DEVELOPMENT** environment:
 
 - Install [**git**](https://git-scm.com/downloads)
-- Setup an [**SSH key**](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh) ([video tutorial](https://www.youtube.com/watch?v=snCP3c7wXw0))
+- Setup an [**SSH key**](https://docs.github.com/en/github/authenticating-to-github/connecting-to-github-with-ssh)
 
 ### 2. 📥 Download or clone the repository
 
@@ -181,7 +181,7 @@ docker compose config
 ./compose.sh start -l
 # Or:
 docker compose up -d --remove-orphans --force-recreate && \
-    docker compose logs -f --tail 100
+    docker compose logs -f -n 100
 ```
 
 #### Standalone runtime (PM2)
@@ -207,14 +207,7 @@ pm2 start ./pm2-process.json && \
 
 #### Standalone runtime (Python)
 
-**OPTION C.** Run server as **python script**:
-
-```sh
-cd src
-python -u ./main.py
-```
-
-**OPTION D.** Run server as **python module**:
+**OPTION C.** Run server as **python module**:
 
 ```sh
 python -u -m src.api
@@ -224,39 +217,42 @@ cd src
 python -u -m api
 ```
 
-**OPTION E.** Run with **uvicorn** cli:
+**OPTION D.** Run with **uvicorn** cli:
 
 ```sh
-uvicorn src.main:app --host=[BIND_HOST] --port=[PORT] --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
+uvicorn src.api.main:app --host=[BIND_HOST] --port=[PORT] --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
 # For example:
-uvicorn src.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
+uvicorn src.api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
+
+# For DEVELOPMENT:
+uvicorn src.api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload --reload-dir=./src
 
 
 # Or:
 cd src
-uvicorn main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
+uvicorn api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
 
 # For DEVELOPMENT:
-uvicorn main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload --reload-include="*.yml" --reload-include=".env"
+uvicorn api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload
 ```
 
-**OPTION F.** Run with **fastapi** cli:
+**OPTION E.** Run with **fastapi** cli:
 
 ```sh
-fastpi run src/main.py --host=[BIND_HOST] --port=[PORT]
+fastapi run src/api/main.py --host=[BIND_HOST] --port=[PORT] --forwarded-allow-ips="*"
 # For example:
-fastapi run src/main.py --port=8000
+fastapi run src/api/main.py --port=8000 --forwarded-allow-ips="*"
 
 # For DEVELOPMENT:
-fastapi dev src/main.py --host="0.0.0.0" --port=8000
+fastapi dev src/api/main.py --host="0.0.0.0" --port=8000 --forwarded-allow-ips="*"
 
 
 # Or:
 cd src
-fastapi run --port=8000
+fastapi run api/main.py --port=8000 --forwarded-allow-ips="*"
 
 # For DEVELOPMENT:
-fastapi dev --host="0.0.0.0" --port=8000
+fastapi dev api/main.py --host="0.0.0.0" --port=8000 --forwarded-allow-ips="*"
 ```
 
 ### 6. ✅ Check server is running
@@ -309,31 +305,22 @@ pm2 stop ./pm2-process.json && \
 ENV=LOCAL
 DEBUG=false
 # TZ={{cookiecutter.timezone}}
+# PYTHONDONTWRITEBYTECODE=1
 
 
 ## -- API configs -- ##
 {{cookiecutter.env_prefix}}API_PORT=8000
+# {{cookiecutter.env_prefix}}API_CONFIGS_DIR="/etc/{{cookiecutter.project_slug}}"
 # {{cookiecutter.env_prefix}}API_LOGS_DIR="/var/log/{{cookiecutter.project_slug}}"
 # {{cookiecutter.env_prefix}}API_DATA_DIR="/var/lib/{{cookiecutter.project_slug}}"
+# {{cookiecutter.env_prefix}}API_TMP_DIR="/tmp/{{cookiecutter.project_slug}}"
 # {{cookiecutter.env_prefix}}API_VERSION="1"
 # {{cookiecutter.env_prefix}}API_PREFIX="/api/v{api_version}"
 # {{cookiecutter.env_prefix}}API_DOCS_ENABLED=true
 # {{cookiecutter.env_prefix}}API_DOCS_OPENAPI_URL="{api_prefix}/openapi.json"
 # {{cookiecutter.env_prefix}}API_DOCS_DOCS_URL="{api_prefix}/docs"
 # {{cookiecutter.env_prefix}}API_DOCS_REDOC_URL="{api_prefix}/redoc"
-```
 
-### 🔧 Command arguments
-
-You can customize the command arguments to debug or run the service with different commands.
-
-[**`compose.override.yml`**](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/templates/compose/compose.override.dev.yml):
-
-```yml
-    command: ["/bin/bash"]
-    command: ["-b", "pwd && ls -al && /bin/bash"]
-    command: ["-b", "python -u -m api"]
-    command: ["-b", "uvicorn main:app --host=0.0.0.0 --port={% raw %}${{% endraw %}{{cookiecutter.env_prefix}}API_PORT:-8000} --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips='*'"]
 ```
 
 ---
@@ -376,7 +363,7 @@ pip install -r ./requirements/requirements.docs.txt
 # Serve documentation locally (for development):
 ./scripts/docs.sh
 # Or:
-mkdocs serve
+mkdocs serve -a 0.0.0.0:8000 --livereload
 
 # Or build documentation:
 ./scripts/docs.sh -b
@@ -386,52 +373,7 @@ mkdocs build
 
 ## 📚 Documentation
 
-- [Docs](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs)
-- [Home](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/README.md)
-
-### Getting Started
-
-- [Prerequisites](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/getting-started/prerequisites.md)
-- [Installation](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/getting-started/installation.md)
-- [Quick start](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/getting-started/quick-start.md)
-- [Configuration](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/getting-started/configuration.md)
-- [Examples](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/getting-started/examples.md)
-
-### API Documentation
-
-<!-- - [API Reference](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/api-docs/api-reference.md) -->
-- [openapi.json](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/api-docs/openapi.json)
-- [Error Codes](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/api-docs/error-codes.md)
-
-### Development
-
-- [Test](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/dev/test.md)
-- [Build](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/dev/build.md)
-- [Docs](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/dev/docs.md)
-- [Scripts](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/dev/scripts/README.md)
-- [CI/CD](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/dev/cicd/README.md)
-- [File Structure](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/dev/file-structure.md)
-- [Sitemap](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/dev/sitemap.md)
-- [Related projects](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/dev/related-projects.md)
-- [Roadmap](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/dev/roadmap.md)
-- [Contributing](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/dev/contributing.md)
-
-### Research
-
-- [Reports](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/research/reports.md)
-- [Benchmarks](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/research/benchmarks.md)
-- [References](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/research/references.md)
-
-### [Release Notes](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/release-notes.md)
-
-### [Blog](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/blog/index.md)
-
-### About
-
-- [FAQ](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/about/faq.md)
-- [Authors](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/about/authors.md)
-- [Contact](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/about/contact.md)
-- [License](https://github.com/{{cookiecutter.repo_owner}}/{{cookiecutter.repo_name}}/blob/main/docs/pages/about/license.md)
+- [Docs](./docs)
 
 ---
 

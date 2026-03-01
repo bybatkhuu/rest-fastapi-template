@@ -12,13 +12,9 @@ services:
       - path: .env
         required: false
     volumes:
-      - "api-logs:{% raw %}${{% endraw %}{{cookiecutter.env_prefix}}API_LOGS_DIR:-/var/log/{{cookiecutter.project_slug}}}"
-      - "api-data:{% raw %}${{% endraw %}{{cookiecutter.env_prefix}}API_DATA_DIR:-/var/lib/{{cookiecutter.project_slug}}}"
+      - "./volumes/configs/{{cookiecutter.project_slug}}:{% raw %}${{% endraw %}{{cookiecutter.env_prefix}}API_CONFIGS_DIR:-/etc/{{cookiecutter.project_slug}}}"
+      - "./volumes/storage/{{cookiecutter.project_slug}}/logs:{% raw %}${{% endraw %}{{cookiecutter.env_prefix}}API_LOGS_DIR:-/var/log/{{cookiecutter.project_slug}}}"
+      - "./volumes/storage/{{cookiecutter.project_slug}}/data:{% raw %}${{% endraw %}{{cookiecutter.env_prefix}}API_DATA_DIR:-/var/lib/{{cookiecutter.project_slug}}}"
     ports:
       - "{% raw %}${{% endraw %}{{cookiecutter.env_prefix}}API_PORT:-8000}:{% raw %}${{% endraw %}{{cookiecutter.env_prefix}}API_PORT:-8000}"
     tty: true
-
-
-volumes:
-  api-logs:
-  api-data:

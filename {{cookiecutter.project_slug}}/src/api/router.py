@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from pydantic import validate_call
 from fastapi import FastAPI, APIRouter
 
@@ -20,9 +18,9 @@ def add_routers(app: FastAPI) -> None:
     _api_router = APIRouter(prefix=config.api.prefix)
     _api_router.include_router(task_router)
     _api_router.include_router(utils_router)
-    ## Add more API routers here...
+    # Add more API routers here...
 
-    ## Add admin API routers here...
+    # Add admin API routers here...
 
     app.include_router(_api_router)
     app.include_router(default_router)

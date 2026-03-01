@@ -1,12 +1,11 @@
 name: 2. Build and Publish
 
 on:
+  workflow_dispatch:
   workflow_run:
     workflows: ["1. Bump Version"]
     types:
       - completed
-    branches:
-      - main
   push:
     tags:
       - "v*.*.*-*"
@@ -17,13 +16,17 @@ env:
 jobs:
   build_publish:
     name: Build and Publish
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
     permissions:
       contents: read
       actions: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
+      - name: Get latest version
+        run: |
+          git pull origin main
+          echo "Current version: v$(./scripts/get-version.sh)"
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
         with:
@@ -43,7 +46,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          build-args: |
+          secrets: |
             "HASH_PASSWORD={% raw %}${{ secrets.DOCKER_UID_HASH_PASSWORD }}{% endraw %}"
           load: true
           cache-from: type=registry,ref={% raw %}${{ secrets.DOCKERHUB_USERNAME }}{% endraw %}/{{cookiecutter.docker_repo_name}}:cache-latest
@@ -57,7 +60,7 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           context: .
-          build-args: |
+          secrets: |
             "HASH_PASSWORD={% raw %}${{ secrets.DOCKER_UID_HASH_PASSWORD }}{% endraw %}"
           # platforms: linux/amd64
           platforms: linux/amd64,linux/arm64

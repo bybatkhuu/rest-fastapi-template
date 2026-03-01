@@ -1,6 +1,6 @@
 # File created using '.gitignore Generator' for Visual Studio Code: https://bit.ly/vscode-gig
-# Created by https://www.toptal.com/developers/gitignore/api/zsh,xcode,windows,visualstudiocode,vim,sublimetext,ssh,python,powershell,macos,linux,jupyternotebooks,jetbrains+all,obsidian
-# Edit at https://www.toptal.com/developers/gitignore?templates=zsh,xcode,windows,visualstudiocode,vim,sublimetext,ssh,python,powershell,macos,linux,jupyternotebooks,jetbrains+all,obsidian
+# Created by https://www.toptal.com/developers/gitignore/api/zsh,xcode,windows,visualstudiocode,vim,sublimetext,ssh,python,powershell,obsidian,macos,linux,jupyternotebooks,jetbrains+all
+# Edit at https://www.toptal.com/developers/gitignore?templates=zsh,xcode,windows,visualstudiocode,vim,sublimetext,ssh,python,powershell,obsidian,macos,linux,jupyternotebooks,jetbrains+all
 
 ### JetBrains+all ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio, WebStorm and Rider
@@ -487,9 +487,10 @@ zsdoc/data
 /tests/_output/*
 !/tests/_output/.gitkeep
 
-# End of https://www.toptal.com/developers/gitignore/api/zsh,xcode,windows,visualstudiocode,vim,sublimetext,ssh,python,powershell,macos,linux,jupyternotebooks,jetbrains+all,obsidian
+# End of https://www.toptal.com/developers/gitignore/api/zsh,xcode,windows,visualstudiocode,vim,sublimetext,ssh,python,powershell,obsidian,macos,linux,jupyternotebooks,jetbrains+all
 
 # Custom rules (everything added below won't be overriden by 'Generate .gitignore File' if you use 'Update' option)
+
 
 # Directories:
 log/
@@ -505,7 +506,6 @@ results/
 output/
 outputs/
 .benchmarks/
-{{cookiecutter.project_slug}}/
 
 # Files:
 log
@@ -521,15 +521,25 @@ results
 output
 outputs
 .benchmarks
-{{cookiecutter.project_slug}}
 env
 *.bak
 pm2-process.json
+docker-compose.yml
+docker-compose.yaml
 compose.override.yml
 compose.override.yaml
-sample.py
 example.py
 test.py
 
-# Specific directories:
+
+# Volumes:
 volumes/**
+!volumes/**/
+!volumes/**/*.gitkeep
+!volumes/configs/**/
+!volumes/configs/**/*
+volumes/configs/**/*.bak
+volumes/configs/**/*.DS_Store
+volumes/configs/**/*Thumbs.db
+volumes/configs/**/*~
+volumes/configs/**/*._*

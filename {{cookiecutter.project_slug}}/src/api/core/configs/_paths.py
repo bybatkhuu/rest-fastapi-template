@@ -1,50 +1,47 @@
-# -*- coding: utf-8 -*-
-
 import os
-from typing import Any, Dict
+from typing import Any
 
-from pydantic import Field, constr, model_validator, field_validator
+from pydantic import Field, model_validator, field_validator
 from pydantic_settings import SettingsConfigDict
 
 from api.core.constants import ENV_PREFIX_API
+
 from ._base import BaseConfig
 
 
 class PathsConfig(BaseConfig):
-    tmp_dir: constr(strip_whitespace=True) = Field(..., min_length=2, max_length=1024)  # type: ignore
-    uploads_dir: constr(strip_whitespace=True) = Field(  # type: ignore
-        ..., min_length=2, max_length=1024
+    tmp_dir: str = Field(default="../tmp", min_length=2, max_length=1024)  # nosec B108
+    uploads_dir: str = Field(default="{tmp_dir}/uploads", min_length=2, max_length=1024)
+    data_dir: str = Field(default="../data", min_length=2, max_length=1024)
+    security_dir: str = Field(
+        default="{data_dir}/security", min_length=2, max_length=1024
     )
-    data_dir: constr(strip_whitespace=True) = Field(  # type: ignore
-        ..., min_length=2, max_length=1024
+    ssl_dir: str = Field(
+        default="{data_dir}/security/ssl", min_length=2, max_length=1024
     )
-    security_dir: constr(strip_whitespace=True) = Field(  # type: ignore
-        ..., min_length=2, max_length=1024
+    asymmetric_keys_dir: str = Field(
+        default="{data_dir}/security/asymmetric_keys", min_length=2, max_length=1024
     )
-    ssl_dir: constr(strip_whitespace=True) = Field(..., min_length=2, max_length=1024)  # type: ignore
-    asymmetric_keys_dir: constr(strip_whitespace=True) = Field(  # type: ignore
-        ..., min_length=2, max_length=1024
-    )
-    # models_dir: constr(strip_whitespace=True) = Field(  # type: ignore
-    #     ..., min_length=2, max_length=1024
+    # models_dir: str = Field(default="{data_dir}/models", min_length=2, max_length=1024)
+    # model_dir: str = Field(
+    #     default="{data_dir}/models/{{model_id}}", min_length=2, max_length=1024
     # )
-    # model_dir: constr(strip_whitespace=True) = Field(..., min_length=2, max_length=1024)  # type: ignore
 
-    @field_validator("data_dir")
+    @field_validator("tmp_dir", mode="after")
     @classmethod
-    def _check_data_dir(cls, val: str) -> str:
-        _data_dir_env = f"{ENV_PREFIX_API}DATA_DIR"
-        if _data_dir_env in os.environ:
-            val = os.getenv(_data_dir_env)
+    def _check_tmp_dir(cls, val: str) -> str:
+        _tmp_dir = os.getenv(f"{ENV_PREFIX_API}TMP_DIR", "")
+        if _tmp_dir:
+            val = _tmp_dir
 
         return val
 
-    @field_validator("tmp_dir")
+    @field_validator("data_dir", mode="after")
     @classmethod
-    def _check_tmp_dir(cls, val: str) -> str:
-        _tmp_dir_env = f"{ENV_PREFIX_API}TMP_DIR"
-        if _tmp_dir_env in os.environ:
-            val = os.getenv(_tmp_dir_env)
+    def _check_data_dir(cls, val: str) -> str:
+        _data_dir = os.getenv(f"{ENV_PREFIX_API}DATA_DIR", "")
+        if _data_dir:
+            val = _data_dir
 
         return val
 
@@ -54,14 +51,22 @@ class PathsConfig(BaseConfig):
 class FrozenPathsConfig(PathsConfig):
     @model_validator(mode="before")
     @classmethod
-    def _check_all(cls, values: Dict[str, Any]) -> Dict[str, Any]:
-        for _key, _val in values.items():
-            if isinstance(_val, str) and ("{data_dir}" in _val):
-                values[_key] = _val.format(data_dir=values["data_dir"])
+    def _check_all(cls, data: Any) -> Any:
+        if isinstance(data, dict):
+            for _key, _val in data.items():
+                if isinstance(_val, str):
+                    if ("data_dir" in data) and ("{data_dir}" in _val):
+                        data[_key] = _val.format(data_dir=data["data_dir"])
 
-        return values
+                    if ("tmp_dir" in data) and ("{tmp_dir}" in _val):
+                        data[_key] = _val.format(tmp_dir=data["tmp_dir"])
+
+        return data
 
     model_config = SettingsConfigDict(frozen=True)
 
 
-__all__ = ["PathsConfig", "FrozenPathsConfig"]
+__all__ = [
+    "PathsConfig",
+    "FrozenPathsConfig",
+]

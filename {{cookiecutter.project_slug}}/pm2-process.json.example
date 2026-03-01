@@ -6,6 +6,9 @@
 	"min_uptime": 5000,
 	"max_restarts": 3,
 	"watch": false,
+	"env": {
+		"PYTHONUNBUFFERED": "1"
+	},
 	"ignore_watch": [
 		"**/.git/**",
 		"**/.github/**",
@@ -68,7 +71,6 @@
 		"**/*pytest.ini",
 		"**/*README.md",
 		"**/*Thumbs.db",
-		"**/*sample.py",
 		"**/*example.py",
 		"**/*test.py"
 	],

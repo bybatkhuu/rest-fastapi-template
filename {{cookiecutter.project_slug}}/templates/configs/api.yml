@@ -1,0 +1,24 @@
+env: LOCAL
+debug: false
+api:
+  title: "{{cookiecutter.project_name}}"
+  slug: {{cookiecutter.project_slug}}
+  http_scheme: http
+  bind_host: "0.0.0.0"
+  port: 8000
+  version: "1"
+  prefix: "/api/v{api_version}"
+  gzip:
+    minimum_size: 1024
+    compresslevel: 9
+  uvicorn:
+    access_log: false
+    server_header: false
+    proxy_headers: true
+    forwarded_allow_ips: ["*"]
+    ssl_keyfile: null
+    ssl_certfile: null
+    reload: false
+    reload_includes: ["*.json", "*.yml", "*.yaml", "*.toml", "*.md"]
+    reload_excludes:
+      [".*", "~*", ".py[cod]", ".sw.*", "__pycache__", "*.log", "logs"]

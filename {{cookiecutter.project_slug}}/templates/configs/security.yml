@@ -1,0 +1,39 @@
+api:
+  security:
+    allowed_hosts: ["*"]
+    cors:
+      allow_origins: ["*"]
+      allow_headers: ["*"]
+      allow_methods:
+        ["GET", "POST", "PUT", "PATCH", "DELETE", "HEAD", "OPTIONS", "CONNECT"]
+      allow_credentials: false
+      allow_private_network: false
+      expose_headers: []
+      max_age: 600
+    ssl:
+      enabled: false
+      generate: false
+      key_size: 2048
+      key_fname: "key.pem"
+      cert_fname: "cert.pem"
+      x509_attrs:
+        C: "US"
+        ST: "Washington"
+        L: "Seattle"
+        O: "Organization"
+        OU: "Organization Unit"
+        CN: "localhost"
+        DNS: "localhost"
+    asymmetric:
+      generate: false
+      algorithm: RS256
+      key_size: 2048
+      private_key_fname: "private_key.pem" # pragma: allowlist secret
+      public_key_fname: "public_key.pem"
+    jwt:
+      secret: "**********" # pragma: allowlist secret
+      algorithm: HS256
+    password:
+      pepper: "**********" # pragma: allowlist secret
+      min_length: 8
+      max_length: 128

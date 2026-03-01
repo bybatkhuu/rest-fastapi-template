@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# flake8: noqa
 
 from ._not_found import *
 from ._method_not_allowed import *

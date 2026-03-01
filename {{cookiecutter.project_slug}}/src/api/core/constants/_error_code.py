@@ -1,8 +1,6 @@
-# -*- coding: utf-8 -*-
-
 from enum import Enum
 from http import HTTPStatus
-from typing import Union, Optional, Any
+from typing import Union, Any
 
 from pydantic import BaseModel, Field, constr
 
@@ -12,7 +10,7 @@ class ErrorCodePM(BaseModel):
     name: constr(strip_whitespace=True) = Field(..., min_length=3, max_length=64)  # type: ignore
     status_code: int = Field(..., ge=100, le=599)
     message: constr(strip_whitespace=True) = Field(..., min_length=1, max_length=256)  # type: ignore
-    description: Optional[constr(strip_whitespace=True)] = Field(  # type: ignore
+    description: constr(strip_whitespace=True) | None = Field(  # type: ignore
         default=None, max_length=1024
     )
     detail: Any = Field(default=None)

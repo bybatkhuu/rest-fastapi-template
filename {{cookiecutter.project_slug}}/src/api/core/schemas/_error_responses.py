@@ -1,6 +1,4 @@
-# -*- coding: utf-8 -*-
-
-from typing import Any, Union
+from typing import Any
 
 from pydantic import Field
 
@@ -16,13 +14,13 @@ class BadBaseResPM(BaseResPM):
         description="Response message about the current request.",
         examples=["Bad Request!"],
     )
-    data: Union[Any, dict, list] = Field(
+    data: Any | dict | list = Field(
         default=None,
         title="Data",
         description="Resource data or any response related data.",
         examples=[None],
     )
-    error: Union[ErrorResPM, Any] = Field(
+    error: ErrorResPM | Any = Field(
         default=None,
         title="Error",
         description="Error information about the current request.",
@@ -45,7 +43,7 @@ class UnauthorizedBaseResPM(BadBaseResPM):
         description="Response message about the current request.",
         examples=["Unauthorized!"],
     )
-    error: Union[ErrorResPM, Any] = Field(
+    error: ErrorResPM | Any = Field(
         default=None,
         title="Error",
         description="Error information about the current request.",
@@ -68,7 +66,7 @@ class ForbiddenBaseResPM(BadBaseResPM):
         description="Response message about the current request.",
         examples=["Forbidden!"],
     )
-    error: Union[ErrorResPM, Any] = Field(
+    error: ErrorResPM | Any = Field(
         default=None,
         title="Error",
         description="Error information about the current request.",
@@ -91,7 +89,7 @@ class NotFoundBaseResPM(BadBaseResPM):
         description="Response message about the current request.",
         examples=["Not Found!"],
     )
-    error: Union[ErrorResPM, Any] = Field(
+    error: ErrorResPM | Any = Field(
         default=None,
         title="Error",
         description="Error information about the current request.",
@@ -114,7 +112,7 @@ class MethodNotBaseResPM(BadBaseResPM):
         description="Response message about the current request.",
         examples=["Method Not Allowed!"],
     )
-    error: Union[ErrorResPM, Any] = Field(
+    error: ErrorResPM | Any = Field(
         default=None,
         title="Error",
         description="Error information about the current request.",
@@ -137,7 +135,7 @@ class ConflictBaseResPM(BadBaseResPM):
         description="Response message about the current request.",
         examples=["Conflict!"],
     )
-    error: Union[ErrorResPM, Any] = Field(
+    error: ErrorResPM | Any = Field(
         default=None,
         title="Error",
         description="Error information about the current request.",
@@ -160,7 +158,7 @@ class InvalidBaseResPM(BadBaseResPM):
         description="Response message about the current request.",
         examples=["Validation error!"],
     )
-    error: Union[ErrorResPM, Any] = Field(
+    error: ErrorResPM | Any = Field(
         default=None,
         title="Error",
         description="Error information about the current request.",
@@ -190,7 +188,7 @@ class ErrorBaseResPM(BadBaseResPM):
         description="Response message about the current request.",
         examples=["Internal Server Error!"],
     )
-    error: Union[ErrorResPM, Any] = Field(
+    error: ErrorResPM | Any = Field(
         default=None,
         title="Error",
         description="Error information about the current request.",
