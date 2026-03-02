@@ -3,12 +3,12 @@
 	"interpreter": "/usr/bin/env",
 	"script": "python",
 	"args": "-u -m src.api",
-	"min_uptime": 5000,
-	"max_restarts": 3,
-	"watch": false,
 	"env": {
 		"PYTHONUNBUFFERED": "1"
 	},
+	"min_uptime": 5000,
+	"max_restarts": 3,
+	"watch": false,
 	"ignore_watch": [
 		"**/.git/**",
 		"**/.github/**",
@@ -46,6 +46,7 @@
 		"**/results/**",
 		"**/output/**",
 		"**/outputs/**",
+		"**/volumes/storage/**",
 		"**/*._*",
 		"**/*.DS_Store",
 		"**/*.egg-info/**",
