@@ -80,6 +80,11 @@ if [ ! -f "${COMPOSE_FILE_PATH:-}" ]; then
 	exit 1
 fi
 
+if [ ! -f "${COMPOSE_GPU_FILE_PATH:-}" ]; then
+	echo "[ERROR]: Not found compose GPU file: ${COMPOSE_GPU_FILE_PATH}" >&2
+	exit 1
+fi
+
 if [ "${_IS_ADD}" == true ]; then
 	if ! command -v git >/dev/null 2>&1; then
 		echo "[ERROR]: Not found 'git' command, please install it first!" >&2
