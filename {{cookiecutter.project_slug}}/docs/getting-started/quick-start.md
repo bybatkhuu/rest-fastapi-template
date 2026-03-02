@@ -26,23 +26,19 @@ nano ./.env
 
 ```sh
 ## 1. Configure 'compose.override.yml' file.
-
 # Copy 'compose.override.[ENV].yml' file to 'compose.override.yml' file:
 cp -v ./templates/compose/compose.override.[ENV].yml ./compose.override.yml
 # For example, DEVELOPMENT environment:
 cp -v ./templates/compose/compose.override.dev.yml ./compose.override.yml
 # For example, STATGING or PRODUCTION environment:
 cp -v ./templates/compose/compose.override.prod.yml ./compose.override.yml
-
 # Edit 'compose.override.yml' file to fit in your environment:
 nano ./compose.override.yml
-
 
 ## 2. Check docker compose configuration is valid:
 ./compose.sh validate
 # Or:
 docker compose config
-
 
 ## 3. Start docker compose:
 ./compose.sh start -l
@@ -59,17 +55,14 @@ docker compose up -d --remove-orphans --force-recreate && \
 
 ```sh
 ## 1. Configure PM2 configuration file.
-
 # Copy example PM2 configuration file:
 cp -v ./pm2-process.json.example ./pm2-process.json
-
 # Edit PM2 configuration file to fit in your environment:
 nano ./pm2-process.json
 
-
 ## 2. Start PM2 process:
 pm2 start ./pm2-process.json && \
-    pm2 logs --lines 50 ft
+    pm2 logs --lines 50 {{cookiecutter.project_abbr}}
 ```
 
 ### Standalone runtime (Python)
@@ -106,7 +99,7 @@ fastapi dev src/api/main.py --host="0.0.0.0" --port=8000 --forwarded-allow-ips="
 
 ```sh
 # 1. Prepare environment variables:
-# 1.a. Copy '.env.example' file into 'src' directory:
+# 1.a. Copy '.env.example' file into 'src' directory as '.env' file:
 cp -v ./.env.example ./src/.env
 # Edit environment variables to fit in your environment:
 nano ./src/.env
@@ -163,7 +156,7 @@ Standalone runtime (Only for **PM2**):
 
 ```sh
 pm2 stop ./pm2-process.json && \
-    pm2 flush ft && \
+    pm2 flush {{cookiecutter.project_abbr}} && \
     pm2 delete ./pm2-process.json
 ```
 
