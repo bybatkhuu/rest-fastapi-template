@@ -1,5 +1,6 @@
 services:
   api:
+    image: bybatkhuu/rest-fastapi-template:latest
     volumes:
       - "./scripts/docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh"
       - "./src:/app/rest-fastapi-template"

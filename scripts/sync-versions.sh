@@ -27,7 +27,7 @@ fi
 ## --- Variables --- ##
 # Load from environment variables:
 VERSION_FILE_PATH="${VERSION_FILE_PATH:-./src/api/__version__.py}"
-COMPOSE_FILE_PATH="${COMPOSE_FILE_PATH:-./templates/compose/compose.override.prod.yml}"
+COMPOSE_FILE_PATH="${COMPOSE_FILE_PATH:-./compose.yml}"
 COMPOSE_GPU_FILE_PATH="${COMPOSE_GPU_FILE_PATH:-./templates/compose/compose.override.prod.gpu.yml}"
 SERVICE_NAME="${SERVICE_NAME:-api}"
 IMG_NAME="${IMG_NAME:-bybatkhuu/rest-fastapi-template}"

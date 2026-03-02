@@ -1,22 +1,21 @@
-services:
-  api:
-    image: bybatkhuu/rest-fastapi-template:8.0.3-260302
-    # volumes:
-    #   - "./volumes/.vscode-server:/home/ft-user/.vscode-server"
-    # deploy:
-    #   replicas: 3
-    #   resources:
-    #     limits:
-    #       cpus: "0.5"
-    #       memory: 512M
-    # ports: !override
-    #   - "8000-8002:${FT_API_PORT:-8000}"
-    # command: ["/bin/bash"]
-    # command: ["-b", "uvicorn api.main:app --host=0.0.0.0 --port=${FT_API_PORT:-8000} --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips='*'"]
-    # healthcheck:
-    #   test: ["CMD-SHELL", "curl -f http://localhost:${FT_API_PORT:-8000}/api/v${FT_API_VERSION:-1}/ping"]
-    #   start_period: 30s
-    #   start_interval: 1s
-    #   interval: 5m
-    #   timeout: 5s
-    #   retries: 3
+# services:
+#   api:
+#     volumes:
+#       - "./volumes/.vscode-server:/home/ft-user/.vscode-server"
+#     deploy:
+#       replicas: 3
+#       resources:
+#         limits:
+#           cpus: "0.5"
+#           memory: 512M
+#     ports: !override
+#       - "8000-8002:${FT_API_PORT:-8000}"
+#     command: ["/bin/bash"]
+#     command: ["-b", "uvicorn api.main:app --host=0.0.0.0 --port=${FT_API_PORT:-8000} --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips='*'"]
+#     healthcheck:
+#       test: ["CMD-SHELL", "curl -f http://localhost:${FT_API_PORT:-8000}/api/v${FT_API_VERSION:-1}/ping"]
+#       start_period: 30s
+#       start_interval: 1s
+#       interval: 5m
+#       timeout: 5s
+#       retries: 3
