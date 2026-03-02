@@ -49,7 +49,7 @@ class BaseMainConfig(FrozenBaseConfig):
         file_secret_settings: PydanticBaseSettingsSource,
     ) -> tuple[PydanticBaseSettingsSource, ...]:
         _sources = []
-        if not utils.is_running_cli():
+        if not utils.is_running_bin():
             _sources.append(CliSettingsSource(settings_cls, cli_parse_args=True))
         _sources.extend(
             [
