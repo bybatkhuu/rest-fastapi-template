@@ -1,7 +1,7 @@
 import sys
 from functools import lru_cache
 
-CLI_KEYWORDS = [
+BINARY_MODULES = [
     "uvicorn",
     "gunicorn",
     "fastapi",
@@ -20,11 +20,11 @@ def is_running_bin() -> bool:
         bool: True if running as a binary environment module, False otherwise.
     """
 
-    for _keyword in CLI_KEYWORDS:
+    for _binary_module in BINARY_MODULES:
         if (
-            sys.argv[0].endswith(_keyword)
-            or sys.argv[0].endswith(f"{_keyword}.exe")
-            or sys.argv[0].endswith(f"{_keyword}/__main__.py")
+            sys.argv[0].endswith(_binary_module)
+            or sys.argv[0].endswith(f"{_binary_module}.exe")
+            or sys.argv[0].endswith(f"{_binary_module}/__main__.py")
         ):
             return True
 
