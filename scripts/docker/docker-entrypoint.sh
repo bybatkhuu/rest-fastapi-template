@@ -7,6 +7,7 @@ echo "[INFO]: Running '${FT_API_SLUG}' docker-entrypoint.sh..."
 
 _run()
 {
+	echo "[INFO]: Starting FastAPI server..."
 	exec gosu "${USER}:${GROUP}" python -m api || exit 2
 	# exec gosu "${USER}:${GROUP}" uvicorn api.main:app \
 	# 	--host=0.0.0.0 \
