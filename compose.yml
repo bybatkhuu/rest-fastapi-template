@@ -6,7 +6,7 @@ services:
     restart: unless-stopped
     environment:
       TERM: ${TERM:-xterm}
-      TZ: ${TZ:-Asia/Seoul}
+      TZ: ${TZ:-UTC}
       FT_API_PORT: ${FT_API_PORT:-8000}
     env_file:
       - path: .env
