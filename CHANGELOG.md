@@ -1,5 +1,13 @@
 # Changelog
 
+## v8.0.3-260302 (2026-03-02)
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+
+
+**Full Changelog**: https://github.com/bybatkhuu/rest-fastapi-template/compare/v8.0.2-260302...v8.0.3-260302
+
 ## v8.0.2-260302 (2026-03-02)
 
 <!-- Release notes generated using configuration in .github/release.yml at main -->
