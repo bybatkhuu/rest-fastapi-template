@@ -156,8 +156,10 @@ RUN --mount=type=secret,id=HASH_PASSWORD \
 	# echo "${USER} ALL=(ALL) NOPASSWD: ALL" > "/etc/sudoers.d/${USER}" && \
 	# chmod 0440 "/etc/sudoers.d/${USER}" && \
 	if [ -f "/run/secrets/HASH_PASSWORD" ]; then \
+		echo "Using hashed password from secret: /run/secrets/HASH_PASSWORD"; \
 		echo -e "${USER}:$(cat /run/secrets/HASH_PASSWORD)" | chpasswd -e; \
 	else \
+		echo "Using hashed password from build argument: HASH_PASSWORD"; \
 		echo -e "${USER}:${HASH_PASSWORD}" | chpasswd -e; \
 	fi && \
 	echo -e "\nalias ls='ls -aF --group-directories-first --color=auto'" >> /root/.bashrc && \
