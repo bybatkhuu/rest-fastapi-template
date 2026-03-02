@@ -128,7 +128,6 @@ pip install -r ./requirements/requirements.gpu.txt
 ```sh
 # Copy '.env.example' file to '.env' file:
 cp -v ./.env.example ./.env
-
 # Edit environment variables to fit in your environment:
 nano ./.env
 ```
