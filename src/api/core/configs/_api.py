@@ -54,7 +54,7 @@ class ApiConfig(BaseConfig):
     def _check_security(
         cls, val: SecurityConfig, info: ValidationInfo
     ) -> SecurityConfig:
-        if (not utils.is_running_cli()) and val.ssl.enabled:
+        if (not utils.is_running_bin()) and val.ssl.enabled:
             info.data["http_scheme"] = HTTPSchemeEnum.https
 
         return val
@@ -107,7 +107,7 @@ class FrozenApiConfig(ApiConfig):
     @model_validator(mode="before")
     @classmethod
     def _check_args(cls, data: Any) -> Any:
-        if isinstance(data, dict) and utils.is_running_cli():
+        if isinstance(data, dict) and utils.is_running_bin():
             _has_host_arg = False
             for _i, _arg in enumerate(sys.argv):
                 if (
