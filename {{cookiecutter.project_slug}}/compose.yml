@@ -1,6 +1,6 @@
 services:
   api:
-    image: {{cookiecutter.docker_registry}}/{{cookiecutter.docker_repo_name}}:latest
+    image: {{cookiecutter.docker_registry}}/{{cookiecutter.docker_repo_name}}:{{cookiecutter.version}}
     build:
       context: .
     restart: unless-stopped

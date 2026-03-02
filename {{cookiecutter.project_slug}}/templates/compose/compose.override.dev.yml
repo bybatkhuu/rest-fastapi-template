@@ -1,5 +1,6 @@
 services:
   api:
+    image: {{cookiecutter.docker_registry}}/{{cookiecutter.docker_repo_name}}:latest
     volumes:
       - "./scripts/docker/docker-entrypoint.sh:/usr/local/bin/docker-entrypoint.sh"
       - "./src:/app/{{cookiecutter.project_slug}}"
