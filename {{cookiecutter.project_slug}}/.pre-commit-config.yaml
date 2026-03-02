@@ -152,13 +152,13 @@ repos:
   #       name: "🐍 pyright - Static type checker"
   #       files: \.pyi?$
 
-  # - repo: local
-  #   hooks:
-  #     - id: pyright
-  #       name: "🐍 pyright (local) - Static type checker"
-  #       language: system
-  #       entry: pyright
-  #       files: \.pyi?$
+  - repo: local
+    hooks:
+      - id: pyright
+        name: "🐍 pyright (local) - Static type checker"
+        language: system
+        entry: pyright
+        files: \.pyi?$
 
   # --- Tests ---
   # - repo: local
