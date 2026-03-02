@@ -653,34 +653,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1. 🌎 Configure environment variables">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#option-a-recommended-for-docker-runtime-5a" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        OPTION A. [RECOMMENDED] For docker runtime [5.A]
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-b-for-standalone-runtime-5b-5f" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        OPTION B. For standalone runtime [5.B ~ 5.F]
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -722,6 +694,17 @@
     <span class="md-ellipsis">
       
         Standalone runtime (Python)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-directly-from-src-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run directly from src directory
       
     </span>
   </a>
@@ -2207,34 +2190,6 @@
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="1. 🌎 Configure environment variables">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#option-a-recommended-for-docker-runtime-5a" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        OPTION A. [RECOMMENDED] For docker runtime [5.A]
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#option-b-for-standalone-runtime-5b-5f" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        OPTION B. For standalone runtime [5.B ~ 5.F]
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
 </li>
       
         <li class="md-nav__item">
@@ -2276,6 +2231,17 @@
     <span class="md-ellipsis">
       
         Standalone runtime (Python)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#run-directly-from-src-directory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Run directly from src directory
       
     </span>
   </a>
@@ -2345,104 +2311,103 @@
 <h1 id="quick-start">🏃 Quick Start</h1>
 <h2 id="1-configure-environment-variables">1. 🌎 Configure environment variables</h2>
 <p>[NOTE] Please, check <strong><a href="../configuration/">environment variables</a></strong> section for more details.</p>
-<h3 id="option-a-recommended-for-docker-runtime-5a"><strong>OPTION A.</strong> <strong>[RECOMMENDED]</strong> For <strong>docker</strong> runtime <strong>[5.A]</strong></h3>
 <div class="language-sh highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Copy &#39;.env.example&#39; file to &#39;.env&#39; file:</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>cp<span class="w"> </span>-v<span class="w"> </span>./.env.example<span class="w"> </span>./.env
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="c1"># Edit environment variables to fit in your environment:</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>nano<span class="w"> </span>./.env
 </span></code></pre></div>
-<h3 id="option-b-for-standalone-runtime-5b-5f"><strong>OPTION B.</strong> For <strong>standalone</strong> runtime <strong>[5.B ~ 5.F]</strong></h3>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1"># Copy &#39;.env.example&#39; file to &#39;.env&#39; file:</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>cp<span class="w"> </span>-v<span class="w"> </span>./.env.example<span class="w"> </span>./src/.env
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>
-</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="c1"># Edit environment variables to fit in your environment:</span>
-</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>nano<span class="w"> </span>./src/.env
-</span></code></pre></div>
 <h2 id="2-start-the-server">2. 🏁 Start the server</h2>
-<p>[NOTE] Follow the one of below instructions based on your environment <strong>[A, B, C, D, E, F]</strong>:</p>
+<p>[NOTE] Follow the one of below instructions based on your environment <strong>[A, B, C, D, E]</strong>:</p>
 <h3 id="docker-runtime">Docker runtime</h3>
 <p><strong>OPTION A.</strong> <strong>[RECOMMENDED]</strong> Run with <strong>docker compose</strong>:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">## 1. Configure &#39;compose.override.yml&#39; file.</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Copy &#39;compose.override.[ENV].yml&#39; file to &#39;compose.override.yml&#39; file:</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>cp<span class="w"> </span>-v<span class="w"> </span>./templates/compose/compose.override.<span class="o">[</span>ENV<span class="o">]</span>.yml<span class="w"> </span>./compose.override.yml
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># For example, DEVELOPMENT environment:</span>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>cp<span class="w"> </span>-v<span class="w"> </span>./templates/compose/compose.override.dev.yml<span class="w"> </span>./compose.override.yml
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># For example, STATGING or PRODUCTION environment:</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>cp<span class="w"> </span>-v<span class="w"> </span>./templates/compose/compose.override.prod.yml<span class="w"> </span>./compose.override.yml
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
-</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1"># Edit &#39;compose.override.yml&#39; file to fit in your environment:</span>
-</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>nano<span class="w"> </span>./compose.override.yml
-</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>
-</span><span id="__span-2-13"><a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
-</span><span id="__span-2-14"><a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="c1">## 2. Check docker compose configuration is valid:</span>
-</span><span id="__span-2-15"><a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>./compose.sh<span class="w"> </span>validate
-</span><span id="__span-2-16"><a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a><span class="c1"># Or:</span>
-</span><span id="__span-2-17"><a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>docker<span class="w"> </span>compose<span class="w"> </span>config
-</span><span id="__span-2-18"><a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>
-</span><span id="__span-2-19"><a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>
-</span><span id="__span-2-20"><a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="c1">## 3. Start docker compose:</span>
-</span><span id="__span-2-21"><a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>./compose.sh<span class="w"> </span>start<span class="w"> </span>-l
-</span><span id="__span-2-22"><a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a><span class="c1"># Or:</span>
-</span><span id="__span-2-23"><a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--remove-orphans<span class="w"> </span>--force-recreate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-2-24"><a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a><span class="w">    </span>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>--tail<span class="w"> </span><span class="m">100</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="c1">## 1. Configure &#39;compose.override.yml&#39; file.</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="c1"># Copy &#39;compose.override.[ENV].yml&#39; file to &#39;compose.override.yml&#39; file:</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>cp<span class="w"> </span>-v<span class="w"> </span>./templates/compose/compose.override.<span class="o">[</span>ENV<span class="o">]</span>.yml<span class="w"> </span>./compose.override.yml
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="c1"># For example, DEVELOPMENT environment:</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>cp<span class="w"> </span>-v<span class="w"> </span>./templates/compose/compose.override.dev.yml<span class="w"> </span>./compose.override.yml
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a><span class="c1"># For example, STATGING or PRODUCTION environment:</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>cp<span class="w"> </span>-v<span class="w"> </span>./templates/compose/compose.override.prod.yml<span class="w"> </span>./compose.override.yml
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a><span class="c1"># Edit &#39;compose.override.yml&#39; file to fit in your environment:</span>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>nano<span class="w"> </span>./compose.override.yml
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>
+</span><span id="__span-1-14"><a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a><span class="c1">## 2. Check docker compose configuration is valid:</span>
+</span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>./compose.sh<span class="w"> </span>validate
+</span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="c1"># Or:</span>
+</span><span id="__span-1-17"><a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>docker<span class="w"> </span>compose<span class="w"> </span>config
+</span><span id="__span-1-18"><a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+</span><span id="__span-1-19"><a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>
+</span><span id="__span-1-20"><a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a><span class="c1">## 3. Start docker compose:</span>
+</span><span id="__span-1-21"><a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>./compose.sh<span class="w"> </span>start<span class="w"> </span>-l
+</span><span id="__span-1-22"><a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a><span class="c1"># Or:</span>
+</span><span id="__span-1-23"><a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>-d<span class="w"> </span>--remove-orphans<span class="w"> </span>--force-recreate<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-1-24"><a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a><span class="w">    </span>docker<span class="w"> </span>compose<span class="w"> </span>logs<span class="w"> </span>-f<span class="w"> </span>--tail<span class="w"> </span><span class="m">100</span>
 </span></code></pre></div>
 <h3 id="standalone-runtime-pm2">Standalone runtime (PM2)</h3>
 <p><strong>OPTION B.</strong> Run with <strong>PM2</strong>:</p>
 <p>[<strong>IMPORTANT</strong>] Before running, need to install <a href="https://pm2.keymetrics.io/docs/usage/quick-start"><strong>PM2</strong></a>:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1">## 1. Configure PM2 configuration file.</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># Copy example PM2 configuration file:</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>cp<span class="w"> </span>-v<span class="w"> </span>./pm2-process.json.example<span class="w"> </span>./pm2-process.json
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># Edit PM2 configuration file to fit in your environment:</span>
-</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>nano<span class="w"> </span>./pm2-process.json
-</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>
-</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>
-</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1">## 2. Start PM2 process:</span>
-</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>pm2<span class="w"> </span>start<span class="w"> </span>./pm2-process.json<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-3-12"><a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a><span class="w">    </span>pm2<span class="w"> </span>logs<span class="w"> </span>--lines<span class="w"> </span><span class="m">50</span><span class="w"> </span>ft
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1">## 1. Configure PM2 configuration file.</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># Copy example PM2 configuration file:</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>cp<span class="w"> </span>-v<span class="w"> </span>./pm2-process.json.example<span class="w"> </span>./pm2-process.json
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># Edit PM2 configuration file to fit in your environment:</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>nano<span class="w"> </span>./pm2-process.json
+</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>
+</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>
+</span><span id="__span-2-10"><a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="c1">## 2. Start PM2 process:</span>
+</span><span id="__span-2-11"><a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a>pm2<span class="w"> </span>start<span class="w"> </span>./pm2-process.json<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-12"><a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span>pm2<span class="w"> </span>logs<span class="w"> </span>--lines<span class="w"> </span><span class="m">50</span><span class="w"> </span>ft
 </span></code></pre></div>
 <h3 id="standalone-runtime-python">Standalone runtime (Python)</h3>
 <p><strong>OPTION C.</strong> Run server as <strong>python module</strong>:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python<span class="w"> </span>-u<span class="w"> </span>-m<span class="w"> </span>src.api
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="c1"># Or:</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="nb">cd</span><span class="w"> </span>src
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>python<span class="w"> </span>-u<span class="w"> </span>-m<span class="w"> </span>api
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>-u<span class="w"> </span>-m<span class="w"> </span>src.api
 </span></code></pre></div>
 <p><strong>OPTION D.</strong> Run with <strong>uvicorn</strong> cli:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>uvicorn<span class="w"> </span>src.api.main:app<span class="w"> </span>--host<span class="o">=[</span>BIND_HOST<span class="o">]</span><span class="w"> </span>--port<span class="o">=[</span>PORT<span class="o">]</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># For example:</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>uvicorn<span class="w"> </span>src.api.main:app<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
-</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># For DEVELOPMENT:</span>
-</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>uvicorn<span class="w"> </span>src.api.main:app<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="w"> </span>--reload<span class="w"> </span>--reload-dir<span class="o">=</span>./src
-</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
-</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>
-</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a><span class="c1"># Or:</span>
-</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a><span class="nb">cd</span><span class="w"> </span>src
-</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>uvicorn<span class="w"> </span>api.main:app<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
-</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>
-</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a><span class="c1"># For DEVELOPMENT:</span>
-</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>uvicorn<span class="w"> </span>api.main:app<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="w"> </span>--reload
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>uvicorn<span class="w"> </span>src.api.main:app<span class="w"> </span>--host<span class="o">=[</span>BIND_HOST<span class="o">]</span><span class="w"> </span>--port<span class="o">=[</span>PORT<span class="o">]</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="c1"># For example:</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>uvicorn<span class="w"> </span>src.api.main:app<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># For DEVELOPMENT:</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>uvicorn<span class="w"> </span>src.api.main:app<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="w"> </span>--reload<span class="w"> </span>--reload-dir<span class="o">=</span>./src
 </span></code></pre></div>
 <p><strong>OPTION E.</strong> Run with <strong>fastapi</strong> cli:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>fastapi<span class="w"> </span>run<span class="w"> </span>src/api/main.py<span class="w"> </span>--host<span class="o">=[</span>BIND_HOST<span class="o">]</span><span class="w"> </span>--port<span class="o">=[</span>PORT<span class="o">]</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># For example:</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>fastapi<span class="w"> </span>run<span class="w"> </span>src/api/main.py<span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1"># For DEVELOPMENT:</span>
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>fastapi<span class="w"> </span>dev<span class="w"> </span>src/api/main.py<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># Or:</span>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="nb">cd</span><span class="w"> </span>src
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>fastapi<span class="w"> </span>run<span class="w"> </span>api/main.py<span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>fastapi<span class="w"> </span>run<span class="w"> </span>src/api/main.py<span class="w"> </span>--host<span class="o">=[</span>BIND_HOST<span class="o">]</span><span class="w"> </span>--port<span class="o">=[</span>PORT<span class="o">]</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="c1"># For example:</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>fastapi<span class="w"> </span>run<span class="w"> </span>src/api/main.py<span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># For DEVELOPMENT:</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>fastapi<span class="w"> </span>dev<span class="w"> </span>src/api/main.py<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
+</span></code></pre></div>
+<h3 id="run-directly-from-src-directory">Run directly from src directory</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># 1. Prepare environment variables:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># 1.a. Copy &#39;.env.example&#39; file into &#39;src&#39; directory:</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>cp<span class="w"> </span>-v<span class="w"> </span>./.env.example<span class="w"> </span>./src/.env
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Edit environment variables to fit in your environment:</span>
+</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>nano<span class="w"> </span>./src/.env
+</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
+</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># 1.b. Or symbolic link current &#39;.env&#39; file into &#39;src&#39; directory:</span>
+</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>ln<span class="w"> </span>-s<span class="w"> </span>-v<span class="w"> </span>../.env<span class="w"> </span>./src/.env
+</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># 2. Enter into src directory:</span>
+</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="nb">cd</span><span class="w"> </span>src
 </span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="c1"># For DEVELOPMENT:</span>
-</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>fastapi<span class="w"> </span>dev<span class="w"> </span>api/main.py<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
+</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="c1"># 3. Run server:</span>
+</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="c1"># 3.a. Run as python module:</span>
+</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>python<span class="w"> </span>-u<span class="w"> </span>-m<span class="w"> </span>api
+</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
+</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="c1"># 3.b. Or run with uvicorn cli:</span>
+</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>uvicorn<span class="w"> </span>api.main:app<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
+</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="c1"># For DEVELOPMENT:</span>
+</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>uvicorn<span class="w"> </span>api.main:app<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="w"> </span>--reload
+</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>
+</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="c1"># 3.c. Or run with fastapi cli:</span>
+</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>fastapi<span class="w"> </span>run<span class="w"> </span>api/main.py<span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
+</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="c1"># For DEVELOPMENT:</span>
+</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>fastapi<span class="w"> </span>dev<span class="w"> </span>api/main.py<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
 </span></code></pre></div>
 <h2 id="3-check-server-is-running">3. ✅ Check server is running</h2>
 <p>Check with CLI (curl):</p>
