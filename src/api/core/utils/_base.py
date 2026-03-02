@@ -13,11 +13,11 @@ CLI_KEYWORDS = [
 
 @lru_cache
 def is_running_bin() -> bool:
-    """Checks if the application is running as a binary module (e.g., via uvicorn, fastapi, gunicorn, pytest, etc.)
+    """Checks if the application is running as a binary environment module (e.g., via uvicorn, fastapi, gunicorn, etc.)
     by inspecting the command-line arguments.
 
     Returns:
-        bool: True if running as a binary module, False otherwise.
+        bool: True if running as a binary environment module, False otherwise.
     """
 
     for _keyword in CLI_KEYWORDS:
