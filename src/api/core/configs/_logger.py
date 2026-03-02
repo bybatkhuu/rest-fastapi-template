@@ -26,7 +26,7 @@ class FileConfigPM(BaseFileConfigPM, BaseConfig):
 
 class LoggerConfigPM(BaseLoggerConfigPM, BaseConfig):
     app_name: str = Field(default="{api_slug}", min_length=1, max_length=128)
-    file: FileConfigPM = Field(default_factory=FileConfigPM)
+    file: FileConfigPM = Field(default_factory=FileConfigPM)  # type: ignore
 
     model_config = SettingsConfigDict(env_prefix=f"{ENV_PREFIX_API}LOGGER_")
 
