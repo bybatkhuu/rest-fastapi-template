@@ -61,8 +61,7 @@ main()
 			-type d -name "scripts" -o \
 			-type d -name "modules" -o \
 			-type d -name "volumes" -o \
-			-type l -name ".env" -o \
-			-type f -name "main.py" \
+			-type l -name ".env" \
 		\) -prune -o -type f -exec \
 			chmod 660 {} + || exit 2
 
