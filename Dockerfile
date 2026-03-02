@@ -66,8 +66,9 @@ RUN --mount=type=cache,target=/opt/conda/pkgs,sharing=private \
 	/opt/conda/condabin/conda install -y python=${PYTHON_VERSION} pip && \
 	/opt/conda/bin/pip install --timeout 60 -U pip uv
 
-COPY ./requirements* ./
+# COPY ./requirements* ./
 RUN	--mount=type=cache,target=/root/.cache,sharing=locked \
+	--mount=type=bind,source=requirements.txt,target=requirements.txt \
 	# _BUILD_TARGET_ARCH=$(uname -m) && \
 	# if [ "${_BUILD_TARGET_ARCH}" == "x86_64" ] && [[ "${BASE_IMAGE}" == nvidia/cuda* ]]; then \
 	# 	export _REQUIRE_FILE_PATH=./requirements.gpu.txt; \
