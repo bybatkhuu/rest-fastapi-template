@@ -1,6 +1,6 @@
 from typing import Any
 
-from pydantic import Field, constr
+from pydantic import Field
 
 from potato_util.constants import HTTPMethodEnum
 
@@ -10,8 +10,9 @@ from ._base import ExtraBasePM, BasePM
 
 
 class LinksResPM(ExtraBasePM):
-    self_link: constr(strip_whitespace=True, max_length=2048) | None = Field(  # type: ignore
+    self_link: str | None = Field(
         default=None,
+        max_length=2048,
         alias="self",
         title="Self link",
         description="Link to the current resource.",
@@ -20,29 +21,33 @@ class LinksResPM(ExtraBasePM):
 
 
 class PageLinksResPM(LinksResPM):
-    first_link: constr(strip_whitespace=True, max_length=2048) | None = Field(  # type: ignore
+    first_link: str | None = Field(
         default=None,
+        max_length=2048,
         alias="first",
         title="First link",
         description="Link to the first page of the resource.",
         examples=[f"{config.api.prefix}/resources/?skip=0&limit=100"],
     )
-    prev_link: constr(strip_whitespace=True, max_length=2048) | None = Field(  # type: ignore
+    prev_link: str | None = Field(
         default=None,
+        max_length=2048,
         alias="prev",
         title="Previous link",
         description="Link to the previous page of the resource.",
         examples=[f"{config.api.prefix}/resources/?skip=100&limit=100"],
     )
-    next_link: constr(strip_whitespace=True, max_length=2048) | None = Field(  # type: ignore
+    next_link: str | None = Field(
         default=None,
+        max_length=2048,
         alias="next",
         title="Next link",
         description="Link to the next page of the resource.",
         examples=[f"{config.api.prefix}/resources/?skip=300&limit=100"],
     )
-    last_link: constr(strip_whitespace=True, max_length=2048) | None = Field(  # type: ignore
+    last_link: str | None = Field(
         default=None,
+        max_length=2048,
         alias="last",
         title="Last link",
         description="Link to the last page of the resource.",
@@ -51,10 +56,10 @@ class PageLinksResPM(LinksResPM):
 
 
 class MetaResPM(ExtraBasePM):
-    base_url: None | (
-        constr(strip_whitespace=True, min_length=2, max_length=256)  # type: ignore
-    ) = Field(
+    base_url: str | None = Field(
         default=None,
+        min_length=2,
+        max_length=256,
         title="Base URL",
         description="Current request base URL.",
         examples=["https://api.example.com"],
@@ -68,7 +73,7 @@ class MetaResPM(ExtraBasePM):
 
 
 class ErrorResPM(BasePM):
-    code: constr(strip_whitespace=True) = Field(  # type: ignore
+    code: str = Field(
         ...,
         min_length=3,
         max_length=36,
@@ -76,7 +81,7 @@ class ErrorResPM(BasePM):
         description="Code that represents the error.",
         examples=["400_00000"],
     )
-    description: constr(strip_whitespace=True) | None = Field(  # type: ignore
+    description: str | None = Field(
         default=None,
         max_length=1024,
         title="Error description",
