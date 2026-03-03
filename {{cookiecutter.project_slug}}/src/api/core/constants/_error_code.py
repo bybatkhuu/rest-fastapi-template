@@ -2,17 +2,15 @@ from enum import Enum
 from http import HTTPStatus
 from typing import Union, Any
 
-from pydantic import BaseModel, Field, constr
+from pydantic import BaseModel, Field
 
 
 class ErrorCodePM(BaseModel):
-    code: constr(strip_whitespace=True) = Field(..., min_length=3, max_length=36)  # type: ignore
-    name: constr(strip_whitespace=True) = Field(..., min_length=3, max_length=64)  # type: ignore
+    code: str = Field(..., min_length=3, max_length=36)
+    name: str = Field(..., min_length=3, max_length=64)
     status_code: int = Field(..., ge=100, le=599)
-    message: constr(strip_whitespace=True) = Field(..., min_length=1, max_length=256)  # type: ignore
-    description: constr(strip_whitespace=True) | None = Field(  # type: ignore
-        default=None, max_length=1024
-    )
+    message: str = Field(..., min_length=1, max_length=256)
+    description: str | None = Field(default=None, max_length=1024)
     detail: Any = Field(default=None)
 
 
