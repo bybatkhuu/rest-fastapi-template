@@ -1,5 +1,16 @@
 # Changelog
 
+## v8.0.4-260306 (2026-03-06)
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### 🐛 Fixes
+* fix: update beans-logging-fastapi version and refactor logging calls … by @bybatkhuu in https://github.com/bybatkhuu/rest-fastapi-template/pull/62
+
+
+**Full Changelog**: https://github.com/bybatkhuu/rest-fastapi-template/compare/v8.0.3-260302...v8.0.4-260306
+
 ## v8.0.3-260302 (2026-03-02)
 
 <!-- Release notes generated using configuration in .github/release.yml at main -->
