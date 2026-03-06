@@ -65,8 +65,6 @@ git checkout cookiecutter
 
 ```sh
 # Install cookiecutter:
-pip install -U cookiecutter
-# Or:
 pip install -r ./requirements.txt
 ```
 
