@@ -2,10 +2,10 @@ from pydantic import validate_call
 
 from potato_util.constants import WarnEnum
 from potato_util.dt import now_utc_dt
+from beans_logging_fastapi import log_at
 
 from api.core.constants import ErrorCodeEnum
 from api.core.exceptions import BaseHTTPException
-from api.logger import log_mode
 
 from .schemas import TaskPM, TaskBasePM
 
@@ -37,7 +37,7 @@ def get_list(
         tuple[list[TaskPM], int]: List of tasks and total count as tuple.
     """
 
-    log_mode(message=f"[{request_id}] - Getting task list...", warn_mode=warn_mode)
+    log_at(message=f"[{request_id}] - Getting task list...", warn_mode=warn_mode)
 
     _task_list: list[TaskPM] = _TASKS_DB
     _all_count = len(_task_list)
@@ -46,7 +46,7 @@ def get_list(
 
     _task_list = _task_list[offset : offset + limit]  # noqa: E203
 
-    log_mode(
+    log_at(
         message=f"[{request_id}] - Successfully retrieved task list.",
         level="SUCCESS",
         warn_mode=warn_mode,
@@ -69,12 +69,12 @@ def create(
         TaskPM: New TaskPM object.
     """
 
-    log_mode(message=f"[{request_id}] - Creating task...", warn_mode=warn_mode)
+    log_at(message=f"[{request_id}] - Creating task...", warn_mode=warn_mode)
 
     _task: TaskPM = TaskPM(**task_in.model_dump())
     _TASKS_DB.append(_task)
 
-    log_mode(
+    log_at(
         message=f"[{request_id}] - Successfully created task with '{_task.id}' ID.",
         level="SUCCESS",
         warn_mode=warn_mode,
@@ -98,7 +98,7 @@ def get(
         TaskPM | None: TaskPM object or None.
     """
 
-    log_mode(
+    log_at(
         message=f"[{request_id}] - Getting task with '{id}' ID...",
         warn_mode=warn_mode,
     )
@@ -109,7 +109,7 @@ def get(
             _task = _task_db
 
     if _task:
-        log_mode(
+        log_at(
             message=f"[{request_id}] - Successfully retrieved task with '{id}' ID.",
             level="SUCCESS",
             warn_mode=warn_mode,
@@ -147,7 +147,7 @@ def update(
             message="No task data provided to update!",
         )
 
-    log_mode(
+    log_at(
         message=f"[{request_id}] - Updating task with '{id}' ID...",
         warn_mode=warn_mode,
     )
@@ -169,7 +169,7 @@ def update(
 
     _task.updated_at = now_utc_dt()
 
-    log_mode(
+    log_at(
         message=f"[{request_id}] - Successfully updated task with '{id}' ID.",
         level="SUCCESS",
         warn_mode=warn_mode,
@@ -195,7 +195,7 @@ def delete(
         BaseHTTPException: If task is not found.
     """
 
-    log_mode(
+    log_at(
         message=f"[{request_id}] - Deleting task with '{id}' ID...", warn_mode=warn_mode
     )
 
@@ -203,7 +203,7 @@ def delete(
         if _task.id == id:
             del _TASKS_DB[_i]
 
-            log_mode(
+            log_at(
                 message=f"[{request_id}] - Successfully deleted task with '{id}' ID.",
                 level="SUCCESS",
                 warn_mode=warn_mode,
