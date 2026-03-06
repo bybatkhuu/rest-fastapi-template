@@ -82,9 +82,7 @@ cookiecutter -f .
 ### 5. 🏁 Start the project
 
 ```sh
-cd [PROJECT_NAME]
-# For example:
-cd rest-fastapi-template
+cd [PROJECT_SLUG]
 
 # Start:
 ./compose.sh start -l
