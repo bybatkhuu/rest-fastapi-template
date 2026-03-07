@@ -64,7 +64,7 @@ async def _async_create_dirs() -> None:
 
     try:
         await async_create_dir(config.api.paths.data_dir)
-        # Add directories needs to be created here...
+        # Add directories that need to be created here...
     except Exception:
         logger.exception("Failed to create directories:")
         raise SystemExit(1)
