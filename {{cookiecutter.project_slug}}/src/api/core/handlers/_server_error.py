@@ -12,7 +12,7 @@ from api.logger import logger
 
 
 # For unhandled Exception or 500 internal server error:
-def server_error_handler(request: Request, exc: Exception) -> BaseResponse:
+async def server_error_handler(request: Request, exc: Exception) -> BaseResponse:
     """Error handler for any kind of unhandled Exception or 500 internal server error.
 
     Args:

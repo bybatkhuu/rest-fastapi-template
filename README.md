@@ -30,7 +30,7 @@ This is a cookiecutter template for FastAPI web service projects.
 - Install **Python (>= v3.9)** and **pip (>= 23)**:
     - **[RECOMMENDED] [Miniconda (v3)](https://www.anaconda.com/docs/getting-started/miniconda/install)**
     - *[arm64/aarch64] [Miniforge (v3)](https://github.com/conda-forge/miniforge)*
-    - *[Python virutal environment] [venv](https://docs.python.org/3/library/venv.html)*
+    - *[Python virtual environment] [venv](https://docs.python.org/3/library/venv.html)*
 
 For **DEVELOPMENT** environment:
 
