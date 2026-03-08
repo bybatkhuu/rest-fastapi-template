@@ -45,9 +45,14 @@ async def http_exception_handler(
         if _error_code_enum:
             _error = _error_code_enum.value.model_dump()
 
+    _content = None
+    if hasattr(exc, "content"):
+        _content = getattr(exc, "content")
+
     _headers = dict(exc.headers) if exc.headers else None
     return BaseResponse(
         request=request,
+        content=_content,
         status_code=exc.status_code,
         message=_message,
         error=_error,
