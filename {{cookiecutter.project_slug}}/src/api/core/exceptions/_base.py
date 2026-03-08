@@ -19,6 +19,7 @@ class BaseHTTPException(HTTPException):
         error_enum: ErrorCodeEnum,
         status_code: int | None = None,
         message: str | None = None,
+        content: Any = None,
         description: str | None = None,
         detail: Any = None,
         headers: dict[str, str] | None = None,
@@ -30,6 +31,7 @@ class BaseHTTPException(HTTPException):
             status_code (int | None           , optional): HTTP status code: [ge=100, le=599]. Defaults to None.
             message     (str | None           , optional): Error message: [min_length=1, max_length=255].
                                                                 Defaults to None.
+            content     (Any                  , optional): Any data content for response. Defaults to None.
             description (str | None           , optional): Error description: [max_length=511]. Defaults to None.
             detail      (Any                  , optional): Error detail. Defaults to None.
             headers     (dict[str, str] | None, optional): Headers. Defaults to None.
@@ -42,6 +44,9 @@ class BaseHTTPException(HTTPException):
 
         if not message:
             message = _error.get("message", "An error occurred")
+
+        if content:
+            self.content = content
 
         if description:
             _error["description"] = description
