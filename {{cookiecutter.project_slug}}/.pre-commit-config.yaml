@@ -1,6 +1,6 @@
 fail_fast: true
 default_language_version:
-  python: python3.10
+  python: python{{cookiecutter.python_version}}
 exclude: |
   (?x)^(
       \.git/.*
