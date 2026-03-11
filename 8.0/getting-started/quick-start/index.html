@@ -23,7 +23,7 @@
       
       
       <link rel="icon" href="../../assets/images/logo.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.5">
     
     
       
@@ -670,17 +670,6 @@
     <span class="md-ellipsis">
       
         Standalone runtime (Python)
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#run-directly-from-src-directory" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Run directly from src directory
       
     </span>
   </a>
@@ -1462,17 +1451,6 @@
   
 </li>
         
-          <li class="md-nav__item">
-  <a href="#run-directly-from-src-directory" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Run directly from src directory
-      
-    </span>
-  </a>
-  
-</li>
-        
       </ul>
     </nav>
   
@@ -1597,37 +1575,10 @@
 </span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="c1"># For DEVELOPMENT:</span>
 </span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>fastapi<span class="w"> </span>dev<span class="w"> </span>src/api/main.py<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
 </span></code></pre></div>
-<h3 id="run-directly-from-src-directory">Run directly from src directory</h3>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># 1. Prepare environment variables:</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1"># 1.a. Copy &#39;.env.example&#39; file into &#39;src&#39; directory as &#39;.env&#39; file:</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>cp<span class="w"> </span>-v<span class="w"> </span>./.env.example<span class="w"> </span>./src/.env
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1"># Edit environment variables to fit in your environment:</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>nano<span class="w"> </span>./src/.env
-</span><span id="__span-6-6"><a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>
-</span><span id="__span-6-7"><a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1"># 1.b. Or symbolic link current &#39;.env&#39; file into &#39;src&#39; directory:</span>
-</span><span id="__span-6-8"><a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>ln<span class="w"> </span>-s<span class="w"> </span>-v<span class="w"> </span>../.env<span class="w"> </span>./src/.env
-</span><span id="__span-6-9"><a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
-</span><span id="__span-6-10"><a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># 2. Enter into src directory:</span>
-</span><span id="__span-6-11"><a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="nb">cd</span><span class="w"> </span>src
-</span><span id="__span-6-12"><a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>
-</span><span id="__span-6-13"><a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="c1"># 3. Run server:</span>
-</span><span id="__span-6-14"><a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="c1"># 3.a. Run as python module:</span>
-</span><span id="__span-6-15"><a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>python<span class="w"> </span>-u<span class="w"> </span>-m<span class="w"> </span>api
-</span><span id="__span-6-16"><a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
-</span><span id="__span-6-17"><a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="c1"># 3.b. Or run with uvicorn cli:</span>
-</span><span id="__span-6-18"><a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a>uvicorn<span class="w"> </span>api.main:app<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
-</span><span id="__span-6-19"><a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="c1"># For DEVELOPMENT:</span>
-</span><span id="__span-6-20"><a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a>uvicorn<span class="w"> </span>api.main:app<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--no-access-log<span class="w"> </span>--no-server-header<span class="w"> </span>--proxy-headers<span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span><span class="w"> </span>--reload
-</span><span id="__span-6-21"><a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>
-</span><span id="__span-6-22"><a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="c1"># 3.c. Or run with fastapi cli:</span>
-</span><span id="__span-6-23"><a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a>fastapi<span class="w"> </span>run<span class="w"> </span>api/main.py<span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
-</span><span id="__span-6-24"><a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="c1"># For DEVELOPMENT:</span>
-</span><span id="__span-6-25"><a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>fastapi<span class="w"> </span>dev<span class="w"> </span>api/main.py<span class="w"> </span>--host<span class="o">=</span><span class="s2">&quot;0.0.0.0&quot;</span><span class="w"> </span>--port<span class="o">=</span><span class="m">8000</span><span class="w"> </span>--forwarded-allow-ips<span class="o">=</span><span class="s2">&quot;*&quot;</span>
-</span></code></pre></div>
 <h2 id="3-check-server-is-running">3. ✅ Check server is running</h2>
 <p>Check with CLI (curl):</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Send a ping request with &#39;curl&#39; to REST API server and parse JSON response with &#39;jq&#39;:</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8000/api/v1/ping<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1"># Send a ping request with &#39;curl&#39; to REST API server and parse JSON response with &#39;jq&#39;:</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>curl<span class="w"> </span>-s<span class="w"> </span>http://localhost:8000/api/v1/ping<span class="w"> </span><span class="p">|</span><span class="w"> </span>jq
 </span></code></pre></div>
 <p>Check with web browser:</p>
 <ul>
@@ -1638,15 +1589,15 @@
 </ul>
 <h2 id="4-stop-the-server">4. 🛑 Stop the server</h2>
 <p>Docker runtime:</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># Stop docker compose:</span>
-</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>./compose.sh<span class="w"> </span>stop
-</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="c1"># Or:</span>
-</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span>--remove-orphans
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># Stop docker compose:</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>./compose.sh<span class="w"> </span>stop
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="c1"># Or:</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>docker<span class="w"> </span>compose<span class="w"> </span>down<span class="w"> </span>--remove-orphans
 </span></code></pre></div>
 <p>Standalone runtime (Only for <strong>PM2</strong>):</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>pm2<span class="w"> </span>stop<span class="w"> </span>./pm2-process.json<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="w">    </span>pm2<span class="w"> </span>flush<span class="w"> </span>ft<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
-</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="w">    </span>pm2<span class="w"> </span>delete<span class="w"> </span>./pm2-process.json
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>pm2<span class="w"> </span>stop<span class="w"> </span>./pm2-process.json<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span>pm2<span class="w"> </span>flush<span class="w"> </span>ft<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span>pm2<span class="w"> </span>delete<span class="w"> </span>./pm2-process.json
 </span></code></pre></div>
 <p>👍</p>
 
