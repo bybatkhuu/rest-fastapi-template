@@ -215,36 +215,6 @@ fastapi run src/api/main.py --port=8000 --forwarded-allow-ips="*"
 fastapi dev src/api/main.py --host="0.0.0.0" --port=8000 --forwarded-allow-ips="*"
 ```
 
-#### Run directly from src directory
-
-```sh
-# 1. Prepare environment variables:
-# 1.a. Copy '.env.example' file into 'src' directory as '.env' file:
-cp -v ./.env.example ./src/.env
-# Edit environment variables to fit in your environment:
-nano ./src/.env
-
-# 1.b. Or symbolic link current '.env' file into 'src' directory:
-ln -s -v ../.env ./src/.env
-
-# 2. Enter into src directory:
-cd src
-
-# 3. Run server:
-# 3.a. Run as python module:
-python -u -m api
-
-# 3.b. Or run with uvicorn cli:
-uvicorn api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*"
-# For DEVELOPMENT:
-uvicorn api.main:app --host="0.0.0.0" --port=8000 --no-access-log --no-server-header --proxy-headers --forwarded-allow-ips="*" --reload
-
-# 3.c. Or run with fastapi cli:
-fastapi run api/main.py --port=8000 --forwarded-allow-ips="*"
-# For DEVELOPMENT:
-fastapi dev api/main.py --host="0.0.0.0" --port=8000 --forwarded-allow-ips="*"
-```
-
 ### 6. ✅ Check server is running
 
 Check with CLI (curl):
