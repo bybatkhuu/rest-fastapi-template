@@ -19,6 +19,7 @@ api:
     ssl_keyfile: null
     ssl_certfile: null
     reload: false
+    reload_dirs: null
     reload_includes: ["*.json", "*.yml", "*.yaml", "*.toml", "*.md"]
     reload_excludes:
       [".*", "~*", ".py[cod]", ".sw.*", "__pycache__", "*.log", "logs"]
