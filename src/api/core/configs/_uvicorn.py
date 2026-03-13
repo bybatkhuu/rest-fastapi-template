@@ -1,3 +1,4 @@
+import os
 from typing import Any
 
 from pydantic import Field, model_validator
@@ -16,10 +17,11 @@ class UvicornConfig(BaseConfig):
     ssl_keyfile: str | None = Field(default=None)
     ssl_certfile: str | None = Field(default=None)
     reload: bool = Field(default=False)
-    reload_includes: list[str] | None = Field(
+    reload_dirs: list[str] | str | None = Field(default=None)
+    reload_includes: list[str] | str | None = Field(
         default=["*.json", "*.yml", "*.yaml", "*.toml", "*.md"]
     )
-    reload_excludes: list[str] | None = Field(
+    reload_excludes: list[str] | str | None = Field(
         default=[".*", "~*", ".py[cod]", ".sw.*", "__pycache__", "*.log", "logs"]
     )
 
@@ -31,9 +33,14 @@ class FrozenUvicornConfig(UvicornConfig):
     @classmethod
     def _check_all(cls, data: Any) -> Any:
         if isinstance(data, dict):
-            if ("reload" in data) and (not data["reload"]):
-                data["reload_includes"] = None
-                data["reload_excludes"] = None
+            if "reload" in data:
+                if data["reload"]:
+                    if (not data.get("reload_dirs")) and os.path.isdir("./src"):
+                        data["reload_dirs"] = ["./src"]
+                else:
+                    data["reload_includes"] = None
+                    data["reload_excludes"] = None
+                    data["reload_dirs"] = None
 
         return data
 
