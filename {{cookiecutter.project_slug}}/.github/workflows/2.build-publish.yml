@@ -62,8 +62,8 @@ jobs:
           context: .
           secrets: |
             "HASH_PASSWORD={% raw %}${{ secrets.DOCKER_UID_HASH_PASSWORD }}{% endraw %}"
-          # platforms: linux/amd64
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
+          # platforms: linux/amd64,linux/arm64
           cache-from: type=registry,ref={% raw %}${{ secrets.DOCKERHUB_USERNAME }}{% endraw %}/{{cookiecutter.docker_repo_name}}:cache-latest
           cache-to: type=registry,ref={% raw %}${{ secrets.DOCKERHUB_USERNAME }}{% endraw %}/{{cookiecutter.docker_repo_name}}:cache-latest,mode=max
           tags: |
