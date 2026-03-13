@@ -154,7 +154,6 @@ repos:
         files: \.pyi?$
         args: ["--skip=B101"] # skip assert-use warning
 
-
   # - repo: https://github.com/RobertCraigie/pyright-python
   #   rev: v1.1.408
   #   hooks:
