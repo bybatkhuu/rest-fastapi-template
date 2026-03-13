@@ -1,5 +1,16 @@
 # Changelog
 
+## v8.0.7-260313 (2026-03-13)
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+## What's Changed
+### 🐛 Fixes
+* feat: update error handling and configuration for Uvicorn by @bybatkhuu in https://github.com/bybatkhuu/rest-fastapi-template/pull/63
+
+
+**Full Changelog**: https://github.com/bybatkhuu/rest-fastapi-template/compare/v8.0.6-260311...v8.0.7-260313
+
 ## v8.0.6-260311 (2026-03-11)
 
 <!-- Release notes generated using configuration in .github/release.yml at main -->

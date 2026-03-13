@@ -1,6 +1,6 @@
 services:
   api:
-    image: bybatkhuu/rest-fastapi-template:8.0.6-260311-gpu
+    image: bybatkhuu/rest-fastapi-template:8.0.7-260313-gpu
     runtime: nvidia
     build:
       args:
