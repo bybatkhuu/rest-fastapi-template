@@ -97,12 +97,14 @@ def get_tasks(
         logger.success(
             f"[{_request_id}] - Successfully retrieved task list count: {len(_task_list)}/{_all_count}."
         )
-    except Exception as err:
-        if isinstance(err, HTTPException):
-            raise
-
-        logger.error(f"[{_request_id}] - Failed to get task list!")
+    except HTTPException:
         raise
+    except Exception:
+        logger.exception(f"[{_request_id}] - Failed to get task list!")
+        raise BaseHTTPException(
+            error_enum=ErrorCodeEnum.INTERNAL_SERVER_ERROR,
+            message="Failed to get task list!",
+        )
 
     _response = BaseResponse(
         request=request,
@@ -143,14 +145,16 @@ def create_task(
         logger.success(
             f"[{_request_id}] - Successfully created task with '{_task.id}' ID."
         )
-    except Exception as err:
-        if isinstance(err, HTTPException):
-            raise
-
-        logger.error(
+    except HTTPException:
+        raise
+    except Exception:
+        logger.exception(
             f"[{_request_id}] - Failed to create task with '{task_in.name}' name!"
         )
-        raise
+        raise BaseHTTPException(
+            error_enum=ErrorCodeEnum.INTERNAL_SERVER_ERROR,
+            message=f"Failed to create task with '{task_in.name}' name!",
+        )
 
     _response = BaseResponse(
         request=request,
@@ -195,12 +199,14 @@ def get_task(
         logger.success(
             f"[{_request_id}] - Successfully retrieved task with '{task_id}' ID."
         )
-    except Exception as err:
-        if isinstance(err, HTTPException):
-            raise
-
-        logger.error(f"[{_request_id}] - Failed to get task with '{task_id}' ID!")
+    except HTTPException:
         raise
+    except Exception:
+        logger.exception(f"[{_request_id}] - Failed to get task with '{task_id}' ID!")
+        raise BaseHTTPException(
+            error_enum=ErrorCodeEnum.INTERNAL_SERVER_ERROR,
+            message=f"Failed to get task with '{task_id}' ID!",
+        )
 
     _response = BaseResponse(
         request=request,
@@ -244,13 +250,16 @@ def update_task(
         logger.success(
             f"[{_request_id}] - Successfully updated task with '{task_id}' ID."
         )
-    except Exception as err:
-
-        if isinstance(err, HTTPException):
-            raise
-
-        logger.error(f"[{_request_id}] - Failed to update task with '{task_id}' ID!")
+    except HTTPException:
         raise
+    except Exception:
+        logger.exception(
+            f"[{_request_id}] - Failed to update task with '{task_id}' ID!"
+        )
+        raise BaseHTTPException(
+            error_enum=ErrorCodeEnum.INTERNAL_SERVER_ERROR,
+            message=f"Failed to update task with '{task_id}' ID!",
+        )
 
     _response = BaseResponse(
         request=request,
@@ -288,13 +297,16 @@ def delete_task(
         logger.success(
             f"[{_request_id}] - Successfully deleted task with '{task_id}' ID."
         )
-    except Exception as err:
-
-        if isinstance(err, HTTPException):
-            raise
-
-        logger.error(f"[{_request_id}] - Failed to delete task with '{task_id}' ID!")
+    except HTTPException:
         raise
+    except Exception:
+        logger.exception(
+            f"[{_request_id}] - Failed to delete task with '{task_id}' ID!"
+        )
+        raise BaseHTTPException(
+            error_enum=ErrorCodeEnum.INTERNAL_SERVER_ERROR,
+            message=f"Failed to delete task with '{task_id}' ID!",
+        )
 
     return
 
