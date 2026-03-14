@@ -97,6 +97,8 @@ pip install -r ./requirements.txt
 
 # For DEVELOPMENT:
 pip install -r ./requirements/requirements.dev.txt
+# Install pre-commit hooks:
+pre-commit install
 ```
 
 <!-- #### 3.2. Install hardware specific dependencies
