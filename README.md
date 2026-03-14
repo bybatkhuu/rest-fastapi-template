@@ -66,6 +66,8 @@ git checkout cookiecutter
 ```sh
 # Install cookiecutter:
 pip install -r ./requirements.txt
+# Install pre-commit hooks:
+pre-commit install
 ```
 
 ### 4. 🏗️ Generate project with cookiecutter
