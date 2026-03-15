@@ -17,13 +17,6 @@
 - Web service
 - Microservice
 - Configuration
-- Tests
-- Build
-- Scripts
-- Examples
-- Documentation
-- CI/CD
-- Docker and docker compose
 
 ---
 
