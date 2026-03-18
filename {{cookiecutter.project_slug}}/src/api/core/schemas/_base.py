@@ -33,13 +33,13 @@ class TimestampPM(BasePM):
         default_factory=now_utc_dt,
         title="Updated datetime",
         description="Last updated datetime of the resource.",
-        examples=["2024-12-01T00:00:00+00:00"],
+        examples=["2026-01-01T00:00:00+00:00"],
     )
     created_at: datetime = Field(
         default_factory=now_utc_dt,
         title="Created datetime",
         description="Created datetime of the resource.",
-        examples=["2024-12-01T00:00:00+00:00"],
+        examples=["2026-01-01T00:00:00+00:00"],
     )
 
 

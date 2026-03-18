@@ -41,7 +41,6 @@ class MainConfig(BaseMainConfig):
         return val
 
     model_config = SettingsConfigDict(
-        env_file=".env",
         env_prefix=ENV_PREFIX,
         env_nested_delimiter="__",
         cli_prefix="",

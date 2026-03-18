@@ -637,11 +637,11 @@
 						"description": "Task as a main data.",
 						"examples": [
 							{
-								"created_at": "2021-01-01T00:00:00+00:00",
+								"created_at": "2026-01-01T00:00:00+00:00",
 								"id": "1699928748406212_46D46E7E55FA4A6E8478BD6B04195793",
 								"name": "Task 1",
 								"point": 70,
-								"updated_at": "2021-01-01T00:00:00+00:00"
+								"updated_at": "2026-01-01T00:00:00+00:00"
 							}
 						]
 					},
@@ -698,24 +698,24 @@
 						"examples": [
 							[
 								{
-									"created_at": "2021-01-01T00:00:00+00:00",
+									"created_at": "2026-01-01T00:00:00+00:00",
 									"id": "1699928748406212_46D46E7E55FA4A6E8478BD6B04195793",
 									"links": {
 										"self": "/api/v1/tasks/1699928748406212_46D46E7E55FA4A6E8478BD6B04195793"
 									},
 									"name": "Task 1",
 									"point": 70,
-									"updated_at": "2021-01-01T00:00:00+00:00"
+									"updated_at": "2026-01-01T00:00:00+00:00"
 								},
 								{
-									"created_at": "2021-01-01T00:00:00+00:00",
+									"created_at": "2026-01-01T00:00:00+00:00",
 									"id": "1699854600504660_337FC34BE4304E14A193F6A2793AD9D1",
 									"links": {
 										"self": "/api/v1/tasks/1699854600504660_337FC34BE4304E14A193F6A2793AD9D1"
 									},
 									"name": "Task 2",
 									"point": 30,
-									"updated_at": "2021-01-01T00:00:00+00:00"
+									"updated_at": "2026-01-01T00:00:00+00:00"
 								}
 							]
 						]
@@ -821,7 +821,7 @@
 						"title": "Updated datetime",
 						"description": "Last updated datetime of the resource.",
 						"examples": [
-							"2024-12-01T00:00:00+00:00"
+							"2026-01-01T00:00:00+00:00"
 						]
 					},
 					"created_at": {
@@ -830,7 +830,7 @@
 						"title": "Created datetime",
 						"description": "Created datetime of the resource.",
 						"examples": [
-							"2024-12-01T00:00:00+00:00"
+							"2026-01-01T00:00:00+00:00"
 						]
 					}
 				},
@@ -915,7 +915,7 @@
 						"title": "Updated datetime",
 						"description": "Last updated datetime of the resource.",
 						"examples": [
-							"2024-12-01T00:00:00+00:00"
+							"2026-01-01T00:00:00+00:00"
 						]
 					},
 					"created_at": {
@@ -924,7 +924,7 @@
 						"title": "Created datetime",
 						"description": "Created datetime of the resource.",
 						"examples": [
-							"2024-12-01T00:00:00+00:00"
+							"2026-01-01T00:00:00+00:00"
 						]
 					},
 					"links": {
