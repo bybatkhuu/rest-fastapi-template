@@ -6,6 +6,14 @@ hide:
 
 # 📌 Release Notes
 
+## v8.0.8-260318 (2026-03-18)
+
+<!-- Release notes generated using configuration in .github/release.yml at main -->
+
+
+
+**Full Changelog**: https://github.com/bybatkhuu/rest-fastapi-template/compare/v8.0.7-260313...v8.0.8-260318
+
 ## v8.0.7-260313 (2026-03-13)
 
 <!-- Release notes generated using configuration in .github/release.yml at main -->
