@@ -96,7 +96,7 @@ main()
 				exec gosu "${USER}:${GROUP}" /bin/bash
 			else
 				echo "[INFO]: Executing command -> ${*}"
-				exec gosu "${USER}:${GROUP}" /bin/bash -c "${@}" || exit 2
+				exec gosu "${USER}:${GROUP}" /bin/bash -c "$@" || exit 2
 			fi
 			exit 0;;
 		*)
@@ -106,4 +106,4 @@ main()
 	esac
 }
 
-main "${@:-}"
+main "$@"
