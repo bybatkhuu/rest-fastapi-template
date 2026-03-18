@@ -1,6 +1,6 @@
 services:
   api:
-    image: bybatkhuu/rest-fastapi-template:8.0.7-260313
+    image: bybatkhuu/rest-fastapi-template:8.0.8-260318
     build:
       context: .
     restart: unless-stopped
