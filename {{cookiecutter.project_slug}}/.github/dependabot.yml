@@ -1,6 +1,7 @@
 version: 2
 updates:
   - package-ecosystem: "pip"
+    target-branch: "dev"
     directory: "/"
     labels:
       - "dependency"
@@ -9,6 +10,7 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "docker"
+    target-branch: "dev"
     directory: "/"
     labels:
       - "dependency"
@@ -18,6 +20,7 @@ updates:
       interval: "daily"
 
   - package-ecosystem: "docker-compose"
+    target-branch: "dev"
     directory: "/"
     labels:
       - "dependency"
