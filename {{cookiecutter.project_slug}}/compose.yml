@@ -3,7 +3,7 @@ services:
     image: {{cookiecutter.docker_registry}}/{{cookiecutter.docker_repo_name}}:{{cookiecutter.version}}
     build:
       context: .
-    restart: unless-stopped
+    restart: always
     environment:
       TERM: ${TERM:-xterm}
       TZ: ${TZ:-{{cookiecutter.timezone}}}
