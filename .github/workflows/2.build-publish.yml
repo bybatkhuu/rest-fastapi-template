@@ -43,7 +43,7 @@ jobs:
       - name: Get version
         run: echo "_VERSION=$(./scripts/get-version.sh)" >> ${GITHUB_ENV}
       - name: Build and export
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           secrets: |
@@ -57,7 +57,7 @@ jobs:
           sleep 3
           curl -s http://localhost:8000/api/v1/ping | grep "Pong"
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: docker/build-push-action@v7
         with:
           context: .
           secrets: |
