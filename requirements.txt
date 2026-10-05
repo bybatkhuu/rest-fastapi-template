@@ -2,4 +2,4 @@ certifi>=2026.4.22,<2030.0.0
 anyio>=4.3.0,<5.0.0
 potato-util[crypto,async]==1.0.1
 beans-logging-fastapi==8.2.3
-fastapi[all]==0.141.1
+fastapi[all]==0.142.2
